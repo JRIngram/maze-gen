@@ -1,6 +1,12 @@
 const Cell = require('./Cell');
 const Maze = require('./Maze');
 
-let maze = new Maze(3,3);
-console.log(maze.toString());
-console.log("done");
+    const maze = new Maze(3,3);
+    maze.removeWall(0,0,"right");
+    maze.removeWall(0,1,"down");
+    maze.removeWall(1,1,"down");
+    maze.removeWall(2,1,"right");
+    maze.removeWall(2,2,"up");
+    maze.removeWall(1,2,"up");
+    maze.removeWall(0,2,"up");
+    console.log(maze.toString());

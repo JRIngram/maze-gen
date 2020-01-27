@@ -23,6 +23,22 @@ class Maze{
 
     removeWall(row, column, direction){
         this.cells[row][column].removeWall(direction);
+        if(direction === "right" && column + 1 < this.cells[row].length){
+            this.cells[row][column+1].removeWall("left");
+        }
+        else if(direction === "left" && column - 1 >= 0){
+            this.cells[row][column-1].removeWall("right");
+        }
+        else if(direction === "up" && (row - 1) >= 0){
+            this.cells[row-1][column].removeWall("down");
+        }
+        else if(direction === "down" && (row + 1) < this.cells.length){
+            this.cells[row+1][column].removeWall("up");
+        }
+    }
+
+    getWallStatus(row, column, direction){
+        return this.cells[row][column].getWallStatus(direction);
     }
 
 
