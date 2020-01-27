@@ -4,7 +4,8 @@
   "description": "Maze Generation Algorithms",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:cov": "jest --coverage"
   },
   "author": "jringram",
   "license": "ISC",

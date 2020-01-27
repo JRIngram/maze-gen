@@ -11,27 +11,43 @@ test('Walls all present on construction', () => {
 
 test('Remove cell function sets cell wall to false', () => {
     const cell = new Cell();
+   
     //Left wall
     expect(cell.getWallStatus('left')).toBe(true);
     cell.removeWall('left');
     expect(cell.walls.left).toBe(false);
     expect(cell.getWallStatus('left')).toBe(false);
+    
     //Right Wall
     expect(cell.getWallStatus('right')).toBe(true);
     cell.removeWall('right');
     expect(cell.walls.right).toBe(false);
     expect(cell.getWallStatus('right')).toBe(false);
+    
     //Up wall
     expect(cell.getWallStatus('up')).toBe(true);
     cell.removeWall('up');
     expect(cell.walls.up).toBe(false);
     expect(cell.getWallStatus('up')).toBe(false);
-    //Down
+    
+    //Down wall
     expect(cell.getWallStatus('down')).toBe(true);
     cell.removeWall('down');
     expect(cell.walls.down).toBe(false);
     expect(cell.getWallStatus('down')).toBe(false);
 });
+
+test('No wall removed if invalid parameter entered', () => {
+    const cell = new Cell();
+   
+    //Left wall
+    expect(cell.getWallStatus('test')).toBe(undefined);
+    cell.removeWall('test');
+    expect(cell.getWallStatus('left')).toBe(true);
+    expect(cell.getWallStatus('right')).toBe(true);
+    expect(cell.getWallStatus('up')).toBe(true);
+    expect(cell.getWallStatus('down')).toBe(true);
+})
 
 //Visit and unvisiting
 test('Cell is marked as unvisited on start', () => {
