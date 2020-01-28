@@ -44,7 +44,7 @@ class Maze{
     getRandomCell(){
         const mazeHeight = this.cells.length;
         const mazeWidth = this.cells[0].length;
-        return {randomHeight: Math.random(mazeHeight), randomWidth: Math.random(mazeWidth)}
+        return {randomHeight: Math.floor(Math.random() * mazeHeight) , randomWidth: Math.floor(Math.random() * mazeWidth)}
     }
 
     getCellNeighbourIndices(row, column){
@@ -70,6 +70,48 @@ class Maze{
         return neighbourIndices;
 
 
+    }
+    
+    /*
+    * Calls getCellNeighbourIndices, checks if each neighbour is unvisited and adds the unvisited cell's coordinates to an array
+    * The above array is returned.
+    */
+    getUnvisitedNeigbourIndices(row, column){
+        const neighbourIndices = this.getCellNeighbourIndices(row, column);
+        let unvisitedNeighbours = []
+        if(typeof neighbourIndices.up != 'undefined' && this.getCellVisited(neighbourIndices.up.y, neighbourIndices.up.x) === false){
+            let cell = {
+                direction: 'up',
+                x: neighbourIndices.up.x,
+                y: neighbourIndices.up.y,
+            }
+            unvisitedNeighbours.push(cell);
+        }
+        if(typeof neighbourIndices.down !== 'undefined' && this.getCellVisited(neighbourIndices.down.y, neighbourIndices.down.x) === false){
+            let cell = {
+                direction: 'down',
+                x: neighbourIndices.down.x,
+                y: neighbourIndices.down.y,
+            }
+            unvisitedNeighbours.push(cell);
+        }
+        if(typeof neighbourIndices.left !== 'undefined' && this.getCellVisited(neighbourIndices.left.y, neighbourIndices.left.x) === false){
+            let cell = {
+                direction: 'left',
+                x: neighbourIndices.left.x,
+                y: neighbourIndices.left.y,
+            }
+            unvisitedNeighbours.push(cell);
+        }
+        if(typeof neighbourIndices.right !== 'undefined' && this.getCellVisited(neighbourIndices.right.y, neighbourIndices.right.x) === false){
+            let cell = {
+                direction: 'right',
+                x: neighbourIndices.right.x,
+                y: neighbourIndices.right.y,
+            }
+            unvisitedNeighbours.push(cell);
+        }
+        return unvisitedNeighbours;
     }
 
     toString(){

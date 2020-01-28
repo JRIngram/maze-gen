@@ -115,9 +115,9 @@ test('Can get a random cell', () =>{
     const maze = new Maze(3,4);
     const actual = maze.getRandomCell();
     expect(actual.randomHeight).toBeLessThan(3);
-    expect(actual.randomHeight).toBeGreaterThan(0);
+    expect(actual.randomHeight).toBeGreaterThanOrEqual(0);
     expect(actual.randomWidth).toBeLessThan(4);
-    expect(actual.randomWidth).toBeGreaterThan(0);
+    expect(actual.randomWidth).toBeGreaterThanOrEqual(0);
 })
 
 //Cell neighbours
@@ -172,4 +172,47 @@ test('Down cell is undefined if cell furthest down', () => {
     expect(actual.down).toBeUndefined();
     expect(actual.up.y).toEqual(1)
     expect(actual.up.x).toEqual(1)
+});
+
+//Unvisited Neighbours
+test('Centre cell gets 4 unvisited neighbours on construction', ()=>{
+    const maze = new Maze(3,3);
+    const unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1,1);
+    expect(unvisitedNeighboursIndicies.length).toBe(4);
+});
+
+test('Outer cell gets 3 unvisited neighbours on construction', ()=>{
+    const maze = new Maze(3,3);
+    const unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(0,1);
+    expect(unvisitedNeighboursIndicies.length).toBe(3);
+});
+
+test('Corner cell gets 2 unvisited neighbours on construction', ()=>{
+    const maze = new Maze(3,3);
+    const unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(0,0);
+    expect(unvisitedNeighboursIndicies.length).toBe(2);
+});
+
+test('Unvisited cell indicies length shortens as more neighbours are visited', ()=>{
+    const maze = new Maze(3,3);
+    let unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1,1);
+    expect(unvisitedNeighboursIndicies.length).toBe(4);
+    let nextCell = unvisitedNeighboursIndicies.pop()
+    maze.visitCell(nextCell.y, nextCell.x);
+    unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1,1);
+    expect(unvisitedNeighboursIndicies.length).toBe(3);
+    nextCell = unvisitedNeighboursIndicies.pop()
+    maze.visitCell(nextCell.y, nextCell.x);
+    unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1,1);
+    expect(unvisitedNeighboursIndicies.length).toBe(2);
+    nextCell = unvisitedNeighboursIndicies.pop()
+    maze.visitCell(nextCell.y, nextCell.x);
+    unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1,1);
+    expect(unvisitedNeighboursIndicies.length).toBe(1);
+    nextCell = unvisitedNeighboursIndicies.pop()
+    maze.visitCell(nextCell.y, nextCell.x);
+    unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1,1);
+    expect(unvisitedNeighboursIndicies.length).toBe(0);
+    nextCell = unvisitedNeighboursIndicies.pop()
+    expect(nextCell).toBeUndefined();
 });

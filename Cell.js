@@ -45,7 +45,7 @@ class Cell
         this.visited = visited;
     }
 
-    getCellVisited(visited){
+    getCellVisited(){
         return this.visited;
     }
 
