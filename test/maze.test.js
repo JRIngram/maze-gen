@@ -119,3 +119,57 @@ test('Can get a random cell', () =>{
     expect(actual.randomWidth).toBeLessThan(4);
     expect(actual.randomWidth).toBeGreaterThan(0);
 })
+
+//Cell neighbours
+test('Can get all neighbours indicies if in centre', () => {
+    const maze = new Maze(3,3);
+    const actual = maze.getCellNeighbourIndices(1,1);
+    
+    expect(actual.up.y).toBe(0);
+    expect(actual.up.x).toBe(1);
+
+    expect(actual.down.y).toBe(2);
+    expect(actual.down.x).toBe(1);
+
+    expect(actual.left.y).toBe(1);
+    expect(actual.left.x).toBe(0);
+
+    expect(actual.right.y).toBe(1);
+    expect(actual.right.x).toBe(2);
+});
+
+test('Right cell is undefined if cell furthest right', () => {
+    const maze = new Maze(3,3);
+    const actual = maze.getCellNeighbourIndices(1,2);
+    
+    expect(actual.right).toBeUndefined();
+    expect(actual.left.y).toEqual(1)
+    expect(actual.left.x).toEqual(1)
+});
+
+test('Left cell is undefined if cell furthest Left', () => {
+    const maze = new Maze(3,3);
+    const actual = maze.getCellNeighbourIndices(1,0);
+    
+    expect(actual.left).toBeUndefined();
+    expect(actual.right.y).toEqual(1)
+    expect(actual.right.x).toEqual(1)
+});
+
+test('Up cell is undefined if cell furthest up', () => {
+    const maze = new Maze(3,3);
+    const actual = maze.getCellNeighbourIndices(0,1);
+
+    expect(actual.up).toBeUndefined();
+    expect(actual.down.y).toEqual(1)
+    expect(actual.down.x).toEqual(1)
+});
+
+test('Down cell is undefined if cell furthest down', () => {
+    const maze = new Maze(3,3);
+    const actual = maze.getCellNeighbourIndices(2,1);
+    
+    expect(actual.down).toBeUndefined();
+    expect(actual.up.y).toEqual(1)
+    expect(actual.up.x).toEqual(1)
+});

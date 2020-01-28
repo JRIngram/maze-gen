@@ -42,11 +42,35 @@ class Maze{
     }
 
     getRandomCell(){
-        const height = this.cells.length;
-        const width = this.cells[0].length;
-        return {randomHeight: Math.random(height), randomWidth: Math.random(width)}
+        const mazeHeight = this.cells.length;
+        const mazeWidth = this.cells[0].length;
+        return {randomHeight: Math.random(mazeHeight), randomWidth: Math.random(mazeWidth)}
     }
 
+    getCellNeighbourIndices(row, column){
+        let neighbourIndices = {};
+        const mazeHeight = this.cells.length;
+        const mazeWidth = this.cells[0].length;
+
+        //Get up neighbour
+        if(row > 0)
+            neighbourIndices.up = {y: (row - 1), x: column}
+
+        //Get down neighbour
+        if(row < mazeHeight - 1)
+            neighbourIndices.down = {y: (row + 1), x: column}
+            
+        //Get left neighbour
+        if(column > 0)
+            neighbourIndices.left = {y: row, x: (column-1)}
+            
+        //Get right neighbour
+        if(column < mazeWidth - 1)
+            neighbourIndices.right = {y: row, x: (column+1)}
+        return neighbourIndices;
+
+
+    }
 
     toString(){
         let stringRepresentation = "";
