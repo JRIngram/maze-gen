@@ -41,6 +41,12 @@ class Maze{
         return this.cells[row][column].getWallStatus(direction);
     }
 
+    getRandomCell(){
+        const height = this.cells.length;
+        const width = this.cells[0].length;
+        return {randomHeight: Math.random(height), randomWidth: Math.random(width)}
+    }
+
 
     toString(){
         let stringRepresentation = "";

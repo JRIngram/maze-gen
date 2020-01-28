@@ -1,7 +1,7 @@
 const Cell = require('./Cell');
 const Maze = require('./Maze');
 
-    const maze = new Maze(3,3);
+    const maze = new Maze(7,7);
     maze.removeWall(0,0,"right");
     maze.removeWall(0,1,"down");
     maze.removeWall(1,1,"down");

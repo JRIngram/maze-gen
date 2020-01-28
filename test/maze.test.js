@@ -7,8 +7,8 @@ test('Maze created with the correct dimension', () => {
     const maze2 = new Maze(5,5);
     expect(maze2.cells.length).toBe(5);
     expect(maze2.cells[0].length).toBe(5);
-    const maze3 = new Maze(100,100);
-    expect(maze3.cells.length).toBe(100);
+    const maze3 = new Maze(100,50);
+    expect(maze3.cells.length).toBe(50);
     expect(maze3.cells[0].length).toBe(100);
 });
 
@@ -109,4 +109,13 @@ test('Can create a visible path through a maze', () => {
     maze.removeWall(0,2,"up");
     expect(maze.toString()).toBe('|=  -|| |\n|=|| || |\n|=||_  _|')
 
+})
+
+test('Can get a random cell', () =>{
+    const maze = new Maze(3,4);
+    const actual = maze.getRandomCell();
+    expect(actual.randomHeight).toBeLessThan(3);
+    expect(actual.randomHeight).toBeGreaterThan(0);
+    expect(actual.randomWidth).toBeLessThan(4);
+    expect(actual.randomWidth).toBeGreaterThan(0);
 })
