@@ -1,6 +1,15 @@
 const Cell = require('./Cell');
 
+/**
+ * A class to represent the generated maze. This is made of cells
+ * @see Cell
+ */
 class Maze{
+    /**
+     * Constructs a 2D array of cells
+     * @param {*} width The width of the maze, i.e. how many cells each row contains
+     * @param {*} height The height of the maze, i.e. how many rows the maze contains
+     */
     constructor(width, height){
         this.cells = [];
         for(let i = 0; i < height; i++){
@@ -13,14 +22,31 @@ class Maze{
         }
     }
 
+    /**
+     * Returns if the cell has been visited or not
+     * @param {*} row The row index of the cell
+     * @param {*} column The column index of the cell
+     * @returns true if the cell has been visited; false if the cell hasn't been visited.
+     */
     getCellVisited(row, column){
         return this.cells[row][column].getCellVisited();
     }
 
+    /**
+     * Marks a cell as visited
+     * @param {*} row The row index of the cell
+     * @param {*} column The column index of the cell
+     */
     visitCell(row, column){
         this.cells[row][column].setCellVisited(true);
     }
 
+    /**
+     * Removes the wall of the selected cell
+     * @param {*} row The row index of the cell
+     * @param {*} column The column index of the cell
+     * @param {string} direction left;right;up;down. The wall that should be removed.
+     */
     removeWall(row, column, direction){
         this.cells[row][column].removeWall(direction);
         if(direction === "right" && column + 1 < this.cells[row].length){
@@ -37,16 +63,33 @@ class Maze{
         }
     }
 
+    /**
+     * Returns if a wall 
+     * @param {*} row The row index of the cell
+     * @param {*} column The column index of the cell
+     * @param {string} direction left;right;up;down. The wall that should be removed.
+     * @returns {boolean} true if the wall exists; false if the wall does not exist.
+     */
     getWallStatus(row, column, direction){
         return this.cells[row][column].getWallStatus(direction);
     }
 
+    /**
+     * Picks a random cell from the maze and returns it
+     * @returns {Cell} A random cell from the maze
+     */
     getRandomCell(){
         const mazeHeight = this.cells.length;
         const mazeWidth = this.cells[0].length;
         return {randomHeight: Math.floor(Math.random() * mazeHeight) , randomWidth: Math.floor(Math.random() * mazeWidth)}
     }
 
+    /**
+     * Gets the indicies of neighbouring cells 
+     * @param {*} row The row index of the cell
+     * @param {*} column The column index of the cell
+     * @returns {{[]}} An object containing the indicies of neighbouring cells
+     */
     getCellNeighbourIndices(row, column){
         let neighbourIndices = {};
         const mazeHeight = this.cells.length;
@@ -72,9 +115,11 @@ class Maze{
 
     }
     
-    /*
+    /**
     * Calls getCellNeighbourIndices, checks if each neighbour is unvisited and adds the unvisited cell's coordinates to an array
-    * The above array is returned.
+    * @param {*} row The row index of the cell
+    * @param {*} column The column index of the cell
+    * @returns {[]} The indicies of unvisited neighours of the chosen cell
     */
     getUnvisitedNeigbourIndices(row, column){
         const neighbourIndices = this.getCellNeighbourIndices(row, column);
@@ -113,7 +158,12 @@ class Maze{
         }
         return unvisitedNeighbours;
     }
-
+    /**
+     * @returns {string} The string represention of all cells within the maze.
+     *  e.g. |-  =  -|
+     *       | ||=  _|
+     *       |_  =  =|
+     */
     toString(){
         let stringRepresentation = "";
         for(let row = 0; row < this.cells.length; row++){
