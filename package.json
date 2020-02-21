@@ -5,11 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "linter": "semistandard",
+    "linter:fix": "semistandard --fix"
   },
   "author": "jringram",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "semistandard": "^14.2.0"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
   }
 }
