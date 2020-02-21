@@ -17,10 +17,6 @@ Run `node index.js` to generate a 10 by 10 maze. Change the parameters of `const
 * `npm run test` to run [jest](https://jestjs.io/) tests.
 * `npm run linter` to run linter. This project uses [SemiStandard](https://github.com/standard/semistandard) styling.
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning.
