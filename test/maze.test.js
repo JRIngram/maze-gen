@@ -80,22 +80,21 @@ test('Can visit cells', () => {
 
 test('Maze to string representation to be correct on creation', () => {
     const maze = new Maze(3,3);
-    expect(maze.toString()).toBe('|=||=||=|\n|=||=||=|\n|=||=||=|')
+    expect(maze.toString()).toBe('|=|=|=|\n|_|_|_|\n|_|_|_|')
 });
 
 test('Maze to string representation to be correct when removing wall', () => {
     const maze = new Maze(3,3);
     maze.removeWall(0,0,"right");
-    expect(maze.toString()).toBe('|=  =||=|\n|=||=||=|\n|=||=||=|')
+    expect(maze.toString()).toBe('|= =|=|\n|_|_|_|\n|_|_|_|')
 });
 
 test('Maze to string representation to be correct when removing multiple walls', () => {
     const maze = new Maze(3,3);
-    maze.removeWall(0,0,"left");
     maze.removeWall(0,0,"right");
     maze.removeWall(1,1,"up");
     maze.removeWall(1,1,"down");
-    expect(maze.toString()).toBe(' =  -||=|\n|=|| ||=|\n|=||_||=|')
+    expect(maze.toString()).toBe('|= -|=|\n|_| |_|\n|_|_|_|')
 });
 
 test('Can create a visible path through a maze', () => {
@@ -107,16 +106,17 @@ test('Can create a visible path through a maze', () => {
     maze.removeWall(2,2,"up");
     maze.removeWall(1,2,"up");
     maze.removeWall(0,2,"up");
-    expect(maze.toString()).toBe('|=  -|| |\n|=|| || |\n|=||_  _|')
+    expect(maze.toString()).toBe('|= -| |\n|_| | |\n|_|_ _|')
 
 })
 
 test('Can get a random cell', () =>{
     const maze = new Maze(3,4);
     const actual = maze.getRandomCell();
-    expect(actual.randomHeight).toBeLessThan(3);
+    console.log(actual);
+    expect(actual.randomHeight).toBeLessThan(4);
     expect(actual.randomHeight).toBeGreaterThanOrEqual(0);
-    expect(actual.randomWidth).toBeLessThan(4);
+    expect(actual.randomWidth).toBeLessThan(3);
     expect(actual.randomWidth).toBeGreaterThanOrEqual(0);
 })
 

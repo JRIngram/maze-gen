@@ -15,7 +15,22 @@ class Maze{
         for(let i = 0; i < height; i++){
             let row = []
             for(let j = 0; j < width; j++){
-                let cell = new Cell();
+                let cell;
+                //Top left cell
+                if(i === 0 && j === 0){
+                    cell = new Cell(true,true);
+                }
+                //Top but not leftmost cell
+                else if(i === 0 && j !== 0){
+                    cell = new Cell(true,false)
+                }
+                //Leftmost but not top cell
+                else if(i !== 0 && j === 0){
+                    cell = new Cell(false,true)
+                }
+                else{
+                    cell = new Cell(false,false);
+                }
                 row.push(cell);
             }
             this.cells.push(row);

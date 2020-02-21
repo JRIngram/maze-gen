@@ -5,8 +5,24 @@ class Cell
 {
     /**
      * Creates a cell with all 4 walls.
+     * @param {bool} topCell If cell is a top cell within the maze
+     * @param {bool} leftCell If a cell is on the leftmost side of the maze
      */
-    constructor() {
+    constructor(topCell=false, leftCell=false) {
+        if(topCell === true){
+            this.topCell = true;
+        }
+        else{
+            this.topCell = false;
+        }
+        if(leftCell === true){
+            this.leftCell = true;
+        }
+        else{
+            this.leftCell = false;
+        }
+
+
         this.walls = {
             left: true,
             right: true,
@@ -86,20 +102,31 @@ class Cell
     toString(){
         let representation = ""
         //Left
-        if(this.walls.left === true){
+        if(this.walls.left === true && this.leftCell === true){
             representation = "|"
         }
         else{
-            representation = " "
+            representation = ""
         }
 
-        //Up abd Down
-        if(this.walls.down === true && this.walls.up === true){
+        //Up and Down
+        //If the cell is a top cell and both up and down wall exists
+        if(this.walls.down === true && this.walls.up === true && this.topCell){
             representation += "="
         }
-        else if(this.walls.down === false && this.walls.up === true){
+        //If the cell is a top cell and only the up wall exists
+        else if(this.walls.down === false && this.walls.up === true && this.topCell){
             representation += "-"
         }
+        //If the cell is not a top cell and both up and down exists
+        else if(this.walls.down === true && this.walls.up === true && this.topCell === false){
+            representation += "_"
+        }
+        //If the cell is not a top cell and only the up wall exists
+        else if(this.walls.down === false && this.walls.up === true && this.topCell === false){
+            representation += " "
+        }
+        //If the cell is not a top cell and only the down wall exists
         else if(this.walls.down === true && this.walls.up === false){
             representation += "_"
         }
