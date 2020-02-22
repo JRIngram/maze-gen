@@ -130,6 +130,16 @@ class Cell {
     }
     return representation;
   }
+
+  toJSON () {
+    return {
+      left: this.walls.left,
+      right: this.walls.right,
+      up: this.walls.up,
+      down: this.walls.down,
+      visited: this.visited
+    };
+  }
 }
 
 module.exports = Cell;
