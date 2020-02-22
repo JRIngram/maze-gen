@@ -183,6 +183,25 @@ class Maze {
     }
     return stringRepresentation;
   }
+
+  /**
+   * Returns a JSON representation of the maze.
+   * The JSON object contains a rows array, which contains an array for each row.
+   * Each row array contains the JSON representations of each cell within the Maze for that row.
+   */
+  toJSON () {
+    const JSONRepresentation = {
+      rows: []
+    };
+    for (let row = 0; row < this.cells.length; row++) {
+      const rowArray = [];
+      for (let cell = 0; cell < this.cells[row].length; cell++) {
+        rowArray.push(this.cells[row][cell].toJSON());
+      }
+      JSONRepresentation.rows.push(rowArray);
+    }
+    return JSONRepresentation;
+  }
 }
 
 module.exports = Maze;
