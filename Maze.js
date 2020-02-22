@@ -185,8 +185,8 @@ class Maze {
   }
 
   /**
-   * Returns a JSON representation of the maze. 
-   * The JSON object contains a rows array, which contains an array for each row. 
+   * Returns a JSON representation of the maze.
+   * The JSON object contains a rows array, which contains an array for each row.
    * Each row array contains the JSON representations of each cell within the Maze for that row.
    */
   toJSON () {
