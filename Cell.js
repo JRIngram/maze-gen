@@ -135,6 +135,9 @@ class Cell {
     return representation;
   }
 
+  /**
+   * Returns the cell as a JSON object
+   */
   toJSON () {
     return {
       left: this.walls.left,
