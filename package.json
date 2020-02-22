@@ -1,7 +1,7 @@
 {
   "name": "mazegen",
   "version": "1.0.0",
-  "description": "Maze Generation Algorithms",
+  "description": "A package to generate mazes using the depth first algorithm",
   "main": "index.js",
   "scripts": {
     "test": "jest",
