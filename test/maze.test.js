@@ -214,3 +214,80 @@ test('Unvisited cell indicies length shortens as more neighbours are visited', (
   nextCell = unvisitedNeighboursIndicies.pop();
   expect(nextCell).toBeUndefined();
 });
+
+// JSON representation
+test('Maze to JSON representation to be correct on creation', () => {
+  const maze = new Maze(3, 3);
+  const testJSON = {
+    rows: [
+      [
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ],
+      [
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ],
+      [
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ]
+    ]
+  };
+  expect(maze.toJSON()).toEqual(testJSON);
+});
+
+test('Maze to JSON representation to be correct when removing wall', () => {
+  const maze = new Maze(3, 3);
+  maze.removeWall(0, 0, 'right');
+  const testJSON = {
+    rows: [
+      [
+        { left: true, right: false, up: true, down: true, visited: false },
+        { left: false, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ],
+      [
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ],
+      [
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ]
+    ]
+  };
+  expect(maze.toJSON()).toEqual(testJSON);
+});
+
+test('Maze to JSON representation to be correct when removing multiple walls', () => {
+  const maze = new Maze(3, 3);
+  maze.removeWall(0, 0, 'right');
+  maze.removeWall(1, 1, 'up');
+  maze.removeWall(1, 1, 'down');
+  const testJSON = {
+    rows: [
+      [
+        { left: true, right: false, up: true, down: true, visited: false },
+        { left: false, right: true, up: true, down: false, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ],
+      [
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: false, down: false, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ],
+      [
+        { left: true, right: true, up: true, down: true, visited: false },
+        { left: true, right: true, up: false, down: true, visited: false },
+        { left: true, right: true, up: true, down: true, visited: false }
+      ]
+    ]
+  };
+  expect(maze.toJSON()).toEqual(testJSON);
+});

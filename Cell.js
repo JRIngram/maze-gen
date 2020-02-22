@@ -42,6 +42,8 @@ class Cell {
       this.walls.up = false;
     } else if (direction === 'down') {
       this.walls.down = false;
+    } else {
+      throw new Error('Invalid direction');
     }
   }
 
@@ -59,6 +61,8 @@ class Cell {
       return this.walls.up;
     } else if (direction === 'down') {
       return this.walls.down;
+    } else {
+      throw new Error('Invalid direction');
     }
   }
 
@@ -80,14 +84,16 @@ class Cell {
 
   /**
      * @return {string} a string representation of a cell:
-     * | show the left & right walls
+     * | show the left & right walls (the left wall only shows if the cell is a leftCell)
      * _ shows if only the down wall exists
      * - shows if only the up wall exists
-     * = show if both the up and down walls exist
+     * = show if both the up and down walls exist (this only applies if the cell is a top most cell)
      * e.g.:
-     *  * |=| would show if all walls exist
-     *  * |-| would show if only the left, right and up wall exists
-     *  * |_  would show if only the left and down wall exist.
+     *  * |=| would show if all walls exist (if the cell is a top left cell).
+     *  *  _| would show if all walls exist and if the cell is not a top left cell.
+     *  * |_| would show if all walls exist and the cell is not a left cell.
+     *  * |_  would show if only the left and down wall exist and the wall if a left wall.
+     *  *  _  would show if the wall is not a top left wall and the right wall does not exist.
      */
   toString () {
     let representation = '';
@@ -127,6 +133,19 @@ class Cell {
       representation += ' ';
     }
     return representation;
+  }
+
+  /**
+   * Returns the cell as a JSON object
+   */
+  toJSON () {
+    return {
+      left: this.walls.left,
+      right: this.walls.right,
+      up: this.walls.up,
+      down: this.walls.down,
+      visited: this.visited
+    };
   }
 }
 
