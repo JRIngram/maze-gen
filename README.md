@@ -10,7 +10,10 @@ Ensure `Node.js` is installed on your machine.
 
 Run `npm i`
 
-Run `node index.js` to generate a 10 by 10 maze. Change the parameters of `const df = new DepthFirst(10, 10);` to generated mazes of different sizes, e.g. `const df = new DepthFirst(10, 15);` to generate a 10 by 15 size maze.
+Run `node index.js` to generate a 5 by 5 maze. Change the parameters of `const df = new DepthFirst(5, 5);` to generated mazes of different sizes, e.g. `const df = new DepthFirst(10, 15);` to generate a 10 by 15 size maze.
+
+Currently the maze is then output in both string and JSON form
+
 
 ## Running the tests
 
