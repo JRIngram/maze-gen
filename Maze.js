@@ -183,6 +183,20 @@ class Maze {
     }
     return stringRepresentation;
   }
+
+  toJSON () {
+    const JSONRepresentation = {
+      rows: []
+    };
+    for (let row = 0; row < this.cells.length; row++) {
+      const rowArray = [];
+      for (let cell = 0; cell < this.cells[row].length; cell++) {
+        rowArray.push(this.cells[row][cell].toJSON());
+      }
+      JSONRepresentation.rows.push(rowArray);
+    }
+    return JSONRepresentation;
+  }
 }
 
 module.exports = Maze;

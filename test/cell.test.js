@@ -190,3 +190,16 @@ test('JSON representation stays correct if walls are removed', () => {
   testJSON.down = false;
   expect(cell.toJSON()).toEqual(testJSON);
 });
+
+test('JSON representation displays correctly if cell marked as visited', () => {
+  const cell = new Cell();
+  const testJSON = {
+    left: true,
+    right: true,
+    up: true,
+    down: true,
+    visited: true
+  };
+  cell.setCellVisited(true);
+  expect(cell.toJSON()).toEqual(testJSON);
+});
