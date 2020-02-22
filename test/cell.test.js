@@ -38,16 +38,23 @@ test('Remove cell function sets cell wall to false', () => {
   expect(cell.getWallStatus('down')).toBe(false);
 });
 
-test('No wall removed if invalid parameter entered', () => {
+test('No wall removed and error to be throw if invalid parameter entered on removeWall', () => {
   const cell = new Cell();
 
-  // Left wall
-  expect(cell.getWallStatus('test')).toBe(undefined);
-  cell.removeWall('test');
+  expect(() => {
+    cell.removeWall('test');
+  }).toThrowError('Invalid direction');
   expect(cell.getWallStatus('left')).toBe(true);
   expect(cell.getWallStatus('right')).toBe(true);
   expect(cell.getWallStatus('up')).toBe(true);
   expect(cell.getWallStatus('down')).toBe(true);
+});
+
+test('Error is thrown if invalid wall status is checked', () => {
+  const cell = new Cell();
+  expect(() => {
+    cell.getWallStatus('test');
+  }).toThrowError('Invalid direction');
 });
 
 // Visit and unvisiting

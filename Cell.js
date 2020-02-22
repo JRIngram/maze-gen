@@ -42,6 +42,8 @@ class Cell {
       this.walls.up = false;
     } else if (direction === 'down') {
       this.walls.down = false;
+    } else {
+      throw new Error('Invalid direction');
     }
   }
 
@@ -59,6 +61,8 @@ class Cell {
       return this.walls.up;
     } else if (direction === 'down') {
       return this.walls.down;
+    } else {
+      throw new Error('Invalid direction');
     }
   }
 
