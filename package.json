@@ -10,7 +10,7 @@
     "linter:fix": "semistandard --fix"
   },
   "author": "jringram",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "jest": "^25.1.0",
     "semistandard": "^14.2.0"
