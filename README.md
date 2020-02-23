@@ -8,12 +8,67 @@ An npm package used to generate mazes.
 
 Ensure `Node.js` is installed on your machine.
 
-Run `npm i`
+Run `npm i mazegen`
 
-Run `node index.js` to generate a 5 by 5 maze. Change the parameters of `const df = new DepthFirst(5, 5);` to generated mazes of different sizes, e.g. `const df = new DepthFirst(10, 15);` to generate a 10 by 15 size maze.
+### Usage
 
-Currently the maze is then output in both string and JSON form
+Add the following to your code (where width and height should be replaced by ints corresponding to how wide and tall you want your maze):
 
+```
+const mazegen = require('mazegen');
+// Generate a maze
+const generatedMaze = mazegen(width,height);
+```
+
+To get the string representation of the generated maze write:
+```
+let stringRepresentation = generatedMaze.toString();
+console.log(stringRepresenation);
+```
+
+Example output:
+```
+|- -|- - -|- = = = -|
+| |_ _| | |_ _  | | |
+|_|    _|_ _ _ _| | |
+|  _|_|  _  |  _ _| |
+|_ _  |_|  _| |  _ _|
+|   | |  _|   |_  | |
+| | |_ _|_  |_ _| | |
+| |   |     |   | | |
+| | |_| | |_| | | | |
+|_|_ _ _|_ _ _|_ _ _|
+```
+
+To get the JSON representation of the generated maze write:
+
+```
+let JSONRepresentation = generatedMaze.toJSON();
+```
+
+The outputed JSON object has the following structure (example is a 3 by 3 cell):
+```
+    {
+        rows: [
+            [[Object],[Object],[Object]],
+            [[Object],[Object],[Object]],
+            [[Object],[Object],[Object]],
+        ]
+    };
+```
+
+Where each object is a Cell object, which as the following JSON structure:
+```
+    {  
+        left: bool,
+        right: bool, 
+        up: bool, 
+        down: bool, 
+        visited: bool
+    }
+```
+
+The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that direction. The `visited` field corresponds to if the cell has been visited. This should be marked as `true` for all completed mazes.
 
 ## Running the tests
 
