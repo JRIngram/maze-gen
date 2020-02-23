@@ -4,7 +4,6 @@
 ![NPM](https://img.shields.io/npm/l/maze-generation)
 ![CircleCI](https://img.shields.io/circleci/build/github/JRIngram/maze-gen)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/maze-generation)
-![npm](https://img.shields.io/npm/v/maze-generation)
 
 An npm package used to generate mazes. 
 
