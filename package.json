@@ -1,6 +1,6 @@
 {
   "name": "maze-generation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A package to generate mazes using the depth first / recursive backtracker algorithm.",
   "homepage":"https://github.com/JRIngram/maze-gen",
   "bugs":"https://github.com/JRIngram/maze-gen/issues",
