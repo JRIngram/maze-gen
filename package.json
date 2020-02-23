@@ -2,6 +2,13 @@
   "name": "mazegen",
   "version": "1.0.0",
   "description": "A package to generate mazes using the depth first algorithm",
+  "homepage":"https://github.com/JRIngram/maze-gen",
+  "bugs":"https://github.com/JRIngram/maze-gen/issues",
+  "repository": {
+    "type":"git",
+    "url": "https://github.com/JRIngram/maze-gen.git"
+  },
+  "keywords":["maze", "generator", "maze-gen", "maze-gen", "gen", "depth-first", "procedural"],
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -9,7 +16,10 @@
     "linter": "semistandard",
     "linter:fix": "semistandard --fix"
   },
-  "author": "jringram",
+  "author": {
+     "name": "Jamie Ingram",
+     "url": "https://github.com/JRIngram"
+  },
   "license": "MIT",
   "devDependencies": {
     "jest": "^25.1.0",
