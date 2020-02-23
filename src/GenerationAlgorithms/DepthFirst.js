@@ -11,11 +11,6 @@ class DepthFirst {
     const randomCell = this.maze.getRandomCell();
     let currentCell = { x: randomCell.randomWidth, y: randomCell.randomHeight };
     this.generatePath(currentCell);
-    while (this.cellStack.length > 0) {
-      currentCell = this.cellStack.pop();
-      this.generatePath(currentCell);
-    }
-
     // While currentCell has unvisited neighbour:
     //  Select random unvisited neighbour
     //  Remove walls between the two
@@ -23,7 +18,10 @@ class DepthFirst {
     //  Mark currentCell visited push to stack
     //  IF currentCell has no unvisited neighbour:
     //      currentCell = stack.pop()
-    console.log('Generation complete!');
+    while (this.cellStack.length > 0) {
+      currentCell = this.cellStack.pop();
+      this.generatePath(currentCell);
+    }
     return this.maze;
   }
 
