@@ -1,4 +1,4 @@
-# Maze-Gen
+# maze-geneneration
 
 ![npm](https://img.shields.io/npm/v/maze-generation)
 ![NPM](https://img.shields.io/npm/l/maze-generation)
@@ -11,21 +11,21 @@ An npm package used to generate mazes.
 
 Ensure `Node.js` is installed on your machine.
 
-Run `npm i mazegen`
+Run `npm i maze-generation`
 
 ### Usage
 
 Add the following to your code (where width and height should be replaced by ints corresponding to how wide and tall you want your maze):
 
 ```
-const mazegen = require('maze-generation');
+const mazegeneration = require('maze-generation');
 // Generate a maze
-const generatedMaze = mazegen(width,height);
+const generatedMaze = mazegeneration(width,height);
 ```
 
 To get the string representation of the generated maze write:
 ```
-let stringRepresentation = generatedMaze.toString();
+const stringRepresentation = generatedMaze.toString();
 console.log(stringRepresenation);
 ```
 
