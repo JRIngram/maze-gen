@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-
 ## [1.0.2] - 2020-02-24
 ### Fixed
 * Remove duplicate badge in README
@@ -28,11 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Ability to get string representation of the maze.
 * Ability to get JSON object representation of the maze.
 
-
 [1.0.0]: https://github.com/jringram/maze-gen/releases/tag/v1.0.0
-<<<<<<< HEAD
-[1.0.1]: https://github.com/jringram/maze-gen/releases/tag/v1.0.1
-=======
 [1.0.1]: https://github.com/jringram/maze-gen/releases/tag/v1.0.1
 [1.0.2]: https://github.com/jringram/maze-gen/releases/tag/v1.0.2
->>>>>>> release-1.0.2
