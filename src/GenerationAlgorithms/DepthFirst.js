@@ -1,9 +1,21 @@
+const Prando = require('prando');
 const Maze = require('../Maze');
 
 class DepthFirst {
-  constructor (width, height) {
+  constructor (width, height, seed = (Math.floor(Math.random() * 10000))) {
+    this.rng = new Prando(seed);
     this.maze = new Maze(width, height);
+    this.width = width;
+    this.height = height;
     this.cellStack = [];
+  }
+
+  /**
+    * Picks a random cell from the maze and returns it
+    * @returns {Cell} A random cell from the maze
+    */
+  getRandomCell () {
+    return { randomHeight: this.rng.nextInt(0, this.height - 1), randomWidth: this.rng.nextInt(0, this.width - 1) };
   }
 
   /**
@@ -19,7 +31,7 @@ class DepthFirst {
    */
   generateMaze () {
     // Set currentCell = random cell
-    const randomCell = this.maze.getRandomCell();
+    const randomCell = this.getRandomCell();
     // Select random cell
     let currentCell = { x: randomCell.randomWidth, y: randomCell.randomHeight };
     this.generatePath(currentCell);
@@ -50,7 +62,7 @@ class DepthFirst {
       // Push current cell to stack to allow for backtracking
       this.cellStack.push(currentCell);
       // Randomly select a valid direction and remove the wall
-      const nextDirection = validDirections[Math.floor(Math.random() * validDirections.length)];
+      const nextDirection = validDirections[this.rng.nextInt(0, validDirections.length - 1)];
       this.maze.removeWall(currentCell.y, currentCell.x, nextDirection);
 
       // Move to the cell in the direction of the removed wall

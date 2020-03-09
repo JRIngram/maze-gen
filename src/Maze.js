@@ -84,16 +84,6 @@ class Maze {
   }
 
   /**
-     * Picks a random cell from the maze and returns it
-     * @returns {Cell} A random cell from the maze
-     */
-  getRandomCell () {
-    const mazeHeight = this.cells.length;
-    const mazeWidth = this.cells[0].length;
-    return { randomHeight: Math.floor(Math.random() * mazeHeight), randomWidth: Math.floor(Math.random() * mazeWidth) };
-  }
-
-  /**
      * Gets the indicies of neighbouring cells
      * @param {*} row The row index of the cell
      * @param {*} column The column index of the cell
