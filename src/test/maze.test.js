@@ -109,15 +109,6 @@ test('Can create a visible path through a maze', () => {
   expect(maze.toString()).toBe('|= -| |\n|_| | |\n|_|_ _|');
 });
 
-test('Can get a random cell', () => {
-  const maze = new Maze(3, 4);
-  const actual = maze.getRandomCell();
-  expect(actual.randomHeight).toBeLessThan(4);
-  expect(actual.randomHeight).toBeGreaterThanOrEqual(0);
-  expect(actual.randomWidth).toBeLessThan(3);
-  expect(actual.randomWidth).toBeGreaterThanOrEqual(0);
-});
-
 // Cell neighbours
 test('Can get all neighbours indicies if in centre', () => {
   const maze = new Maze(3, 3);

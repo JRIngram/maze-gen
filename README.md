@@ -15,12 +15,12 @@ Run `npm i maze-generation`
 
 ### Usage
 
-Add the following to your code (where width and height should be replaced by ints corresponding to how wide and tall you want your maze):
+Add the following to your code (where width and height should be replaced by ints corresponding to how wide and tall you want your maze; and seed should be replaced by an int):
 
 ```
 const mazegeneration = require('maze-generation');
 // Generate a maze
-const generatedMaze = mazegeneration(width,height);
+const generatedMaze = mazegeneration(width,height,seed);
 ```
 
 To get the string representation of the generated maze write:
@@ -31,16 +31,17 @@ console.log(stringRepresenation);
 
 Example output:
 ```
-|- -|- - -|- = = = -|
-| |_ _| | |_ _  | | |
-|_|    _|_ _ _ _| | |
-|  _|_|  _  |  _ _| |
-|_ _  |_|  _| |  _ _|
-|   | |  _|   |_  | |
-| | |_ _|_  |_ _| | |
-| |   |     |   | | |
-| | |_| | |_| | | | |
-|_|_ _ _|_ _ _|_ _ _|
+|- = = =|- = - -|- -|
+|  _ _ _ _|  _| | | |
+|_  |  _  |_  |_ _| |
+|  _| | |_  | |_ _  |
+|_  | |  _ _|_ _  | |
+| | | | |  _  |  _| |
+| | | | |_  |_| |_ _|
+| |_ _|  _ _|  _|  _|
+|  _ _| |  _ _|  _| |
+|_ _ _ _|_ _ _ _ _ _|
+
 ```
 
 To get the JSON representation of the generated maze write:
@@ -86,4 +87,3 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Acknowledgments
 
 * README format based off of [PurpleBooth's README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-

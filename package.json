@@ -2,13 +2,26 @@
   "name": "maze-generation",
   "version": "1.0.2",
   "description": "A package to generate mazes using the depth first / recursive backtracker algorithm.",
-  "homepage":"https://github.com/JRIngram/maze-gen",
-  "bugs":"https://github.com/JRIngram/maze-gen/issues",
+  "homepage": "https://github.com/JRIngram/maze-gen",
+  "bugs": "https://github.com/JRIngram/maze-gen/issues",
   "repository": {
-    "type":"git",
+    "type": "git",
     "url": "https://github.com/JRIngram/maze-gen.git"
   },
-  "keywords":["maze", "generator", "maze-gen", "maze-gen", "gen", "depth-first", "procedural", "recursive", "backtracker", "depth", "first", "depth-first"],
+  "keywords": [
+    "maze",
+    "generator",
+    "maze-gen",
+    "maze-gen",
+    "gen",
+    "depth-first",
+    "procedural",
+    "recursive",
+    "backtracker",
+    "depth",
+    "first",
+    "depth-first"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -17,8 +30,8 @@
     "linter:fix": "semistandard --fix"
   },
   "author": {
-     "name": "Jamie Ingram",
-     "url": "https://github.com/JRIngram"
+    "name": "Jamie Ingram",
+    "url": "https://github.com/JRIngram"
   },
   "license": "MIT",
   "devDependencies": {
@@ -29,5 +42,8 @@
     "env": [
       "jest"
     ]
+  },
+  "dependencies": {
+    "prando": "^5.1.2"
   }
 }
