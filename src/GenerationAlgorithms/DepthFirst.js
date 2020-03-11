@@ -12,7 +12,7 @@ class DepthFirst {
 
   /**
     * Picks a random cell from the maze and returns it
-    * @returns {Cell} A random cell from the maze
+    * @returns {{int, int}} Coordinates of a random cell within the maze
     */
   getRandomCell () {
     return { randomHeight: this.rng.nextInt(0, this.height - 1), randomWidth: this.rng.nextInt(0, this.width - 1) };
