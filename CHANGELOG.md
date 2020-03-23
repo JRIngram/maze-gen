@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 * Ability to use a seeded random number generator to generate a maze
 
+### Security 
+* Bump acorn from 6.4.0 to 6.4.1 
+
 ## [1.0.2] - 2020-02-24
 ### Fixed
 * Remove duplicate badge in README
