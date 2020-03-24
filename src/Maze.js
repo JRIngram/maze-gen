@@ -160,9 +160,23 @@ class Maze {
      */
   toString () {
     let stringRepresentation = '';
+    for (let topRow = 0; topRow < this.cells[0].length; topRow++) {
+      // Adds a top wall to the top cells
+      if (this.cells[0][topRow].walls.up === true) {
+        stringRepresentation += ' _';
+      } else {
+        stringRepresentation += '  ';
+      }
+    }
+    stringRepresentation += '\n';
+
     for (let row = 0; row < this.cells.length; row++) {
       let rowString = '';
       for (let cell = 0; cell < this.cells[row].length; cell++) {
+        // Adds a wall to the left most cell
+        if (cell === 0 && this.cells[row][cell].walls.left === true) {
+          stringRepresentation += '|';
+        }
         rowString += this.cells[row][cell].toString();
       }
       if (row + 1 < this.cells.length) {

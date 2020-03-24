@@ -4,21 +4,8 @@
 class Cell {
   /**
      * Creates a cell with all 4 walls.
-     * @param {bool} topCell If cell is a top cell within the maze
-     * @param {bool} leftCell If a cell is on the leftmost side of the maze
      */
-  constructor (topCell = false, leftCell = false) {
-    if (topCell === true) {
-      this.topCell = true;
-    } else {
-      this.topCell = false;
-    }
-    if (leftCell === true) {
-      this.leftCell = true;
-    } else {
-      this.leftCell = false;
-    }
-
+  constructor () {
     this.walls = {
       left: true,
       right: true,
@@ -84,42 +71,18 @@ class Cell {
 
   /**
      * @return {string} a string representation of a cell:
-     * | show the left & right walls (the left wall only shows if the cell is a leftCell)
+     * | shows if the right wall exists
      * _ shows if only the down wall exists
-     * - shows if only the up wall exists
-     * = show if both the up and down walls exist (this only applies if the cell is a top most cell)
      * e.g.:
-     *  * |=| would show if all walls exist (if the cell is a top left cell).
-     *  *  _| would show if all walls exist and if the cell is not a top left cell.
-     *  * |_| would show if all walls exist and the cell is not a left cell.
-     *  * |_  would show if only the left and down wall exist and the wall if a left wall.
-     *  *  _  would show if the wall is not a top left wall and the right wall does not exist.
+     *  * _| would show if all walls exist (if the cell is a top left cell).
+     *  * _  would show if the right wall does not exist
+     *  *  | would show if the down wall does not exist
      */
   toString () {
     let representation = '';
 
-    // Left
-    if (this.walls.left === true && this.leftCell === true) {
-      representation = '|';
-    } else {
-      representation = '';
-    }
-
     // Up and Down
-
-    if (this.walls.down === true && this.walls.up === true && this.topCell) {
-      // If the cell is a top cell and both up and down wall exists
-      representation += '=';
-    } else if (this.walls.down === false && this.walls.up === true && this.topCell) {
-      // If the cell is a top cell and only the up wall exists
-      representation += '-';
-    } else if (this.walls.down === true && this.walls.up === true && this.topCell === false) {
-      // If the cell is not a top cell and both up and down exists
-      representation += '_';
-    } else if (this.walls.down === false && this.walls.up === true && this.topCell === false) {
-      // If the cell is not a top cell and only the up wall exists
-      representation += ' ';
-    } else if (this.walls.down === true && this.walls.up === false) {
+    if (this.walls.down === true) {
       // If the cell is not a top cell and only the down wall exists
       representation += '_';
     } else {

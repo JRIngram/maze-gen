@@ -80,13 +80,13 @@ test('Can visit cells', () => {
 
 test('Maze to string representation to be correct on creation', () => {
   const maze = new Maze(3, 3);
-  expect(maze.toString()).toBe('|=|=|=|\n|_|_|_|\n|_|_|_|');
+  expect(maze.toString()).toBe(' _ _ _\n|_|_|_|\n|_|_|_|\n|_|_|_|');
 });
 
 test('Maze to string representation to be correct when removing wall', () => {
   const maze = new Maze(3, 3);
   maze.removeWall(0, 0, 'right');
-  expect(maze.toString()).toBe('|= =|=|\n|_|_|_|\n|_|_|_|');
+  expect(maze.toString()).toBe(' _ _ _\n|_ _|_|\n|_|_|_|\n|_|_|_|');
 });
 
 test('Maze to string representation to be correct when removing multiple walls', () => {
@@ -94,19 +94,13 @@ test('Maze to string representation to be correct when removing multiple walls',
   maze.removeWall(0, 0, 'right');
   maze.removeWall(1, 1, 'up');
   maze.removeWall(1, 1, 'down');
-  expect(maze.toString()).toBe('|= -|=|\n|_| |_|\n|_|_|_|');
+  expect(maze.toString()).toBe(' _ _ _\n|_  |_|\n|_| |_|\n|_|_|_|');
 });
-
-test('Can create a visible path through a maze', () => {
+test('Maze to string represenation is correct if top walls are removed', () => {
   const maze = new Maze(3, 3);
-  maze.removeWall(0, 0, 'right');
-  maze.removeWall(0, 1, 'down');
-  maze.removeWall(1, 1, 'down');
-  maze.removeWall(2, 1, 'right');
-  maze.removeWall(2, 2, 'up');
-  maze.removeWall(1, 2, 'up');
-  maze.removeWall(0, 2, 'up');
-  expect(maze.toString()).toBe('|= -| |\n|_| | |\n|_|_ _|');
+  maze.removeWall(0, 0, 'up');
+  maze.removeWall(2, 2, 'down');
+  expect(maze.toString()).toBe('   _ _\n|_|_|_|\n|_|_|_|\n|_|_| |');
 });
 
 // Cell neighbours
