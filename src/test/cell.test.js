@@ -78,7 +78,7 @@ test('Cell can be marked as unvisited', () => {
 });
 
 // String representations
-test('String representation displays correctly on construction when cell is not an edge cell', () => {
+test('String representation displays correctly on construction', () => {
   const cell = new Cell();
   expect(cell.toString()).toBe('_|');
 });
@@ -107,40 +107,11 @@ test('String representation correct when removing right wall', () => {
   expect(cell.toString()).toBe('_ ');
 });
 
-test('String representation correct when removing up and down wall and cell is a non-edge cell', () => {
+test('String representation is correct when removiing all walls', () => {
   const cell = new Cell();
-  cell.removeWall('up');
+  cell.removeWall('right');
   cell.removeWall('down');
-  expect(cell.toString()).toBe(' |');
-});
-
-test('String representation correct when removing up and down wall and cell is a top cell', () => {
-  const cell = new Cell(true, false);
-  cell.removeWall('up');
-  cell.removeWall('down');
-  expect(cell.toString()).toBe(' |');
-});
-
-test('String representation correct when removing up and down wall and cell is a top left cell', () => {
-  const cell = new Cell(true, true);
-  cell.removeWall('up');
-  cell.removeWall('down');
-  expect(cell.toString()).toBe('| |');
-});
-
-test('String representation correct on construction if cell is a top non-left cell', () => {
-  const cell = new Cell(true, false);
-  expect(cell.toString()).toBe('=|');
-});
-
-test('String representation correct on construction if cell is a top left cell', () => {
-  const cell = new Cell(true, true);
-  expect(cell.toString()).toBe('|=|');
-});
-
-test('String representation correct on construction if cell is a non-top left cell', () => {
-  const cell = new Cell(false, true);
-  expect(cell.toString()).toBe('|_|');
+  expect(cell.toString()).toBe('  ');
 });
 
 // JSON representation tests

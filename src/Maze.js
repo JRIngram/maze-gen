@@ -12,23 +12,11 @@ class Maze {
      */
   constructor (width, height) {
     this.cells = [];
+    // Create an [i, j] 2D array of cells
     for (let i = 0; i < height; i++) {
       const row = [];
       for (let j = 0; j < width; j++) {
-        let cell;
-        if (i === 0 && j === 0) {
-          // Top left cell
-          cell = new Cell(true, true);
-        } else if (i === 0 && j !== 0) {
-          // Top but not leftmost cell
-          cell = new Cell(true, false);
-        } else if (i !== 0 && j === 0) {
-          // Leftmost but not top cell
-          cell = new Cell(false, true);
-        } else {
-          cell = new Cell(false, false);
-        }
-        row.push(cell);
+        row.push(new Cell());
       }
       this.cells.push(row);
     }
@@ -160,16 +148,23 @@ class Maze {
      */
   toString () {
     let stringRepresentation = '';
+    for (let topRow = 0; topRow < this.cells[0].length; topRow++) {
+      // Adds a top wall to the top cells
+      stringRepresentation += this.cells[0][topRow].walls.up ? ' _' : '  ';
+    }
+    stringRepresentation += '\n';
+
     for (let row = 0; row < this.cells.length; row++) {
       let rowString = '';
       for (let cell = 0; cell < this.cells[row].length; cell++) {
+        // Adds a wall to the left most cell
+        if (cell === 0 && this.cells[row][cell].walls.left) {
+          stringRepresentation += '|';
+        }
         rowString += this.cells[row][cell].toString();
       }
-      if (row + 1 < this.cells.length) {
-        stringRepresentation += rowString + '\n';
-      } else {
-        stringRepresentation += rowString;
-      }
+      // Add a new line if the last cell of the row
+      stringRepresentation += row + 1 < this.cells.length ? rowString + '\n' : rowString;
     }
     return stringRepresentation;
   }
