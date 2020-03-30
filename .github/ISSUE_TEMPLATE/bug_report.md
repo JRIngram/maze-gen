@@ -16,8 +16,9 @@ assignees: JRIngram
     Remember the more information, the more the community can help.
  -->
 
-## To Reproduce
+## Steps To Reproduce The Bug
 <!-- 
+e.g. 
 Steps to reproduce the behavior:
     1. Go to login page
     2. Click on forgot password

@@ -24,13 +24,13 @@ assignees: JRIngram
     So that <receive benefit>
 -->
 
-## If this request is related to a problem describe the problem
+## If this request is related to a problem, describe the problem
 <!-- 
     A clear and concise description of what the problem is.
     I'm frustrated that / when [...] 
 -->
 
-## Alternate fixes to the problem
+## Alternate solutions to the problem
 <!-- 
     A clear and concise description of any alternative solutions that would have the same effect.
 
