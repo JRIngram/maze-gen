@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 * Changes string representation of the maze
+* Bump jest from 25.1.0 to 25.2.4
 
 ### Security 
 * Bump acorn from 6.4.0 to 6.4.1 
