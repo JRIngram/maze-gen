@@ -72,7 +72,7 @@ class Cell {
   /**
      * @return {string} a string representation of a cell:
      * | shows if the right wall exists
-     * _ shows if only the down wall exists
+     * _ shows if the down wall exists
      * e.g.:
      *  * _| would show if all walls exist (if the cell is a top left cell).
      *  * _  would show if the right wall does not exist
@@ -80,21 +80,8 @@ class Cell {
      */
   toString () {
     let representation = '';
-
-    // Up and Down
-    if (this.walls.down === true) {
-      // If the cell is not a top cell and only the down wall exists
-      representation += '_';
-    } else {
-      representation += ' ';
-    }
-
-    // Right
-    if (this.walls.right === true) {
-      representation += '|';
-    } else {
-      representation += ' ';
-    }
+    representation += this.walls.down ? '_' : ' ';
+    representation += this.walls.right ? '|' : ' ';
     return representation;
   }
 
