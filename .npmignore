@@ -1,0 +1,6 @@
+.circleci/
+.github/
+coverage/
+node_modules/
+.gitignore
+src/test/
