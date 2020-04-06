@@ -31,19 +31,22 @@ class Generator {
   }
 
   generateMaze () {
-    switch (this.algorithm) {
-      case 'DEPTHFIRST':
-        this.depthFirst();
-        break;
-      case 'HUNTANDKILL':
-        this.huntAndKill();
-        break;
+    if (this.algorithm === 'DEPTHFIRST') {
+      return this.depthFirst();
+    }
+    if (this.algorithm === 'HUNTANDKILL') {
+      return this.huntAndKill();
     }
   }
 
   depthFirst () {
     const df = new DepthFirst(this.width, this.height, this.seed);
     return df.generateMaze();
+  }
+
+  huntAndKill () {
+    const hunt = new HuntAndKill(this.width, this.weight, this.seed);
+    return hunt.generateMaze();
   }
 }
 

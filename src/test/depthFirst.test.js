@@ -1,11 +1,11 @@
-const getType = require('jest-get-type');
 const DepthFirst = require('../GenerationAlgorithms/DepthFirst');
 /* eslint-env jest */
 
 describe('DepthFirst alogorithm', () => {
-  it('Returns an object', () => {
+  it('Returns a maze', () => {
     const df = new DepthFirst(3, 3);
-    expect(getType(df.generateMaze())).toBe('object');
+    const maze = df.generateMaze();
+    expect(maze.getCellVisited(0, 0)).toBe(true);
   });
 
   it('Returns the same maze structure when given the same seed', () => {

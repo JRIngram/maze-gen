@@ -1,5 +1,4 @@
 const Generator = require('../GenerationAlgorithms/Generator');
-const DepthFirst = require('../GenerationAlgorithms/DepthFirst');
 
 /* eslint-env jest */
 describe('Calls the correct algorithms', () => {
@@ -25,6 +24,23 @@ describe('Calls the correct algorithms', () => {
     gen.generateMaze();
     expect(spy).toHaveBeenCalled();
     spy.mockReset();
+  });
+});
+
+describe('Returns mazes', () => {
+  it('Should return a maze when DEPTHFIRST is chosen', () => {
+    const gen = new Generator(10, 10, 'DepthFirst');
+    expect(gen.generateMaze().getCellVisited(0, 0)).toBe(true);
+  });
+
+  it('Should return a maze when HUNTANDKILL is chosen', () => {
+    const gen = new Generator(10, 10, 'HuntAndKill');
+    expect(gen.generateMaze().getCellVisited(0, 0)).toBe(true);
+  });
+
+  it('Should return a maze when an invalid algorithm is chosen', () => {
+    const gen = new Generator(10, 10, 'InvalidAlgorithm');
+    expect(gen.generateMaze().getCellVisited(0, 0)).toBe(true);
   });
 });
 
