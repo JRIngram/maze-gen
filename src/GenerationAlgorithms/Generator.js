@@ -14,14 +14,6 @@ class Generator {
     }
   }
 
-  /**
-    * Picks a random cell from the maze and returns it
-    * @returns {{int, int}} Coordinates of a random cell within the maze
-  */
-  getRandomCell () {
-    return { randomHeight: this.rng.nextInt(0, this.height - 1), randomWidth: this.rng.nextInt(0, this.width - 1) };
-  }
-
   generateMaze (algorithm = 'DEPTHFIRST') {
     if (!this.isValidAlgorithm) {
       throw new Error('Invalid Maze Generation Algorithm');
@@ -40,7 +32,7 @@ class Generator {
     const cellStack = [];
 
     // Set currentCell = random cell
-    const randomCell = this.getRandomCell();
+    const randomCell = { randomHeight: rng.nextInt(0, this.height - 1), randomWidth: rng.nextInt(0, this.width - 1) };
     // Select random cell and mark as visited
     let currentCell = { x: randomCell.randomWidth, y: randomCell.randomHeight };
 
