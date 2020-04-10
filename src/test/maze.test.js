@@ -304,3 +304,37 @@ describe('Number of unvisited cells', () => {
     expect(maze.getTotalUnvisitedCells()).toEqual(0);
   });
 });
+
+describe('Find first univisted cell', () => {
+  let maze;
+  const width = 3;
+  const height = 3;
+
+  beforeEach(() => {
+    maze = new Maze(width, height);
+  });
+
+  it('should return the first cell on construction', () => {
+    const firstCell = maze.getFirstUnvisitedCell();
+    expect(firstCell.x).toEqual(0);
+    expect(firstCell.y).toEqual(0);
+  });
+
+  it('should return false if all cells are visited', () => {
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        maze.visitCell(i, j);
+      }
+    }
+    expect(maze.getFirstUnvisitedCell()).toEqual(false);
+  });
+
+  it('should return the first cell of the second row if the first row has been visited', () => {
+    for (let i = 0; i < width; i++) {
+      maze.visitCell(0, i);
+    }
+    const firstCell = maze.getFirstUnvisitedCell();
+    expect(firstCell.x).toEqual(0);
+    expect(firstCell.y).toEqual(1);
+  });
+});
