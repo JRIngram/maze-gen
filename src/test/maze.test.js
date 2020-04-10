@@ -287,12 +287,12 @@ describe('Number of unvisited cells', () => {
   });
 
   it('Should return the number of cells if all cells unvisited', () => {
-    expect(maze.getTotalUnvisitedCells()).toEqual(width*height);
+    expect(maze.getTotalUnvisitedCells()).toEqual(width * height);
   });
 
   it('Should return the number of cells - 1 when a single cell is visited', () => {
     maze.visitCell(0, 0);
-    expect(maze.getTotalUnvisitedCells()).toEqual((width*height) - 1);
+    expect(maze.getTotalUnvisitedCells()).toEqual((width * height) - 1);
   });
 
   it('Should return 0 when all cells have been visited', () => {

@@ -41,6 +41,16 @@ class Maze {
     this.cells[row][column].setCellVisited(true);
   }
 
+  getFirstUnvisitedCell () {
+    for (let i = 0; i < this.cells.length; i++) {
+      for (let j = 0; j < this.cells[i].length; j++) {
+        if (this.getCellVisited(i, j)) {
+          return { x: j, y: i };
+        }
+      }
+    }
+  }
+
   getTotalUnvisitedCells () {
     let totalUnvisitedCells = 0;
     for (let i = 0; i < this.cells.length; i++) {
@@ -104,6 +114,44 @@ class Maze {
     // Get right neighbour
     if (column < mazeWidth - 1) { neighbourIndices.right = { y: row, x: (column + 1) }; }
     return neighbourIndices;
+  }
+
+  getCellNeighbours (row, column) {
+    const neighbourIndices = this.getCellNeighbourIndices(row, column);
+    const neighbours = [];
+    if (typeof neighbourIndices.up !== 'undefined') {
+      const cell = {
+        direction: 'up',
+        x: neighbourIndices.up.x,
+        y: neighbourIndices.up.y
+      };
+      neighbours.push(cell);
+    }
+    if (typeof neighbourIndices.down !== 'undefined') {
+      const cell = {
+        direction: 'down',
+        x: neighbourIndices.down.x,
+        y: neighbourIndices.down.y
+      };
+      neighbours.push(cell);
+    }
+    if (typeof neighbourIndices.left !== 'undefined') {
+      const cell = {
+        direction: 'left',
+        x: neighbourIndices.left.x,
+        y: neighbourIndices.left.y
+      };
+      neighbours.push(cell);
+    }
+    if (typeof neighbourIndices.right !== 'undefined') {
+      const cell = {
+        direction: 'right',
+        x: neighbourIndices.right.x,
+        y: neighbourIndices.right.y
+      };
+      neighbours.push(cell);
+    }
+    return neighbours;
   }
 
   /**
