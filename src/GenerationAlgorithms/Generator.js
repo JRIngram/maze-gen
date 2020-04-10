@@ -71,6 +71,13 @@ class Generator {
     return generatedMaze;
   }
 
+  // CHOOSE A RANDOM CELL
+  // PERFORM RANDOMISED WALK
+  // WHILE THERES AN UNVISITED CELL: 
+  //  FIND FIRST UNVISITED CELL
+  //  IF IT HAS UNVISITED NEIGHBOURS
+  //    DO RANDOMISED WALK
+  //  ELSE MOVE IN A RANDOM DIRECTION
   huntAndKill (seed) {
     const rng = new Prando(seed);
     let generatedMaze = new Maze(this.width, this.height);
@@ -81,20 +88,20 @@ class Generator {
     // Select random cell and mark as visited
     let currentCell = { x: randomCell.randomWidth, y: randomCell.randomHeight };
     generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
-    let unvisitedNeighbours = generatedMaze.getTotalUnvisitedCells();
 
     while (generatedMaze.getTotalUnvisitedCells() > 0) {
       console.log("STUCK " + generatedMaze.getTotalUnvisitedCells());
       console.log(generatedMaze.toString());
       const firstUnvisited = generatedMaze.getFirstUnvisitedCell();
+      console.log(firstUnvisited);
       currentCell = { x: firstUnvisited.x, y: firstUnvisited.y };
       generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
       unvisitedNeighbours = generatedMaze.getTotalUnvisitedCells();
-      if (unvisitedNeighbours === 0) {
-        const neighbours = generatedMaze.getCellNeighbours(currentCell.y, currentCell.x);
-        const direction = neighbours[rng.nextInt(0, neighbours.length - 1)].direction;
-        generatedMaze.removeWall(currentCell.y, currentCell.x, direction);
-      }
+      // if (unvisitedNeighbours > 0) {
+      //   const neighbours = generatedMaze.getCellNeighbours(currentCell.y, currentCell.x);
+      //   const direction = neighbours[rng.nextInt(0, neighbours.length - 1)].direction;
+      //   generatedMaze.removeWall(currentCell.y, currentCell.x, direction);
+      // }
     }
 
     return generatedMaze;
@@ -110,8 +117,8 @@ class Generator {
       validDirections.push(unvisitedNeighbours[i].direction);
     }
 
+    // If there's an unvisited neighbour
     while (validDirections.length > 0) {
-      maze.visitCell(currentCell.y, currentCell.x);
       // Randomly select a valid direction and remove the wall
       const nextDirection = validDirections[rng.nextInt(0, validDirections.length - 1)];
       maze.removeWall(currentCell.y, currentCell.x, nextDirection);
@@ -120,12 +127,12 @@ class Generator {
       for (let i = 0; i < unvisitedNeighbours.length; i++) {
         if (unvisitedNeighbours[i].direction === nextDirection) {
           currentCell = { x: unvisitedNeighbours[i].x, y: unvisitedNeighbours[i].y };
+          maze.visitCell(currentCell.y, currentCell.x);
         }
       }
 
       // Generate a list of unvisited neighbours
       unvisitedNeighbours = maze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x);
-
       // Find which of the unvisited neighbours can be visited
       validDirections = [];
       for (let i = 0; i < unvisitedNeighbours.length; i++) {
