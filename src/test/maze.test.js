@@ -276,3 +276,31 @@ test('Maze to JSON representation to be correct when removing multiple walls', (
   };
   expect(maze.toJSON()).toEqual(testJSON);
 });
+
+describe('Number of unvisited cells', () => {
+  let maze;
+  const width = 3;
+  const height = 3;
+
+  beforeEach(() => {
+    maze = new Maze(width, height);
+  });
+
+  it('Should return the number of cells if all cells unvisited', () => {
+    expect(maze.getTotalUnvisitedCells()).toEqual(width*height);
+  });
+
+  it('Should return the number of cells - 1 when a single cell is visited', () => {
+    maze.visitCell(0, 0);
+    expect(maze.getTotalUnvisitedCells()).toEqual((width*height) - 1);
+  });
+
+  it('Should return 0 when all cells have been visited', () => {
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        maze.visitCell(j, i);
+      }
+    }
+    expect(maze.getTotalUnvisitedCells()).toEqual(0);
+  });
+});

@@ -41,6 +41,16 @@ class Maze {
     this.cells[row][column].setCellVisited(true);
   }
 
+  getTotalUnvisitedCells () {
+    let totalUnvisitedCells = 0;
+    for (let i = 0; i < this.cells.length; i++) {
+      for (let j = 0; j < this.cells[i].length; j++) {
+        totalUnvisitedCells += this.getCellVisited(i, j) ? 0 : 1;
+      }
+    }
+    return totalUnvisitedCells;
+  }
+
   /**
      * Removes the wall of the selected cell
      * @param {*} row The row index of the cell
