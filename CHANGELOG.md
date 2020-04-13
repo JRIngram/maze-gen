@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 * Changes string representation of the maze
-* Bump jest from 25.1.0 to 25.2.4
+* Bump jest from 25.1.0 to 25.3.0
 * Improved bug report template.
 
 ### Security 
