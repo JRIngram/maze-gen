@@ -52,14 +52,36 @@ class Maze {
     return false;
   }
 
-  getTotalUnvisitedCells () {
-    let totalUnvisitedCells = 0;
-    for (let i = 0; i < this.cells.length; i++) {
-      for (let j = 0; j < this.cells[i].length; j++) {
-        totalUnvisitedCells += this.getCellVisited(i, j) ? 0 : 1;
+  /**
+   * Gets the first unvisited cell in the maze with visited neighbours and returns the cell and the neighbours information
+   */
+  getFirstUnvisitedCellWithVisitedNeighbour () {
+    let unvisitedCells = this.getUnvisitedCells();
+    for (let i = 0; i < unvisitedCells.length; i++) {
+      let neighbours = this.getVisitedNeigbourIndices(unvisitedCells[i].y, unvisitedCells[i].x);
+      if (neighbours.length > 0) {
+        return {
+          firstCell: unvisitedCells[i],
+          neighbours: neighbours
+        };
       }
     }
-    return totalUnvisitedCells;
+  }
+
+  getUnvisitedCells () {
+    const unvisitedCells = [];
+    for (let i = 0; i < this.cells.length; i++) {
+      for (let j = 0; j < this.cells[i].length; j++) {
+        if (!this.getCellVisited(i, j)) {
+          unvisitedCells.push({ x: j, y: i });
+        }
+      }
+    }
+    return unvisitedCells;
+  }
+
+  getTotalUnvisitedCells () {
+    return this.getUnvisitedCells().length;
   }
 
   /**
@@ -189,6 +211,50 @@ class Maze {
       unvisitedNeighbours.push(cell);
     }
     if (typeof neighbourIndices.right !== 'undefined' && this.getCellVisited(neighbourIndices.right.y, neighbourIndices.right.x) === false) {
+      const cell = {
+        direction: 'right',
+        x: neighbourIndices.right.x,
+        y: neighbourIndices.right.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    return unvisitedNeighbours;
+  }
+
+    /**
+    * Calls getCellNeighbourIndices, checks if each neighbour is visited and adds the visited cell's coordinates to an array
+    * @param {*} row The row index of the cell
+    * @param {*} column The column index of the cell
+    * @returns {[]} The indicies of visited neighours of the chosen cell
+    */
+   getVisitedNeigbourIndices (row, column) {
+    const neighbourIndices = this.getCellNeighbourIndices(row, column);
+    const unvisitedNeighbours = [];
+    if (typeof neighbourIndices.up !== 'undefined' && this.getCellVisited(neighbourIndices.up.y, neighbourIndices.up.x) === true) {
+      const cell = {
+        direction: 'up',
+        x: neighbourIndices.up.x,
+        y: neighbourIndices.up.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    if (typeof neighbourIndices.down !== 'undefined' && this.getCellVisited(neighbourIndices.down.y, neighbourIndices.down.x) === true) {
+      const cell = {
+        direction: 'down',
+        x: neighbourIndices.down.x,
+        y: neighbourIndices.down.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    if (typeof neighbourIndices.left !== 'undefined' && this.getCellVisited(neighbourIndices.left.y, neighbourIndices.left.x) === true) {
+      const cell = {
+        direction: 'left',
+        x: neighbourIndices.left.x,
+        y: neighbourIndices.left.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    if (typeof neighbourIndices.right !== 'undefined' && this.getCellVisited(neighbourIndices.right.y, neighbourIndices.right.x) === true) {
       const cell = {
         direction: 'right',
         x: neighbourIndices.right.x,

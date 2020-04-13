@@ -90,19 +90,15 @@ class Generator {
     generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
 
     while (generatedMaze.getTotalUnvisitedCells() > 0) {
-      currentCell = generatedMaze.getFirstUnvisitedCell();
+      const firstUnvisitedCellNeighbours = generatedMaze.getFirstUnvisitedCellWithVisitedNeighbour();
+      currentCell = firstUnvisitedCellNeighbours.firstCell;
+      const neighbours = firstUnvisitedCellNeighbours.neighbours;
       console.log(generatedMaze.toString());
       console.log(currentCell);
 
-      // If all neighbours visited
-      if (generatedMaze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x).length === 0) {
-        // DO A RANDOM DIRECTION MOVE
-        const neighbours = generatedMaze.getCellNeighbours(currentCell.y, currentCell.x);
-        generatedMaze.removeWall(currentCell.y, currentCell.x, neighbours[rng.nextInt(0, neighbours.length - 1)].direction);
-        generatedMaze.visitCell(currentCell.y, currentCell.x);
-      } else {
-        generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
-      }
+      generatedMaze.removeWall(currentCell.y, currentCell.x, neighbours[rng.nextInt(0, neighbours.length - 1)].direction);
+      generatedMaze.visitCell(currentCell.y, currentCell.x);
+      generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
     }
 
     return generatedMaze;
