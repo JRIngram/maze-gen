@@ -41,17 +41,6 @@ class Maze {
     this.cells[row][column].setCellVisited(true);
   }
 
-  getFirstUnvisitedCell () {
-    for (let i = 0; i < this.cells.length; i++) {
-      for (let j = 0; j < this.cells[i].length; j++) {
-        if (!this.getCellVisited(i, j)) {
-          return { x: j, y: i };
-        }
-      }
-    }
-    return false;
-  }
-
   /**
    * Gets the first unvisited cell in the maze with visited neighbours and returns the cell and the neighbours information
    * @returns If true: the first unvisited cell indicies and the indicies of its neighbours; false if no cell with visitedNeighbours exists
@@ -106,7 +95,7 @@ class Maze {
   }
 
   /**
-     * Returns if a wall
+     * Returns if a wall exists in the specified direction
      * @param {*} row The row index of the cell
      * @param {*} column The column index of the cell
      * @param {string} direction left;right;up;down. The wall that should be removed.

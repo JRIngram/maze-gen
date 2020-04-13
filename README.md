@@ -15,16 +15,20 @@ Run `npm i maze-generation`
 
 ### Usage
 
-Add the following to your code (where width and height should be replaced by ints corresponding to how wide and tall you want your maze; and seed should be replaced by an int or string):
+Add the following to your code where:
+* `width` and `height` should be replaced by ints corresponding to how wide and tall you want your maze
+* `seed` should be replaced by an int or string and will be used as the seed for the random number generator
+* `algorithm` should be: `'DEPTHFIRST'` or `'HUNTANDKILL'`
 
-```
+```javascript
 const mazegeneration = require('maze-generation');
+
 // Generate a maze
-const generatedMaze = mazegeneration(width,height,seed);
+const generatedMaze = mazegeneration(width,height,algorithm, seed);
 ```
 
 To get the string representation of the generated maze write:
-```
+```javascript
 const stringRepresentation = generatedMaze.toString();
 console.log(stringRepresenation);
 ```
@@ -52,7 +56,7 @@ let JSONRepresentation = generatedMaze.toJSON();
 ```
 
 The outputed JSON object has the following structure (example is a 3 by 3 cell):
-```
+```javascript
     {
         rows: [
             [[Object],[Object],[Object]],
@@ -63,7 +67,7 @@ The outputed JSON object has the following structure (example is a 3 by 3 cell):
 ```
 
 Where each object is a Cell object, which as the following JSON structure:
-```
+```javascript
     {  
         left: bool,
         right: bool, 
@@ -91,7 +95,7 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
 
 ```
 
-* More information can be found on the [Wikipedia page.](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker).
+* More information can be found on the [Wikipedia page](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker).
 #### Hunt And Kill
 
 ```

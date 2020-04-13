@@ -20,7 +20,7 @@ describe('Calls the correct algorithms', () => {
   it('Should call depthFirst when no algorithm is entered as generateMaze param', () => {
     const gen = new Generator(10, 10);
     const spy = jest.spyOn(gen, 'depthFirst');
-    gen.generateMaze('depthFirst');
+    gen.generateMaze();
     expect(spy).toHaveBeenCalled();
     spy.mockReset();
   });
