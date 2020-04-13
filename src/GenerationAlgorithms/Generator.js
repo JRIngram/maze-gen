@@ -90,32 +90,39 @@ class Generator {
     generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
 
     while (generatedMaze.getTotalUnvisitedCells() > 0) {
-      console.log("STUCK " + generatedMaze.getTotalUnvisitedCells());
+      currentCell = generatedMaze.getFirstUnvisitedCell();
       console.log(generatedMaze.toString());
-      const firstUnvisited = generatedMaze.getFirstUnvisitedCell();
-      console.log(firstUnvisited);
-      currentCell = { x: firstUnvisited.x, y: firstUnvisited.y };
-      generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
-      unvisitedNeighbours = generatedMaze.getTotalUnvisitedCells();
-      // if (unvisitedNeighbours > 0) {
-      //   const neighbours = generatedMaze.getCellNeighbours(currentCell.y, currentCell.x);
-      //   const direction = neighbours[rng.nextInt(0, neighbours.length - 1)].direction;
-      //   generatedMaze.removeWall(currentCell.y, currentCell.x, direction);
-      // }
+      console.log(currentCell);
+
+      // If all neighbours visited
+      if (generatedMaze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x).length === 0) {
+        // DO A RANDOM DIRECTION MOVE
+        const neighbours = generatedMaze.getCellNeighbours(currentCell.y, currentCell.x);
+        generatedMaze.removeWall(currentCell.y, currentCell.x, neighbours[rng.nextInt(0, neighbours.length - 1)].direction);
+        generatedMaze.visitCell(currentCell.y, currentCell.x);
+      } else {
+        generatedMaze = this.randomisedWalk(currentCell, rng, generatedMaze);
+      }
     }
 
     return generatedMaze;
   }
 
-  randomisedWalk (currentCell, rng, maze) {
-    // Generate a list of unvisited neighbours
-    let unvisitedNeighbours = maze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x);
-
-    // Find which of the unvisited neighbours can be visited
-    let validDirections = [];
+  /**
+   * Get the unvisited neighbours of the current cell
+   * @param {[]} unvisitedNeighbours Generated using maze.getUnvisitedNeigbourIndices
+   */
+  getValidDirections (unvisitedNeighbours) {
+    const validDirections = [];
     for (let i = 0; i < unvisitedNeighbours.length; i++) {
       validDirections.push(unvisitedNeighbours[i].direction);
     }
+    return validDirections;
+  }
+
+  randomisedWalk (currentCell, rng, maze) {
+    let unvisitedNeighbours = maze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x);
+    let validDirections = this.getValidDirections(unvisitedNeighbours);
 
     // If there's an unvisited neighbour
     while (validDirections.length > 0) {
@@ -133,11 +140,7 @@ class Generator {
 
       // Generate a list of unvisited neighbours
       unvisitedNeighbours = maze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x);
-      // Find which of the unvisited neighbours can be visited
-      validDirections = [];
-      for (let i = 0; i < unvisitedNeighbours.length; i++) {
-        validDirections.push(unvisitedNeighbours[i].direction);
-      }
+      validDirections = this.getValidDirections(unvisitedNeighbours);
     }
 
     return maze;

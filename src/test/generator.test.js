@@ -20,13 +20,13 @@ describe('Calls the correct algorithms', () => {
     spy.mockReset();
   });
 
-  // it('Should call huntAndKill when HUNTANDKILL is chosen at construction', () => {
-  //   const gen = new Generator(10, 10, 'huntandkill');
-  //   const spy = jest.spyOn(gen, 'huntAndKill');
-  //   gen.generateMaze();
-  //   expect(spy).toHaveBeenCalled();
-  //   spy.mockReset();
-  // });
+  it('Should call huntAndKill when HUNTANDKILL is chosen at construction', () => {
+    const gen = new Generator(10, 10, 'huntandkill');
+    const spy = jest.spyOn(gen, 'huntAndKill');
+    gen.generateMaze('huntAndKill');
+    expect(spy).toHaveBeenCalled();
+    spy.mockReset();
+  });
 });
 
 describe('Returns mazes', () => {
@@ -36,11 +36,11 @@ describe('Returns mazes', () => {
     expect(maze.getTotalUnvisitedCells()).toEqual(0);
   });
 
-  // it('Should return a maze when HUNTANDKILL is chosen', () => {
-  //   const gen = new Generator(10, 10, 'HuntAndKill');
-  //   const maze = gen.generateMaze();
-  //   expect(maze.getTotalUnvisitedCells()).toEqual(0);
-  // });
+  it('Should return a maze when HUNTANDKILL is chosen', () => {
+    const gen = new Generator(10, 10, 'HuntAndKill');
+    const maze = gen.generateMaze();
+    expect(maze.getTotalUnvisitedCells()).toEqual(0);
+  });
 
   it('Should return a maze when an invalid algorithm is chosen', () => {
     const gen = new Generator(10, 10, 'InvalidAlgorithm');
@@ -96,41 +96,41 @@ describe('Algorithm tests', () => {
     });
   });
 
-  // describe('Hunt and kill Algorithm', () => {
-  //   beforeEach(() => { gen = new Generator(3, 3); });
-  //   it('Should return a maze when HUNTANDKILL is chosen', () => {
-  //     const maze = gen.huntAndKill(123);
-  //     expect(maze.getCellVisited(0, 0)).toEqual(true);
-  //   });
+  describe('Hunt and kill Algorithm', () => {
+    beforeEach(() => { gen = new Generator(3, 3); });
+    it('Should return a maze when HUNTANDKILL is chosen', () => {
+      const maze = gen.huntAndKill(123);
+      expect(maze.getCellVisited(0, 0)).toEqual(true);
+    });
 
-  //   it('Returns the same maze structure when given the same seed', () => {
-  //     const maze1 = gen.huntAndKill(123);
-  //     const maze2 = gen.huntAndKill(123);
-  //     expect(maze1).toEqual(maze2);
-  //   });
+    it('Returns the same maze structure when given the same seed', () => {
+      const maze1 = gen.huntAndKill(123);
+      const maze2 = gen.huntAndKill(123);
+      expect(maze1).toEqual(maze2);
+    });
 
-  //   it('Returns a different maze structure when given a different seed', () => {
-  //     const maze1 = gen.huntAndKill(123);
-  //     const maze2 = gen.huntAndKill(1234);
-  //     expect(maze1).not.toEqual(maze2);
-  //   });
-  // });
+    it('Returns a different maze structure when given a different seed', () => {
+      const maze1 = gen.huntAndKill(123);
+      const maze2 = gen.huntAndKill(1234);
+      expect(maze1).not.toEqual(maze2);
+    });
+  });
 });
 
 describe('Randomised walk', () => {
-  const width = 3;
-  const height = 3;
+  const width = 5;
+  const height = 5;
   let gen;
 
   beforeAll(() => {
     gen = new Generator(width, height);
   });
+
   it('Should return a maze with fewer visited cells than on construction', () => {
     const rng = new Prando();
     const currentCell = { x: 0, y: 0 };
-    const maze = new Maze(3,3);
+    const maze = new Maze(width, height);
     const generatedMaze = gen.randomisedWalk(currentCell, rng, maze);
-
     expect(generatedMaze.getTotalUnvisitedCells()).toBeLessThan(width * height);
   });
 });

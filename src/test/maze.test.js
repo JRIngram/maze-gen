@@ -307,8 +307,8 @@ describe('Number of unvisited cells', () => {
 
 describe('Find first univisted cell', () => {
   let maze;
-  const width = 3;
-  const height = 3;
+  const width = 5;
+  const height = 5;
 
   beforeEach(() => {
     maze = new Maze(width, height);
@@ -327,6 +327,15 @@ describe('Find first univisted cell', () => {
       }
     }
     expect(maze.getFirstUnvisitedCell()).toEqual(false);
+  });
+
+  it('should return the last cell of the first row if the all but the final cell of that row has been cleared', () => {
+    for (let i = 0; i < width - 1; i++) {
+      maze.visitCell(0, i);
+    }
+    const firstCell = maze.getFirstUnvisitedCell();
+    expect(firstCell.x).toEqual(width - 1);
+    expect(firstCell.y).toEqual(0);
   });
 
   it('should return the first cell of the second row if the first row has been visited', () => {
