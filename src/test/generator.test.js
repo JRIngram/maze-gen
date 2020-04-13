@@ -1,4 +1,4 @@
-const Generator = require('../GenerationAlgorithms/Generator');
+const Generator = require('../Generator');
 const Prando = require('prando');
 const Maze = require('../Maze');
 

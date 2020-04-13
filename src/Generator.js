@@ -1,5 +1,5 @@
 const Prando = require('prando');
-const Maze = require('../Maze');
+const Maze = require('./Maze');
 const validAlgorithms = ['DEPTHFIRST', 'HUNTANDKILL'];
 
 class Generator {
@@ -12,7 +12,7 @@ class Generator {
     return typeof algorithm === 'string' ? validAlgorithms.includes(algorithm.toUpperCase()) : false;
   }
 
-  generateMaze (algorithm = 'DEPTHFIRST') {
+  generateMaze (algorithm = 'DEPTHFIRST', seed = Math.floor(Math.random() * Math.floor(100000))) {
     if (!this.isValidAlgorithm(algorithm.toUpperCase())) {
       throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
     } else {
