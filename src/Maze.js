@@ -56,9 +56,9 @@ class Maze {
    * Gets the first unvisited cell in the maze with visited neighbours and returns the cell and the neighbours information
    */
   getFirstUnvisitedCellWithVisitedNeighbour () {
-    let unvisitedCells = this.getUnvisitedCells();
+    const unvisitedCells = this.getUnvisitedCells();
     for (let i = 0; i < unvisitedCells.length; i++) {
-      let neighbours = this.getVisitedNeigbourIndices(unvisitedCells[i].y, unvisitedCells[i].x);
+      const neighbours = this.getVisitedNeigbourIndices(unvisitedCells[i].y, unvisitedCells[i].x);
       if (neighbours.length > 0) {
         return {
           firstCell: unvisitedCells[i],
@@ -139,6 +139,12 @@ class Maze {
     return neighbourIndices;
   }
 
+  /**
+   * Returns the neighbours of chosen cell
+   * @param {*} row The Y axis index of the current cell
+   * @param {*} column The X axis index of the current cell
+   * @returns {[{}]} An array of cells (direction, x axis index and Y axis index)
+   */
   getCellNeighbours (row, column) {
     const neighbourIndices = this.getCellNeighbourIndices(row, column);
     const neighbours = [];
