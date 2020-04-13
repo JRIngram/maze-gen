@@ -123,56 +123,58 @@ describe('Cell neighbours', () => {
     maze = new Maze(3, 3);
   });
 
-  it('Can get all neighbours indicies if in centre', () => {
-    const actual = maze.getCellNeighbourIndices(1, 1);
+  describe('Get cell neighbour indicies', () => {
+    it('Can get all neighbours indicies if in centre', () => {
+      const actual = maze.getCellNeighbourIndices(1, 1);
 
-    expect(actual.up.y).toBe(0);
-    expect(actual.up.x).toBe(1);
+      expect(actual.up.y).toBe(0);
+      expect(actual.up.x).toBe(1);
 
-    expect(actual.down.y).toBe(2);
-    expect(actual.down.x).toBe(1);
+      expect(actual.down.y).toBe(2);
+      expect(actual.down.x).toBe(1);
 
-    expect(actual.left.y).toBe(1);
-    expect(actual.left.x).toBe(0);
+      expect(actual.left.y).toBe(1);
+      expect(actual.left.x).toBe(0);
 
-    expect(actual.right.y).toBe(1);
-    expect(actual.right.x).toBe(2);
-  });
+      expect(actual.right.y).toBe(1);
+      expect(actual.right.x).toBe(2);
+    });
 
-  it('Right cell is undefined if cell furthest right', () => {
-    const actual = maze.getCellNeighbourIndices(1, 2);
+    it('Right cell is undefined if cell furthest right', () => {
+      const actual = maze.getCellNeighbourIndices(1, 2);
 
-    expect(actual.right).toBeUndefined();
-    expect(actual.left.y).toEqual(1);
-    expect(actual.left.x).toEqual(1);
-  });
+      expect(actual.right).toBeUndefined();
+      expect(actual.left.y).toEqual(1);
+      expect(actual.left.x).toEqual(1);
+    });
 
-  it('Left cell is undefined if cell furthest Left', () => {
-    const actual = maze.getCellNeighbourIndices(1, 0);
+    it('Left cell is undefined if cell furthest Left', () => {
+      const actual = maze.getCellNeighbourIndices(1, 0);
 
-    expect(actual.left).toBeUndefined();
-    expect(actual.right.y).toEqual(1);
-    expect(actual.right.x).toEqual(1);
-  });
+      expect(actual.left).toBeUndefined();
+      expect(actual.right.y).toEqual(1);
+      expect(actual.right.x).toEqual(1);
+    });
 
-  it('Up cell is undefined if cell furthest up', () => {
-    const actual = maze.getCellNeighbourIndices(0, 1);
+    it('Up cell is undefined if cell furthest up', () => {
+      const actual = maze.getCellNeighbourIndices(0, 1);
 
-    expect(actual.up).toBeUndefined();
-    expect(actual.down.y).toEqual(1);
-    expect(actual.down.x).toEqual(1);
-  });
+      expect(actual.up).toBeUndefined();
+      expect(actual.down.y).toEqual(1);
+      expect(actual.down.x).toEqual(1);
+    });
 
-  it('Down cell is undefined if cell furthest down', () => {
-    const actual = maze.getCellNeighbourIndices(2, 1);
+    it('Down cell is undefined if cell furthest down', () => {
+      const actual = maze.getCellNeighbourIndices(2, 1);
 
-    expect(actual.down).toBeUndefined();
-    expect(actual.up.y).toEqual(1);
-    expect(actual.up.x).toEqual(1);
+      expect(actual.down).toBeUndefined();
+      expect(actual.up.y).toEqual(1);
+      expect(actual.up.x).toEqual(1);
+    });
   });
 });
 
-describe('Unvisited Neighbours', () => {
+describe('Unvisited Neighbour Indicies', () => {
   let maze;
   beforeEach(() => {
     maze = new Maze(3, 3);
@@ -214,6 +216,112 @@ describe('Unvisited Neighbours', () => {
     expect(unvisitedNeighboursIndicies.length).toBe(0);
     nextCell = unvisitedNeighboursIndicies.pop();
     expect(nextCell).toBeUndefined();
+  });
+});
+
+describe('Visited Neighbour Indicies', () => {
+  let maze;
+  beforeEach(() => {
+    maze = new Maze(3, 3);
+  });
+
+  it('Centre cell gets 0 visited neighbours on construction', () => {
+    const visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(1, 1);
+    expect(visitedNeighboursIndicies.length).toBe(0);
+  });
+
+  it('Outer cell gets 0 visited neighbours on construction', () => {
+    const visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(0, 1);
+    expect(visitedNeighboursIndicies.length).toBe(0);
+  });
+
+  it('Corner cell gets 0 visited neighbours on construction', () => {
+    const visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(0, 0);
+    expect(visitedNeighboursIndicies.length).toBe(0);
+  });
+
+  it('Visited cell indicies length grows as more neighbours are visited', () => {
+    let visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(1, 1);
+    expect(visitedNeighboursIndicies.length).toBe(0);
+    const nextCell = visitedNeighboursIndicies.pop();
+    expect(nextCell).toBeUndefined();
+    maze.visitCell(0, 1);
+    visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(1, 1);
+    expect(visitedNeighboursIndicies.length).toBe(1);
+    maze.visitCell(2, 1);
+    visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(1, 1);
+    expect(visitedNeighboursIndicies.length).toBe(2);
+    maze.visitCell(1, 0);
+    visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(1, 1);
+    expect(visitedNeighboursIndicies.length).toBe(3);
+    maze.visitCell(1, 2);
+    visitedNeighboursIndicies = maze.getVisitedNeigbourIndices(1, 1);
+    expect(visitedNeighboursIndicies.length).toBe(4);
+  });
+});
+
+describe('First cell with an unvisited neighbour', () => {
+  let maze;
+  const width = 3;
+  const height = 3;
+
+  beforeEach(() => {
+    maze = new Maze(width, height);
+  });
+
+  it('Should return false if no unvisited cell with visited neighbour exists', () => {
+    const expected = false;
+    const actual = maze.getFirstUnvisitedCellWithVisitedNeighbour();
+    expect(actual).toEqual(expected);
+  });
+
+  it('Should return false if all cells have been visited', () => {
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        maze.visitCell(j, i);
+      }
+    }
+    const expected = false;
+    const actual = maze.getFirstUnvisitedCellWithVisitedNeighbour();
+    expect(actual).toEqual(expected);
+  });
+
+  it('Should return the top left cell and cell (1,0) if cell (1,0) has been visited', () => {
+    maze.visitCell(0, 1);
+    const firstCellExpected = { x: 0, y: 0 };
+    const firstCellActual = maze.getFirstUnvisitedCellWithVisitedNeighbour().firstCell;
+    expect(firstCellActual).toEqual(firstCellExpected);
+
+    const neighbours = maze.getFirstUnvisitedCellWithVisitedNeighbour().neighbours;
+    const expectedNeighboursLength = 1;
+    const actualNeighboursLength = neighbours.length;
+    expect(actualNeighboursLength).toEqual(expectedNeighboursLength);
+
+    const expectedNeighbour = { direction: 'right', x: 1, y: 0 };
+    const actualNeighbour = neighbours[0];
+    expect(actualNeighbour).toEqual(expectedNeighbour);
+  });
+
+  it('Should return the centre cell and cells (1,0) & (0,1) if the top row, and left most cell on the second row has been visited', () => {
+    maze.visitCell(0, 0);
+    maze.visitCell(0, 1);
+    maze.visitCell(0, 2);
+    maze.visitCell(1, 0);
+    const firstCellExpected = { x: 1, y: 1 };
+    const firstCellActual = maze.getFirstUnvisitedCellWithVisitedNeighbour().firstCell;
+    expect(firstCellActual).toEqual(firstCellExpected);
+
+    const neighbours = maze.getFirstUnvisitedCellWithVisitedNeighbour().neighbours;
+    const expectedNeighboursLength = 2;
+    const actualNeighboursLength = neighbours.length;
+    expect(actualNeighboursLength).toEqual(expectedNeighboursLength);
+
+    const expectedNeighbourOne = { direction: 'up', x: 1, y: 0 };
+    const expectedNeighbourTwo = { direction: 'left', x: 0, y: 1 };
+    const actualNeighbourOne = neighbours[0];
+    const actualNeighbourTwo = neighbours[1];
+    expect(actualNeighbourOne).toEqual(expectedNeighbourOne);
+    expect(actualNeighbourTwo).toEqual(expectedNeighbourTwo);
   });
 });
 
