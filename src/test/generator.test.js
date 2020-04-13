@@ -4,23 +4,35 @@ const Maze = require('../Maze');
 
 /* eslint-env jest */
 describe('Calls the correct algorithms', () => {
+  let gen;
+
+  beforeAll(() => {
+    gen = new Generator(10, 10);
+  });
+
   it('Should call depthFirst when DEPTHFIRST is entered as generateMaze param', () => {
+    const spy = jest.spyOn(gen, 'depthFirst');
+    gen.generateMaze('depthFirst');
+    expect(spy).toHaveBeenCalled();
+    spy.mockReset();
+  });
+
+  it('Should call depthFirst when no algorithm is entered as generateMaze param', () => {
     const gen = new Generator(10, 10);
     const spy = jest.spyOn(gen, 'depthFirst');
-    gen.generateMaze();
+    gen.generateMaze('depthFirst');
     expect(spy).toHaveBeenCalled();
     spy.mockReset();
   });
 
   it('Should call depthFirst when an invalid algorithm is chosen at construction', () => {
-    const gen = new Generator(10, 10, 'InvalidAlgorithm');
-    const spy = jest.spyOn(gen, 'depthFirst');
-    gen.generateMaze();
-    expect(spy).toHaveBeenCalled();
-    spy.mockReset();
+    const gen = new Generator(10, 10);
+    expect(() => {
+      gen.generateMaze('InvalidAlgorithm');
+    }).toThrowError();
   });
 
-  it('Should call huntAndKill when HUNTANDKILL is chosen at construction', () => {
+  it('Should call huntAndKill when HUNTANDKILL is is entered as generateMaze param', () => {
     const gen = new Generator(10, 10, 'huntandkill');
     const spy = jest.spyOn(gen, 'huntAndKill');
     gen.generateMaze('huntAndKill');
@@ -57,19 +69,25 @@ describe('isValidAlgorithm', () => {
   });
 
   it('Returns true when HUNTANDKILL is chosen', () => {
-    gen.isValidAlgorithm('HUNTANDKILL');
+    expect(gen.isValidAlgorithm('HUNTANDKILL')).toEqual(true);
   });
 
   it('Returns true when DEPTHFIRST is chosen', () => {
-    gen.isValidAlgorithm('DEPTHFIRST');
+    expect(gen.isValidAlgorithm('DEPTHFIRST')).toEqual(true);
   });
 
   it('Returns false when an invalid algorithm is chosen', () => {
-    gen.isValidAlgorithm('InvalidAlgorithm');
+    expect(gen.isValidAlgorithm('InvalidAlgorithm')).toEqual(false);
   });
 
-  it('Returns true when a lower case valid algorithm is chosen', () =>{
-    gen.isValidAlgorithm('depthfirst');
+  it('Returns true when a lower case valid algorithm is chosen', () => {
+    expect(gen.isValidAlgorithm('depthfirst')).toEqual(true);
+  });
+
+  it('Returns false when a none string parameter is entered', () => {
+    expect(gen.isValidAlgorithm(123)).toEqual(false);
+    expect(gen.isValidAlgorithm(123.0)).toEqual(false);
+    expect(gen.isValidAlgorithm(true)).toEqual(false);
   });
 });
 

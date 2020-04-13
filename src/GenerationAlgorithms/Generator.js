@@ -9,20 +9,18 @@ class Generator {
   }
 
   isValidAlgorithm (algorithm) {
-    if (typeof algorithm === 'string') {
-      return validAlgorithms.includes(algorithm);
-    }
+    return typeof algorithm === 'string' ? validAlgorithms.includes(algorithm.toUpperCase()) : false;
   }
 
   generateMaze (algorithm = 'DEPTHFIRST') {
-    if (!this.isValidAlgorithm) {
-      throw new Error('Invalid Maze Generation Algorithm');
-    }
-
-    if (algorithm.toUpperCase() === 'DEPTHFIRST') {
-      return this.depthFirst(this.seed);
-    } else if (algorithm.toUpperCase() === 'HUNTANDKILL') {
-      return this.huntAndKill(this.seed);
+    if (!this.isValidAlgorithm(algorithm.toUpperCase())) {
+      throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
+    } else {
+      if (algorithm.toUpperCase() === 'DEPTHFIRST') {
+        return this.depthFirst(this.seed);
+      } else if (algorithm.toUpperCase() === 'HUNTANDKILL') {
+        return this.huntAndKill(this.seed);
+      }
     }
   }
 
@@ -93,8 +91,6 @@ class Generator {
       const firstUnvisitedCellNeighbours = generatedMaze.getFirstUnvisitedCellWithVisitedNeighbour();
       currentCell = firstUnvisitedCellNeighbours.firstCell;
       const neighbours = firstUnvisitedCellNeighbours.neighbours;
-      console.log(generatedMaze.toString());
-      console.log(currentCell);
 
       generatedMaze.removeWall(currentCell.y, currentCell.x, neighbours[rng.nextInt(0, neighbours.length - 1)].direction);
       generatedMaze.visitCell(currentCell.y, currentCell.x);
