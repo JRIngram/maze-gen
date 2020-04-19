@@ -11,7 +11,7 @@ An npm package used to generate mazes.
 Please view our [CONTRIBUTING.md](CONTRIBUTING.md) file for information on how to contribute, report issues and request features.
 
 ## Changelog and versioning
-Please view our [CHANGELOG.md](CHANGELOG.md) file for information our updates.
+Please view our [CHANGELOG.md](CHANGELOG.md) file for information on our updates.
 
 We use [SemVer](http://semver.org/) for versioning.
 
