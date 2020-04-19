@@ -4,23 +4,28 @@ orbs:
 jobs:
   build:
     executor:
+    name: node/default
+    steps:
+      - checkout 
+      - node/with-cache:
+          steps:
+            - run: npm install
+  unit-test:
+    executor:
       name: node/default
     steps:
       - checkout
       - node/with-cache:
-        - run: npm install
-  unit-test:
-    steps:
-      - checkout
-      - node/with-cache:
-          - run: npm test
+          steps:
+            - run: npm test
   lint:
     executor:
       name: node/default
     steps:
       - checkout
       - node/with-cache:
-          - run: npm run linter
+          steps:
+            - run: npm run linter
 workflows:
     build-and-test:
       jobs:
