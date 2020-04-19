@@ -33,7 +33,7 @@ Add the following to your code where:
 const mazegeneration = require('maze-generation');
 
 // Generate a maze
-const generatedMaze = mazegeneration(width,height,algorithm, seed);
+const generatedMaze = mazegeneration(width,height,seed,algorithm);
 ```
 
 To get the string representation of the generated maze write:
