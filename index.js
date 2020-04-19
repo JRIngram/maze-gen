@@ -1,6 +1,6 @@
-const DepthFirst = require('./src/GenerationAlgorithms/DepthFirst');
+const Generator = require('./src/Generator');
 
-module.exports = (width, height, seed) => {
-  const df = new DepthFirst(width, height, seed);
-  return df.generateMaze();
+module.exports = (width, height, seed, algorithm = 'DEPTHFIRST') => {
+  const df = new Generator(width, height);
+  return df.generateMaze(algorithm, seed);
 };
