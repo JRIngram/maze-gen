@@ -8,10 +8,10 @@
 An npm package used to generate mazes.
 
 ## Contributing
-Please view our [CONTRIBUTING.md](CONTRIBUTING.md) file for information on how to contribute, report issues and request features.
+Please view our [CONTRIBUTING.md](https://github.com/JRIngram/maze-gen/blob/develop/CONTRIBUTING.md) file for information on how to contribute, report issues and request features.
 
 ## Changelog and versioning
-Please view our [CHANGELOG.md](CHANGELOG.md) file for information on our updates.
+Please view our [CHANGELOG.md](https://github.com/JRIngram/maze-gen/blob/develop/CHANGELOG.md) file for information on our updates.
 
 We use [SemVer](http://semver.org/) for versioning.
 
