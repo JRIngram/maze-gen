@@ -60,7 +60,7 @@ Example output:
 
 To get the JSON representation of the generated maze write:
 
-```
+```javascript
 let JSONRepresentation = generatedMaze.toJSON();
 ```
 
@@ -91,7 +91,6 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
 #### Algorithms
 ##### Depth First
 ```
-
    CURRENT_CELL = random cell
    Create an empty CELL_STACK
    While CURRENT_CELL has unvisited neighbour:
@@ -101,7 +100,6 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
     Mark CURRENT_CELL as visited and push it to the CELL_STACK
     IF CURRENT_CELL has no unvisited neighbour:
       CURRENT_CELL = CELL_STACK.pop()
-
 ```
 
 * More information can be found on the [Wikipedia page](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker).
