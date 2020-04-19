@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     executor:
-    name: node/default
+      name: node/default
     steps:
       - checkout 
       - node/with-cache:
