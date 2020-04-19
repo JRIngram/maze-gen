@@ -26,8 +26,8 @@ Run `npm i maze-generation`
 
 Add the following to your code where:
 * `width` and `height` should be replaced by ints corresponding to how wide and tall you want your maze
-* `seed` should be replaced by an int or string and will be used as the seed for the random number generator
 * `algorithm` should be: `'DEPTHFIRST'` or `'HUNTANDKILL'`
+* `seed` should be replaced by an int or string and will be used as the seed for the random number generator
 
 ```javascript
 const mazegeneration = require('maze-generation');

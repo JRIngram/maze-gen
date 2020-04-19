@@ -152,3 +152,32 @@ describe('Randomised walk', () => {
     expect(generatedMaze.getTotalUnvisitedCells()).toBeLessThan(width * height);
   });
 });
+
+describe('Seed Test', () => {
+  const width = 15;
+  const height = 15;
+
+  it('should return the same maze given two seperate generators with the same seed and DEPTHFIRST selected', () => {
+    const gen1 = new Generator(width, height);
+    const gen2 = new Generator(width, height);
+    expect(gen1.generateMaze('DEPTHFIRST', 1234)).toEqual(gen2.generateMaze('DEPTHFIRST', 1234));
+  });
+
+  it('should return a different maze given two seperate generators with a different seed and DEPTHFIRST selected', () => {
+    const gen1 = new Generator(width, height);
+    const gen2 = new Generator(width, height);
+    expect(gen1.generateMaze('DEPTHFIRST', 123)).not.toEqual(gen2.generateMaze('DEPTHFIRST', 1234));
+  });
+
+  it('should return the same maze given two seperate generators with the same seed and HUNTANDKILL selected', () => {
+    const gen1 = new Generator(width, height);
+    const gen2 = new Generator(width, height);
+    expect(gen1.generateMaze('HUNTANDKILL', 1234)).toEqual(gen2.generateMaze('HUNTANDKILL', 1234));
+  });
+
+  it('should return a different maze given two seperate generators with a different seed and HUNTANDKILL selected', () => {
+    const gen1 = new Generator(width, height);
+    const gen2 = new Generator(width, height);
+    expect(gen1.generateMaze('HUNTANDKILL', 123)).not.toEqual(gen2.generateMaze('HUNTANDKILL', 1234));
+  });
+});
