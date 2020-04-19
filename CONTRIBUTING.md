@@ -20,8 +20,7 @@ Once your contribution is ready to be added to the project, please do the follow
 4. Update the [changelog](CHANGELOG.md). Add details of your update to the appropriate section beneath "Unreleased". Our changelogs are based on [KEEPACHANGELOG](https://keepachangelog.com/en/1.0.0/).
 5. If required, update the [README](README.md) with details of changes to the interface.
 6. Follow the Pull Request template. It is in place to make pull requests easier to review.
-7. Assign jringram as a reviewer.
-8. You may merge the Pull Request to **DEVELOP**  once you have the sign-off of one other developer and all checks have passed.
+7. Assign jringram as a reviewer and await a review. Your code will be merged following an approval.
 
 ## Running the tests
 * `npm run test` to run [jest](https://jestjs.io/) tests.

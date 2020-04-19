@@ -8,10 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 * Ability to use a seeded random number generator to generate a maze.
-* Feature request template.
-* .npmignore.
 * Hunt and kill algorithm.
 * Created a CONTRIBUTING.md file
+* Added codeowners
+* Feature request template.
+* .npmignore to reduce size of package.
 
 ### Changes
 * Changes string representation of the maze
