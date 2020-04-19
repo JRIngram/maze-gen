@@ -17,7 +17,7 @@ Once your contribution is ready to be added to the project, please do the follow
    build.
 2. Ensure linting standards are conformed to.
 3. If new code is written, ensure that unit tests have been writen to cover the new code.
-4. Update the [changelog](CHANGELOG.md). Add details of your update to the appropriate section beneath "Unreleased". Our changelogs are based on [KEEPACHANGELOG](https://keepachangelog.com/en/1.0.0/).
+4. Update the [changelog](https://github.com/JRIngram/maze-gen/blob/develop/CHANGELOG.md). Add details of your update to the appropriate section beneath "Unreleased". Our changelogs are based on [KEEPACHANGELOG](https://keepachangelog.com/en/1.0.0/).
 5. If required, update the [README](README.md) with details of changes to the interface.
 6. Follow the Pull Request template. It is in place to make pull requests easier to review.
 7. Assign jringram as a reviewer.
