@@ -20,26 +20,26 @@ class Generator {
   /**
    * Returns the generated maze from the generation algorithm pass as a parameter.
    * @param {*} algorithm the algorithm to use to generate the maze
-   * @param {*} seed the seed to generate the maze
+   * @param {*} prando A prando object constructed with the seed to generate the maze
    */
-  generateMaze (algorithm = 'DEPTHFIRST', seed = Math.floor(Math.random() * Math.floor(100000))) {
+  generateMaze (algorithm = 'DEPTHFIRST', prando = new Prando()) {
     if (!this.isValidAlgorithm(algorithm.toUpperCase())) {
       throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
     } else {
       if (algorithm.toUpperCase() === 'DEPTHFIRST') {
-        return this.depthFirst(this.seed);
+        return this.depthFirst(prando);
       } else if (algorithm.toUpperCase() === 'HUNTANDKILL') {
-        return this.huntAndKill(this.seed);
+        return this.huntAndKill(prando);
       }
     }
   }
 
   /**
    * Generates a maze using the Depth First algorithm
-   * @param {*} seed  The seed for the used random number generator.
+   * @param {*} prando A prando object constructed with the seed to generate the maze. Used as arandom number generator.
   */
-  depthFirst (seed) {
-    const rng = new Prando(seed);
+  depthFirst (prando) {
+    const rng = prando;
     const generatedMaze = new Maze(this.width, this.height);
     const cellStack = [];
 
@@ -85,10 +85,10 @@ class Generator {
 
   /**
    * Generates a maze using the Hunt And Kill algorithm
-   * @param {*} seed  The seed for the used random number generator.
+   * @param {*} prando A prando object constructed with the seed to generate the maze. Used as arandom number generator.
    */
-  huntAndKill (seed) {
-    const rng = new Prando(seed);
+  huntAndKill (prando) {
+    const rng = prando;
     let generatedMaze = new Maze(this.width, this.height);
 
     // Set currentCell = random cell
