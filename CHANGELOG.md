@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Restructured README:
     * Added links to changelog and contributing
     * Added algorithm descriptions
+* Moved linting and unit tests to distinct jobs in circleci
 
 ### Security 
 * Bump acorn from 6.4.0 to 6.4.1 
