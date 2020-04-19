@@ -7,14 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
-* Ability to use a seeded random number generator to generate a maze
-* Feature request template
-* .npmignore
+* Ability to use a seeded random number generator to generate a maze.
+* Feature request template.
+* .npmignore.
+* Hunt and kill algorithm.
+* Created a CONTRIBUTING.md file
 
 ### Changes
 * Changes string representation of the maze
 * Bump jest from 25.1.0 to 25.3.0
 * Improved bug report template.
+* Order of parameters for generateMaze.
+* Tidied tests and remove unused functions.
+* Restructured README:
+    * Added links to changelog and contributing
+    * Added algorithm descriptions
 
 ### Security 
 * Bump acorn from 6.4.0 to 6.4.1 
@@ -42,3 +49,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.0]: https://github.com/jringram/maze-gen/releases/tag/v1.0.0
 [1.0.1]: https://github.com/jringram/maze-gen/releases/tag/v1.0.1
 [1.0.2]: https://github.com/jringram/maze-gen/releases/tag/v1.0.2
+[2.0.0]: https://github.com/jringram/maze-gen/releases/tag/v2.0.0
