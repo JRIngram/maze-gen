@@ -23,7 +23,8 @@
     "depth",
     "first",
     "depth-first",
-    "seed"
+    "seed",
+    "reproducible"
   ],
   "main": "index.js",
   "scripts": {

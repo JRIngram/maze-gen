@@ -5,7 +5,11 @@
 ![CircleCI](https://img.shields.io/circleci/build/github/JRIngram/maze-gen)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/maze-generation)
 
-An npm package used to generate mazes.
+An npm package used to generate mazes with a specified width and height. 
+
+Mazes can be generated using either recursive backtracker (Depth First) or hunt and kill algorithms. See below for details of these algorithms.
+
+Additionally mazes can be generated using seeds, which allows for reproducible maze generation.
 
 ## Contributing
 Please view our [CONTRIBUTING.md](https://github.com/JRIngram/maze-gen/blob/develop/CONTRIBUTING.md) file for information on how to contribute, report issues and request features.
