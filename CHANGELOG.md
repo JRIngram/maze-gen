@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [2.0.0] - 2020-04-21
 ### Added
 * Ability to use a seeded random number generator to generate a maze.
 * Feature request template.
@@ -14,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Created a CONTRIBUTING.md file
 
 ### Changes
-* Changes string representation of the maze
+* String representation of the maze to be more clear
 * Bump jest from 25.1.0 to 25.4.0
 * Improved bug report template.
 * Order of parameters for generateMaze.
