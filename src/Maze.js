@@ -12,23 +12,11 @@ class Maze {
      */
   constructor (width, height) {
     this.cells = [];
+    // Create an [i, j] 2D array of cells
     for (let i = 0; i < height; i++) {
       const row = [];
       for (let j = 0; j < width; j++) {
-        let cell;
-        if (i === 0 && j === 0) {
-          // Top left cell
-          cell = new Cell(true, true);
-        } else if (i === 0 && j !== 0) {
-          // Top but not leftmost cell
-          cell = new Cell(true, false);
-        } else if (i !== 0 && j === 0) {
-          // Leftmost but not top cell
-          cell = new Cell(false, true);
-        } else {
-          cell = new Cell(false, false);
-        }
-        row.push(cell);
+        row.push(new Cell());
       }
       this.cells.push(row);
     }
@@ -54,6 +42,40 @@ class Maze {
   }
 
   /**
+   * Gets the first unvisited cell in the maze with visited neighbours and returns the cell and the neighbours information
+   * @returns If true: the first unvisited cell indicies and the indicies of its neighbours; false if no cell with visitedNeighbours exists
+   */
+  getFirstUnvisitedCellWithVisitedNeighbour () {
+    const unvisitedCells = this.getUnvisitedCells();
+    for (let i = 0; i < unvisitedCells.length; i++) {
+      const visitedNeighbours = this.getVisitedNeigbourIndices(unvisitedCells[i].y, unvisitedCells[i].x);
+      if (visitedNeighbours.length > 0) {
+        return {
+          firstCell: unvisitedCells[i],
+          neighbours: visitedNeighbours
+        };
+      }
+    }
+    return false;
+  }
+
+  getUnvisitedCells () {
+    const unvisitedCells = [];
+    for (let i = 0; i < this.cells.length; i++) {
+      for (let j = 0; j < this.cells[i].length; j++) {
+        if (!this.getCellVisited(i, j)) {
+          unvisitedCells.push({ x: j, y: i });
+        }
+      }
+    }
+    return unvisitedCells;
+  }
+
+  getTotalUnvisitedCells () {
+    return this.getUnvisitedCells().length;
+  }
+
+  /**
      * Removes the wall of the selected cell
      * @param {*} row The row index of the cell
      * @param {*} column The column index of the cell
@@ -73,7 +95,7 @@ class Maze {
   }
 
   /**
-     * Returns if a wall
+     * Returns if a wall exists in the specified direction
      * @param {*} row The row index of the cell
      * @param {*} column The column index of the cell
      * @param {string} direction left;right;up;down. The wall that should be removed.
@@ -81,16 +103,6 @@ class Maze {
      */
   getWallStatus (row, column, direction) {
     return this.cells[row][column].getWallStatus(direction);
-  }
-
-  /**
-     * Picks a random cell from the maze and returns it
-     * @returns {Cell} A random cell from the maze
-     */
-  getRandomCell () {
-    const mazeHeight = this.cells.length;
-    const mazeWidth = this.cells[0].length;
-    return { randomHeight: Math.floor(Math.random() * mazeHeight), randomWidth: Math.floor(Math.random() * mazeWidth) };
   }
 
   /**
@@ -163,6 +175,50 @@ class Maze {
   }
 
   /**
+    * Calls getCellNeighbourIndices, checks if each neighbour is visited and adds the visited cell's coordinates to an array
+    * @param {*} row The row index of the cell
+    * @param {*} column The column index of the cell
+    * @returns {[]} The indicies of visited neighours of the chosen cell
+  */
+  getVisitedNeigbourIndices (row, column) {
+    const neighbourIndices = this.getCellNeighbourIndices(row, column);
+    const unvisitedNeighbours = [];
+    if (typeof neighbourIndices.up !== 'undefined' && this.getCellVisited(neighbourIndices.up.y, neighbourIndices.up.x) === true) {
+      const cell = {
+        direction: 'up',
+        x: neighbourIndices.up.x,
+        y: neighbourIndices.up.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    if (typeof neighbourIndices.down !== 'undefined' && this.getCellVisited(neighbourIndices.down.y, neighbourIndices.down.x) === true) {
+      const cell = {
+        direction: 'down',
+        x: neighbourIndices.down.x,
+        y: neighbourIndices.down.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    if (typeof neighbourIndices.left !== 'undefined' && this.getCellVisited(neighbourIndices.left.y, neighbourIndices.left.x) === true) {
+      const cell = {
+        direction: 'left',
+        x: neighbourIndices.left.x,
+        y: neighbourIndices.left.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    if (typeof neighbourIndices.right !== 'undefined' && this.getCellVisited(neighbourIndices.right.y, neighbourIndices.right.x) === true) {
+      const cell = {
+        direction: 'right',
+        x: neighbourIndices.right.x,
+        y: neighbourIndices.right.y
+      };
+      unvisitedNeighbours.push(cell);
+    }
+    return unvisitedNeighbours;
+  }
+
+  /**
      * @returns {string} The string represention of all cells within the maze.
      *  e.g. |-  =  -|
      *       | ||=  _|
@@ -170,16 +226,23 @@ class Maze {
      */
   toString () {
     let stringRepresentation = '';
+    for (let topRow = 0; topRow < this.cells[0].length; topRow++) {
+      // Adds a top wall to the top cells
+      stringRepresentation += this.cells[0][topRow].walls.up ? ' _' : '  ';
+    }
+    stringRepresentation += '\n';
+
     for (let row = 0; row < this.cells.length; row++) {
       let rowString = '';
       for (let cell = 0; cell < this.cells[row].length; cell++) {
+        // Adds a wall to the left most cell
+        if (cell === 0 && this.cells[row][cell].walls.left) {
+          stringRepresentation += '|';
+        }
         rowString += this.cells[row][cell].toString();
       }
-      if (row + 1 < this.cells.length) {
-        stringRepresentation += rowString + '\n';
-      } else {
-        stringRepresentation += rowString;
-      }
+      // Add a new line if the last cell of the row
+      stringRepresentation += row + 1 < this.cells.length ? rowString + '\n' : rowString;
     }
     return stringRepresentation;
   }
