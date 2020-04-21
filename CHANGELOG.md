@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 * Changes string representation of the maze
-* Bump jest from 25.1.0 to 25.3.0
+* Bump jest from 25.1.0 to 25.4.0
 * Improved bug report template.
 * Order of parameters for generateMaze.
 * Tidied tests and remove unused functions.
