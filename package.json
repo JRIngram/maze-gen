@@ -39,7 +39,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "jest": "^25.1.0",
+    "jest": "^26.0.0",
     "semistandard": "^14.2.0"
   },
   "standard": {
