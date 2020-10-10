@@ -220,7 +220,7 @@ class Maze {
 
   /**
      * @returns {string} The string represention of all cells within the maze.
-     *  e.g. 
+     *  e.g.
      *  _ _ _
      * |    _|
      * |_| | |
