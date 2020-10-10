@@ -220,10 +220,13 @@ class Maze {
 
   /**
      * @returns {string} The string represention of all cells within the maze.
-     *  e.g. |-  =  -|
-     *       | ||=  _|
-     *       |_  =  =|
-     */
+     *  e.g. 
+     *  _ _ _
+     * |    _|
+     * |_| | |
+     * | | | |
+     * |_ _ _|
+     **/
   toString () {
     let stringRepresentation = '';
     for (let topRow = 0; topRow < this.cells[0].length; topRow++) {
