@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 * New max dimensions, to stop heap out of memory errors
+* Minor documentation fixes
 
 ## [2.0.0] - 2020-04-21
 ### Added
