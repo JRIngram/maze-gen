@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changes
 * Bump from semi-standard `14.2.3` to `16.0.0`
+* Bump jest from `26.5.2` to `26.6.3`
 ### Security
 
 ## [2.1.0] - 2020-10-10
