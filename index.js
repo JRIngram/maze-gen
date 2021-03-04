@@ -3,7 +3,9 @@ const Prando = require('prando');
 
 module.exports = (options) => {
   let { width, height, seed, algorithm } = options;
-  // TODO add extra check to see if all variables are undefined
+  if (typeof width === 'undefined' || typeof height === 'undefined') {
+    throw new Error('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+  }
   if (typeof algorithm === 'undefined') {
     algorithm = 'DEPTHFIRST';
   }

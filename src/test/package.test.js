@@ -51,7 +51,7 @@ describe('Seed generation', () => {
 });
 
 describe('Error handling', () => {
-  describe('Dimensions', () => {
+  describe('min / max Dimensions', () => {
     describe('Width and Height must be above 0', () => {
       it.each([
         [0, 0],
@@ -79,6 +79,46 @@ describe('Error handling', () => {
     });
   });
 
+  describe('no required parameters', () => {
+    it('throws an error if an empty object is passed as parameter', () => {
+      expect(() => {
+        const options = {};
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
+
+    it.each(
+      [
+        [{ width: 3 }],
+        [{ width: 3, seed: 1234, algorithm: 'HUNTANDKILL' }]
+      ]
+    )('throws an error if an object without the height parameter is passed', () => {
+      expect(() => {
+        const options = { width: 3 };
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
+
+    it.each(
+      [
+        [{ height: 3 }],
+        [{ height: 3, seed: 1234, algorithm: 'HUNTANDKILL' }]
+      ]
+    )('throws an error if an object without the width parameter is passed', () => {
+      expect(() => {
+        const options = { width: 3 };
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
+
+    it('throws an error if an object is passed without both dimension parameters', () => {
+      expect(() => {
+        const options = { seed: 1234, algorithm: 'HUNTANDKILL' };
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
+  });
+
   it('Invalid algorithm', () => {
     const options = { width: 3, height: 3, seed: 12345, algorithm: 'INVALIDALGORITHM' };
     expect(() => {
@@ -86,7 +126,7 @@ describe('Error handling', () => {
     }).toThrowError(`${options.algorithm} is an Invalid Maze Generation Algorithm`);
   });
 
-  describe('Height and row dimensions', () => {
+  describe('height and width types', () => {
     describe('are passed as strings', () => {
       it.each([
         ['3', '3'],
@@ -118,9 +158,9 @@ describe('Error handling', () => {
 
     describe('objects', () => {
       it.each([
-        [{ width: 3 }, { height: 3}],
-        [3, { height: 3}],
-        [{width:3}, 3]
+        [{ width: 3 }, { height: 3 }],
+        [3, { height: 3 }],
+        [{ width: 3 }, 3]
       ])(('throws an error if width is %o and height is %o'), (width, height) => {
         const options = { width: width, height: height };
         expect(() => {
