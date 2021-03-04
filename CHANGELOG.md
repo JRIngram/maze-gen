@@ -6,9 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.2.0] - Unreleased
-
 ### Added
 ### Changes
+* Package now takes an `options` object as its parameter (which contains height, width, seed and algorithm) rather than taking 4 individual parameters
 * Bump from semi-standard `14.2.3` to `16.0.0`
 * Bump jest from `26.5.2` to `26.6.3`
 
