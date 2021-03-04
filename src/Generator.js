@@ -23,14 +23,13 @@ class Generator {
    * @param {*} prando A prando object constructed with the seed to generate the maze
    */
   generateMaze (algorithm = 'DEPTHFIRST', prando = new Prando()) {
-    if (!this.isValidAlgorithm(algorithm.toUpperCase())) {
-      throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
+    const capitalisedAlgorithm = algorithm.toUpperCase();
+    if (capitalisedAlgorithm === 'DEPTHFIRST') {
+      return this.depthFirst(prando);
+    } else if (capitalisedAlgorithm === 'HUNTANDKILL') {
+      return this.huntAndKill(prando);
     } else {
-      if (algorithm.toUpperCase() === 'DEPTHFIRST') {
-        return this.depthFirst(prando);
-      } else if (algorithm.toUpperCase() === 'HUNTANDKILL') {
-        return this.huntAndKill(prando);
-      }
+      throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
     }
   }
 
