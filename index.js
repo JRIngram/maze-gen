@@ -1,7 +1,15 @@
 const Generator = require('./src/Generator');
 const Prando = require('prando');
 
-module.exports = (width, height, seed = Math.floor(Math.random() * Math.floor(100000)), algorithm = 'DEPTHFIRST') => {
+module.exports = (options) => {
+  let { width, height, seed, algorithm } = options;
+  // TODO add extra check to see if all variables are undefined
+  if (typeof algorithm === 'undefined') {
+    algorithm = 'DEPTHFIRST';
+  }
+  if (typeof seed === 'undefined') {
+    seed = Math.floor(Math.random() * Math.floor(100000));
+  }
   if (typeof width !== 'number' || typeof height !== 'number') {
     throw new Error('Width and height must be numbers');
   }
