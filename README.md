@@ -42,7 +42,7 @@ const options = {
     width: 10,
     height: 15,
     seed: 12345,
-    algorithm: HUNTANDKILL
+    algorithm: 'HUNTANDKILL'
 }
 
 // Generate a maze
