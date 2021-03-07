@@ -1,6 +1,5 @@
 const Prando = require('prando');
 const Maze = require('./Maze');
-const validAlgorithms = ['DEPTHFIRST', 'HUNTANDKILL'];
 
 class Generator {
   constructor (width, height) {
@@ -9,28 +8,18 @@ class Generator {
   }
 
   /**
-   * Returns true if the name of a valid algorithm is passed as a parameter
-   * @param {*} algorithm
-   */
-
-  isValidAlgorithm (algorithm) {
-    return typeof algorithm === 'string' ? validAlgorithms.includes(algorithm.toUpperCase()) : false;
-  }
-
-  /**
    * Returns the generated maze from the generation algorithm pass as a parameter.
    * @param {*} algorithm the algorithm to use to generate the maze
    * @param {*} prando A prando object constructed with the seed to generate the maze
    */
   generateMaze (algorithm = 'DEPTHFIRST', prando = new Prando()) {
-    if (!this.isValidAlgorithm(algorithm.toUpperCase())) {
-      throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
+    const capitalisedAlgorithm = algorithm.toUpperCase();
+    if (capitalisedAlgorithm === 'DEPTHFIRST') {
+      return this.depthFirst(prando);
+    } else if (capitalisedAlgorithm === 'HUNTANDKILL') {
+      return this.huntAndKill(prando);
     } else {
-      if (algorithm.toUpperCase() === 'DEPTHFIRST') {
-        return this.depthFirst(prando);
-      } else if (algorithm.toUpperCase() === 'HUNTANDKILL') {
-        return this.huntAndKill(prando);
-      }
+      throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
     }
   }
 
