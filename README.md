@@ -28,18 +28,25 @@ Run `npm i maze-generation`
 
 ### Usage
 
-Add the following to your code where:
-* `width` and `height` should be replaced by ints corresponding to how wide and tall you want your maze.
-* `seed` should be replaced by an int or string and will be used as the seed for the random number generator.
-* `algorithm` should be: `'DEPTHFIRST'` or `'HUNTANDKILL'`.
+Add an `options` object to your code, with the following to fields:
+* **REQUIRED** `width` and `height` should be replaced by ints corresponding to how wide and tall you want your maze.
+* **OPTIONAL** `seed` should be replaced by an int or string and will be used as the seed for the random number generator. Defaults to a random number.
+* **OPTIONAL** `algorithm` should be: `'DEPTHFIRST'` or `'HUNTANDKILL'`. Defaults to `'DEPTHFIRST'`.
 
 To stop heap out of memory errors, the maximum allowed height and width is 3000.
 
 ```javascript
 const mazegeneration = require('maze-generation');
 
+const options = {
+    width: 10,
+    height: 15,
+    seed: 12345,
+    algorithm: HUNTANDKILL
+}
+
 // Generate a maze
-const generatedMaze = mazegeneration(width,height,seed,algorithm);
+const generatedMaze = mazegeneration(options);
 ```
 
 To get the string representation of the generated maze write:
