@@ -1,6 +1,5 @@
 const Prando = require('prando');
 const Maze = require('./Maze');
-const validAlgorithms = ['DEPTHFIRST', 'HUNTANDKILL'];
 
 class Generator {
   constructor (width, height) {
