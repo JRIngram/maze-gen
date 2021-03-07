@@ -9,15 +9,6 @@ class Generator {
   }
 
   /**
-   * Returns true if the name of a valid algorithm is passed as a parameter
-   * @param {*} algorithm
-   */
-
-  isValidAlgorithm (algorithm) {
-    return typeof algorithm === 'string' ? validAlgorithms.includes(algorithm.toUpperCase()) : false;
-  }
-
-  /**
    * Returns the generated maze from the generation algorithm pass as a parameter.
    * @param {*} algorithm the algorithm to use to generate the maze
    * @param {*} prando A prando object constructed with the seed to generate the maze

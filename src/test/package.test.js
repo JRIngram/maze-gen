@@ -18,36 +18,127 @@ describe('Maze created with the correct dimensions', () => {
   });
 });
 
-describe('Seed generation', () => {
+describe('Algorithms', () => {
   const testOptions = {
     width: 10,
     height: 10,
-    algorithm: 'DEPTHFIRST'
   };
 
-  it('generates the same maze if the same numerical seed is provided', () => {
-    const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
-    const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
-    expect(maze1).toEqual(maze2);
+  describe('Default (DEPTHFIRST)', () => {
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    });
+  });
+});
+
+describe('Seed generation', () => {
+  let testOptions = {
+    width: 10,
+    height: 10,
+  };
+  
+  describe('DEPTHFIRST', () => {
+    testOptions = {...testOptions, algorithm: 'DEPTHFIRST'}
+
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    });
   });
 
-  it('generates the same maze if the same alphabetical seed is provided', () => {
-    const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
-    const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
-    expect(maze1).toEqual(maze2);
+  describe('Default (DEPTHFIRST)', () => {
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    })
   });
 
-  it('generates a different maze if a different numerical seed is provided', () => {
-    const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
-    const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
-    expect(maze1).not.toEqual(maze2);
+  describe('HUNTANDKILL', () => {
+    testOptions = {...testOptions, algorithm: 'HUNTANDKILL'}
+    
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+  
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    });
   });
 
-  it('generates a different maze if a different alphabetical seed is provided', () => {
-    const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
-    const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
-    expect(maze1).not.toEqual(maze2);
-  });
 });
 
 describe('Error handling', () => {
