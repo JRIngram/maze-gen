@@ -48,6 +48,6 @@
     ]
   },
   "dependencies": {
-    "prando": "^5.1.2"
+    "prando": "^6.0.1"
   }
 }
