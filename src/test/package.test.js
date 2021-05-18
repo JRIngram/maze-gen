@@ -1,154 +1,262 @@
 const mazegeneration = require('../../index');
 /* eslint-env jest */
 
-describe('Maze created with the correct dimension', () => {
-  it('is created correctly when dimensions are 3 by 3', () => {
-    const maze = mazegeneration(3, 3);
-    const height = maze.cells.length;
-    const width = maze.cells[0].length;
-    expect(width).toBe(3);
-    expect(height).toBe(3);
+describe('Maze created with the correct dimensions', () => {
+  it.each([
+    [1, 1],
+    [3, 3],
+    [50, 100],
+    [100, 50],
+    [2999, 2999],
+    [3000, 3000]
+  ])('is created correctly when dimensions are %i by %i', (width, height) => {
+    const maze = mazegeneration({ width: width, height: height });
+    const expectedHeight = maze.cells.length;
+    const expectedWidth = maze.cells[0].length;
+    expect(expectedWidth).toBe(width);
+    expect(expectedHeight).toBe(height);
   });
+});
 
-  it('is created correctly when dimensions are 50 by 100', () => {
-    const maze = mazegeneration(50, 100);
-    const height = maze.cells.length;
-    const width = maze.cells[0].length;
-    expect(height).toBe(100);
-    expect(width).toBe(50);
-  });
+describe('Algorithms', () => {
+  const testOptions = {
+    width: 10,
+    height: 10
+  };
 
-  it('is created correctly when dimensions are 50000 by 100000', () => {
-    const maze = mazegeneration(3000, 3000);
-    const height = maze.cells.length;
-    const width = maze.cells[0].length;
-    expect(height).toBe(3000);
-    expect(width).toBe(3000);
+  describe('Default (DEPTHFIRST)', () => {
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    });
   });
 });
 
 describe('Seed generation', () => {
-  it('generates the same maze if the same numerical seed is provided', () => {
-    const maze1 = mazegeneration(10, 10, 12345, 'DEPTHFIRST');
-    const maze2 = mazegeneration(10, 10, 12345, 'DEPTHFIRST');
-    expect(maze1).toEqual(maze2);
+  let testOptions = {
+    width: 10,
+    height: 10
+  };
+
+  describe('DEPTHFIRST', () => {
+    testOptions = { ...testOptions, algorithm: 'DEPTHFIRST' };
+
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    });
   });
 
-  it('generates the same maze if the same alphabetical seed is provided', () => {
-    const maze1 = mazegeneration(10, 10, 'test', 'DEPTHFIRST');
-    const maze2 = mazegeneration(10, 10, 'test', 'DEPTHFIRST');
-    expect(maze1).toEqual(maze2);
+  describe('Default (DEPTHFIRST)', () => {
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    });
+  });
+
+  describe('HUNTANDKILL', () => {
+    testOptions = { ...testOptions, algorithm: 'HUNTANDKILL' };
+
+    it('generates the same maze if the same numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 12345 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates the same maze if the same alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'test' });
+      expect(maze1).toEqual(maze2);
+    });
+
+    it('generates a different maze if a different numerical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 11234 });
+      const maze2 = mazegeneration({ ...testOptions, seed: 12345 });
+      expect(maze1).not.toEqual(maze2);
+    });
+
+    it('generates a different maze if a different alphabetical seed is provided', () => {
+      const maze1 = mazegeneration({ ...testOptions, seed: 'test' });
+      const maze2 = mazegeneration({ ...testOptions, seed: 'testseed' });
+      expect(maze1).not.toEqual(maze2);
+    });
   });
 });
 
 describe('Error handling', () => {
-  describe('Dimensions', () => {
-    it('throws an error if width and height are 0', () => {
-      expect(() => {
-        mazegeneration(0, 0);
-      }).toThrowError('Width and height must be greater than 0');
+  describe('min / max Dimensions', () => {
+    describe('Width and Height must be above 0', () => {
+      it.each([
+        [0, 0],
+        [3, 0],
+        [0, 3]
+      ])('throws an error if width is %i and height is %i', (width, height) => {
+        expect(() => {
+          const options = { width: width, height: height };
+          mazegeneration(options);
+        }).toThrowError('Width and height must be greater than 0');
+      });
     });
 
-    it('throws an error if height is 0', () => {
-      expect(() => {
-        mazegeneration(50, 0);
-      }).toThrowError('Width and height must be greater than 0');
-    });
-
-    it('throws an error if width is 0', () => {
-      expect(() => {
-        mazegeneration(0, 50);
-      }).toThrowError('Width and height must be greater than 0');
-    });
-
-    it('throws an error if width and height are above 3000', () => {
-      expect(() => {
-        mazegeneration(3001, 3001);
-      }).toThrowError('Height and width must be a maximum of 3000');
-    });
-
-    it('throws an error if width is above 3000', () => {
-      expect(() => {
-        mazegeneration(3001, 3000);
-      }).toThrowError('Height and width must be a maximum of 3000');
-    });
-
-    it('throws an error if height is above 3000', () => {
-      expect(() => {
-        mazegeneration(3000, 3001);
-      }).toThrowError('Height and width must be a maximum of 3000');
+    describe('Width and Height must be below 3000', () => {
+      it.each([
+        [3001, 3001],
+        [3001, 3],
+        [3, 3001]
+      ])('throws an error if width is %i and height is %i', (width, height) => {
+        expect(() => {
+          const options = { width: width, height: height };
+          mazegeneration(options);
+        }).toThrowError('Height and width must be a maximum of 3000');
+      });
     });
   });
 
-  describe('Height and row types', () => {
-    describe('strings', () => {
-      it('throws an error if height and width are strings', () => {
-        expect(() => {
-          mazegeneration('3', '3');
-        }).toThrowError('Width and height must be numbers');
-      });
+  describe('no required parameters', () => {
+    it('throws an error if an empty object is passed as parameter', () => {
+      expect(() => {
+        const options = {};
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
 
-      it('throws an error if height is a string', () => {
-        expect(() => {
-          mazegeneration('3', 3);
-        }).toThrowError('Width and height must be numbers');
-      });
+    it.each(
+      [
+        [{ width: 3 }],
+        [{ width: 3, seed: 1234, algorithm: 'HUNTANDKILL' }]
+      ]
+    )('throws an error if an object without the height parameter is passed', () => {
+      expect(() => {
+        const options = { width: 3 };
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
 
-      it('throws an error if width is a string', () => {
+    it.each(
+      [
+        [{ height: 3 }],
+        [{ height: 3, seed: 1234, algorithm: 'HUNTANDKILL' }]
+      ]
+    )('throws an error if an object without the width parameter is passed', () => {
+      expect(() => {
+        const options = { width: 3 };
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
+
+    it('throws an error if an object is passed without both dimension parameters', () => {
+      expect(() => {
+        const options = { seed: 1234, algorithm: 'HUNTANDKILL' };
+        mazegeneration(options);
+      }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
+    });
+  });
+
+  it('Invalid algorithm', () => {
+    const options = { width: 3, height: 3, seed: 12345, algorithm: 'INVALIDALGORITHM' };
+    expect(() => {
+      mazegeneration(options);
+    }).toThrowError(`${options.algorithm} is an Invalid Maze Generation Algorithm`);
+  });
+
+  describe('height and width types', () => {
+    describe('are passed as strings', () => {
+      it.each([
+        ['3', '3'],
+        ['3', 3],
+        [3, '3']
+      ])('throws an error if width is %s and height is %s', (width, height) => {
+        const options = { width: width, height: height };
         expect(() => {
-          mazegeneration(3, '3');
+          mazegeneration(options);
         }).toThrowError('Width and height must be numbers');
       });
     });
 
-    describe('booleans', () => {
-      it('throws an error if height and width are booleans', () => {
+    describe('are passed as boolean', () => {
+      it.each([
+        [3, false],
+        [3, true],
+        [false, false],
+        [false, true],
+        [false, 3],
+        [true, 3]
+      ])('throws an error if width is %o and height is %o', (width, height) => {
+        const options = { width: width, height: height };
         expect(() => {
-          mazegeneration(false, true);
-        }).toThrowError('Width and height must be numbers');
-      });
-
-      it('throws an error if height is a boolean', () => {
-        expect(() => {
-          mazegeneration(3, true);
-        }).toThrowError('Width and height must be numbers');
-      });
-
-      it('throws an error if width is a boolean', () => {
-        expect(() => {
-          mazegeneration(false, 3);
+          mazegeneration(options);
         }).toThrowError('Width and height must be numbers');
       });
     });
 
     describe('objects', () => {
-      it('throws an error if height and width are objects', () => {
-        const testObject = { number: 3 };
+      it.each([
+        [{ width: 3 }, { height: 3 }],
+        [3, { height: 3 }],
+        [{ width: 3 }, 3]
+      ])(('throws an error if width is %o and height is %o'), (width, height) => {
+        const options = { width: width, height: height };
         expect(() => {
-          mazegeneration(testObject, testObject);
+          mazegeneration(options);
         }).toThrowError('Width and height must be numbers');
       });
-
-      it('throws an error if height is a objects', () => {
-        const testObject = { number: 3 };
-        expect(() => {
-          mazegeneration(3, testObject);
-        }).toThrowError('Width and height must be numbers');
-      });
-
-      it('throws an error if width is a objects', () => {
-        const testObject = { number: 3 };
-        expect(() => {
-          mazegeneration(testObject, 3);
-        }).toThrowError('Width and height must be numbers');
-      });
-    });
-
-    it('Invalid algorithm', () => {
-      const invalidAlgorithm = 'INVALIDALGORITHM';
-      expect(() => {
-        mazegeneration(10, 10, 12345, invalidAlgorithm);
-      }).toThrowError(`${invalidAlgorithm} is an Invalid Maze Generation Algorithm`);
     });
   });
 });

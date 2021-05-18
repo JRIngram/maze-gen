@@ -61,36 +61,6 @@ describe('Returns mazes', () => {
   });
 });
 
-describe('isValidAlgorithm', () => {
-  let gen;
-
-  beforeAll(() => {
-    gen = new Generator(10, 10, 'DepthFirst');
-  });
-
-  it('Returns true when HUNTANDKILL is chosen', () => {
-    expect(gen.isValidAlgorithm('HUNTANDKILL')).toEqual(true);
-  });
-
-  it('Returns true when DEPTHFIRST is chosen', () => {
-    expect(gen.isValidAlgorithm('DEPTHFIRST')).toEqual(true);
-  });
-
-  it('Returns false when an invalid algorithm is chosen', () => {
-    expect(gen.isValidAlgorithm('InvalidAlgorithm')).toEqual(false);
-  });
-
-  it('Returns true when a lower case valid algorithm is chosen', () => {
-    expect(gen.isValidAlgorithm('depthfirst')).toEqual(true);
-  });
-
-  it('Returns false when a none string parameter is entered', () => {
-    expect(gen.isValidAlgorithm(123)).toEqual(false);
-    expect(gen.isValidAlgorithm(123.0)).toEqual(false);
-    expect(gen.isValidAlgorithm(true)).toEqual(false);
-  });
-});
-
 describe('Algorithm tests', () => {
   let gen;
 
