@@ -1,16 +1,18 @@
 class Solver {
   constructor (maze, start, goal) {
     this.maze = maze;
-    const mazeHeight = maze.cells.lenght - 1;
-    const mazeWidth = maze.cells[0].length - 1;
+    const mazeHeight = this.maze.cells.length - 1;
+    const mazeWidth = this.maze.cells[0].length - 1;
     if (
       mazeHeight < start.row ||
-      mazeHeight < goal.row) {
+      mazeHeight < goal.row
+    ) {
       throw Error(`start/goal rows must be less than maze height (${mazeHeight}).`);
-    } else if (mazeWidth < start.column ||
+    } else if (
+      mazeWidth < start.column ||
       mazeWidth < goal.column
     ) {
-      throw Error(`start/goal columns must be less than width (${mazeWidth}).`);
+      throw Error(`start/goal columns must be less than maze width (${mazeWidth}).`);
     }
 
     const openSet = [{ ...start, cost: 0 }];
@@ -151,12 +153,9 @@ class Solver {
     const mazeHeight = this.maze.cells.length - 1;
     for (let bottomRow = 0; bottomRow < this.maze.cells[mazeHeight].length; bottomRow++) {
       const cellIsInPath = cellInPath(mazeHeight, bottomRow);
-      console.log(cellIsInPath);
       if (cellIsInPath) {
         // Adds a bottom wall to the bottom cells only if cell in path
-        console.log(this.maze.cells[mazeHeight][bottomRow].walls.down);
         if (this.maze.cells[mazeHeight][bottomRow].walls.down) {
-          console.log('here');
           stringRepresentation += ' ¯';
         }
       } else {
