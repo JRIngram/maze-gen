@@ -134,7 +134,9 @@ class Solver {
         if (pathCell) {
           const finalDigit = pathCell.step % 10;
           rowString += finalDigit;
-          if (!this.maze.cells[row][column].right) {
+          if (this.maze.cells[row][column].walls.right) {
+            rowString += '|';
+          } else {
             rowString += ' ';
           }
         } else {
@@ -143,6 +145,23 @@ class Solver {
       }
       // Add a new line if the last cell of the row
       stringRepresentation += row + 1 < this.maze.cells.length ? rowString + '\n' : rowString;
+    }
+
+    stringRepresentation += '\n';
+    const mazeHeight = this.maze.cells.length - 1;
+    for (let bottomRow = 0; bottomRow < this.maze.cells[mazeHeight].length; bottomRow++) {
+      const cellIsInPath = cellInPath(mazeHeight, bottomRow);
+      console.log(cellIsInPath);
+      if (cellIsInPath) {
+        // Adds a bottom wall to the bottom cells only if cell in path
+        console.log(this.maze.cells[mazeHeight][bottomRow].walls.down);
+        if (this.maze.cells[mazeHeight][bottomRow].walls.down) {
+          console.log('here');
+          stringRepresentation += ' ¯';
+        }
+      } else {
+        stringRepresentation += '  ';
+      }
     }
     return stringRepresentation;
   }
