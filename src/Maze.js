@@ -248,12 +248,12 @@ class Maze {
 
     for (let row = 0; row < this.cells.length; row++) {
       let rowString = '';
-      for (let cell = 0; cell < this.cells[row].length; cell++) {
-        // Adds a wall to the left most cell
-        if (cell === 0 && this.cells[row][cell].walls.left) {
+      for (let column = 0; column < this.cells[row].length; column++) {
+        if (column === 0 && this.cells[row][column].walls.left) {
+          // Adds a wall to the left most cell
           stringRepresentation += '|';
         }
-        rowString += this.cells[row][cell].toString();
+        rowString += this.cells[row][column].toString();
       }
       // Add a new line if the last cell of the row
       stringRepresentation += row + 1 < this.cells.length ? rowString + '\n' : rowString;

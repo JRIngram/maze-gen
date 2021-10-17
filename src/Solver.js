@@ -1,4 +1,5 @@
 class Solver {
+
   constructor(maze, start, goal) {
     this.maze = maze;
     const mazeHeight = maze.cells.lenght - 1;
@@ -76,9 +77,9 @@ class Solver {
         openSet.sort((cellOne, cellTwo) => {
           return cellOne.cost - cellTwo.cost;
         });
-        foundGoalCell = openSet.filter((openSetCell) => {
+        foundGoalCell = openSet.find((openSetCell) => {
           return openSetCell.column === goal.column && openSetCell.row === goal.row;
-        })[0]
+        })
         if (foundGoalCell) {
           finishedPathfinding = true;
         }
@@ -99,6 +100,54 @@ class Solver {
     constructPath(foundGoalCell);
 
     this.path = path;
+  }
+
+  toJSON(){
+    return this.path;
+  }
+
+  toString(){
+    const numberedPath = this.path.map((cell, index) => {
+      return {...cell, step: index}
+    });
+    let stringRepresentation = '';
+
+    const cellInPath = (row, column) => {
+      return numberedPath.find((pathCell) => {
+        return row === pathCell.row && column === pathCell.column;
+      });
+    }
+
+    for (let topRow = 0; topRow < this.maze.cells[0].length; topRow++) {
+      // Adds a top wall to the top cells
+      stringRepresentation += this.maze.cells[0][topRow].walls.up ? ' _' : '  ';
+    }
+    stringRepresentation += '\n';
+
+
+    for (let row = 0; row < this.maze.cells.length; row++) {
+      let rowString = '';
+      for (let column = 0; column < this.maze.cells[row].length; column++) {
+        const pathCell = cellInPath(row, column);
+        if (column === 0 && this.maze.cells[row][column].walls.left) {
+          // Adds a wall to the left most cell
+          stringRepresentation += '|';
+        }
+        if(pathCell){
+          const finalDigit = pathCell.step % 10;
+          rowString += finalDigit
+          if(!this.maze.cells[row][column].right){
+            rowString += ' ';
+          }
+        } else {
+          rowString += this.maze.cells[row][column].toString();
+        }
+
+      }
+      // Add a new line if the last cell of the row
+      stringRepresentation += row + 1 < this.maze.cells.length ? rowString + '\n' : rowString;
+    }
+    return stringRepresentation;
   }
 }
 
