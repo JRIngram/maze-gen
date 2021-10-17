@@ -220,7 +220,7 @@ class Maze {
   }
 
   /**
-   * 
+   *
    * @param {{row: number, column: number}} start the {row, column} coordinates of the starting cell
    * @param {{row: number, column: number}} goal the {row, column} coordinates of the goal cell
    */
