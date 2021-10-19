@@ -93,7 +93,35 @@ describe('Constructor', () => {
       }).toThrowError('start/goal columns must be less than maze width (3).');
     });
 
-    it.todo('you need to do error handling for if any index is -1');
+    it('throws an error if the goal row is set to less than 0', () => {
+      const testStart = {
+        row: 0,
+        column: 0
+      };
+      const testGoal = {
+        row: -1,
+        column: 3
+      };
+      expect(() => {
+        const testSolver = new Solver(testMaze, testStart, testGoal);
+        console.log(testSolver.path);
+      }).toThrowError('goal column/row must be great than or equal to 0.');
+    });
+
+    it('throws an error if the goal column is set to less than 0', () => {
+      const testStart = {
+        row: 0,
+        column: 0
+      };
+      const testGoal = {
+        row: 4,
+        column: -1
+      };
+      expect(() => {
+        const testSolver = new Solver(testMaze, testStart, testGoal);
+        console.log(testSolver.path);
+      }).toThrowError('goal column/row must be great than or equal to 0.');
+    });
   });
 
   describe('start errors', () => {
@@ -125,6 +153,36 @@ describe('Constructor', () => {
         const testSolver = new Solver(testMaze, testStart, testGoal);
         console.log(testSolver.path);
       }).toThrowError('start/goal columns must be less than maze width (3).');
+    });
+
+    it('throws an error if the start row is less than 0', () => {
+      const testStart = {
+        row: -1,
+        column: 4
+      };
+      const testGoal = {
+        row: 0,
+        column: 0
+      };
+      expect(() => {
+        const testSolver = new Solver(testMaze, testStart, testGoal);
+        console.log(testSolver.path);
+      }).toThrowError('start column/row must be great than or equal to 0.');
+    });
+
+    it('throws an error if the start column is less than 0', () => {
+      const testStart = {
+        row: 3,
+        column: -1
+      };
+      const testGoal = {
+        row: 0,
+        column: 0
+      };
+      expect(() => {
+        const testSolver = new Solver(testMaze, testStart, testGoal);
+        console.log(testSolver.path);
+      }).toThrowError('start column/row must be great than or equal to 0.');
     });
   });
 });

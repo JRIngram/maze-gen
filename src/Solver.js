@@ -3,12 +3,19 @@ class Solver {
     this.maze = maze;
     const mazeHeight = this.maze.cells.length - 1;
     const mazeWidth = this.maze.cells[0].length - 1;
+    if (start.column < 0 || start.row < 0) {
+      throw Error('start column/row must be great than or equal to 0.');
+    }
+    if (goal.column < 0 || goal.row < 0) {
+      throw Error('goal column/row must be great than or equal to 0.');
+    }
     if (
       mazeHeight < start.row ||
       mazeHeight < goal.row
     ) {
       throw Error(`start/goal rows must be less than maze height (${mazeHeight}).`);
-    } else if (
+    }
+    if (
       mazeWidth < start.column ||
       mazeWidth < goal.column
     ) {
