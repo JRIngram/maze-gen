@@ -434,4 +434,8 @@ describe('Number of unvisited cells', () => {
     }
     expect(maze.getTotalUnvisitedCells()).toEqual(0);
   });
+
+  describe('solver', () => {
+    it.todo('returns empty array if impassible returns path if path found');
+  });
 });
