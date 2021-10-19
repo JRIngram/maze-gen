@@ -185,4 +185,35 @@ describe('Constructor', () => {
       }).toThrowError('start column/row must be great than or equal to 0.');
     });
   });
+
+  it.todo('returns empty array if no path can be found');
+});
+
+describe('toString', () => {
+  it('correctly creates string for path', () => {
+    const testStart = {
+      row: 0,
+      column: 0
+    };
+    const testGoal = {
+      row: 3,
+      column: 3
+    };
+    const gen = new Generator(testOptions.width, testOptions.height);
+    const testMaze = gen.generateMaze(testOptions.algorithm, new Prando(testOptions.seed));
+    const testSolver = new Solver(testMaze, testStart, testGoal);
+    const actual = testSolver.toString();
+    const expected =
+    ' _ _ _ _\n' +
+    '|0 _  | |\n' +
+    '|1|_ _ _|\n' +
+    '|2 3 4 5|\n' +
+    '|_|_ _ 6|\n' +
+    '       ¯';
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe('toJSON', () => {
+  it.todo('correctly creates JSON for path');
 });
