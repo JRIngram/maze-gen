@@ -186,7 +186,59 @@ describe('Constructor', () => {
     });
   });
 
-  it.todo('returns empty array if no path can be found');
+  describe('no path found', () => {
+    beforeEach(() => {
+      // make goal cell impossible to get to
+      testMaze.cells[2][3].walls = {left: true, right: true, up: true, down: true};
+      testMaze.cells[3][2].walls = {left: true, right: true, up: true, down: true};
+      testMaze.cells[3][3].walls = {left: true, right: true, up: true, down: true};
+    });
+
+    it('returns empty array if no path can be found', () => {
+      const testStart = {
+        row: 0,
+        column: 0
+      };
+      const testGoal = {
+        row: 3,
+        column: 3
+      };
+      const testSolver = new Solver(testMaze, testStart, testGoal);
+      const expected = [];
+      const actual = testSolver.path;
+      expect(actual).toEqual(expected);
+    });
+
+    it('returns an empty string when showing no found path as string', () => {
+      const testStart = {
+        row: 0,
+        column: 0
+      };
+      const testGoal = {
+        row: 3,
+        column: 3
+      };
+      const testSolver = new Solver(testMaze, testStart, testGoal);
+      const expected = '';
+      const actual = testSolver.toString();
+      expect(actual).toEqual(expected);
+    });
+
+    it('returns an empty array when showing no found path as string', () => {
+      const testStart = {
+        row: 0,
+        column: 0
+      };
+      const testGoal = {
+        row: 3,
+        column: 3
+      };
+      const testSolver = new Solver(testMaze, testStart, testGoal);
+      const expected = [];
+      const actual = testSolver.toJSON();
+      expect(actual).toEqual(expected);
+    });
+  });
 });
 
 describe('toString', () => {

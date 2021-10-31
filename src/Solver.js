@@ -92,21 +92,24 @@ class Solver {
           finishedPathfinding = true;
         }
       } else {
-        return [];
+        finishedPathfinding = true;
+        foundGoalCell = false;
+        this.path = [];
       }
     }
 
     const path = [];
-    const constructPath = (cell) => {
-      const { row, column } = cell;
-      path.push({ row, column });
-      if (cell.previousCell) {
-        return constructPath(cell.previousCell);
-      }
-      path.reverse();
-    };
-    constructPath(foundGoalCell);
-
+    if(foundGoalCell){
+      const constructPath = (cell) => {
+        const { row, column } = cell;
+        path.push({ row, column });
+        if (cell.previousCell) {
+          return constructPath(cell.previousCell);
+        }
+        path.reverse();
+      };
+      constructPath(foundGoalCell);
+    }
     this.path = path;
   }
 
@@ -115,6 +118,9 @@ class Solver {
   }
 
   toString () {
+    if(this.path.length === 0){
+      return '';
+    }
     const numberedPath = this.path.map((cell, index) => {
       return { ...cell, step: index };
     });
