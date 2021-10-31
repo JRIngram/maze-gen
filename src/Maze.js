@@ -226,7 +226,7 @@ class Maze {
    */
   findPath (start, goal) {
     const solvedMaze = new Solver(this, start, goal);
-    return solvedMaze;
+    this.path = solvedMaze;
   }
 
   /**
