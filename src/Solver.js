@@ -99,7 +99,7 @@ class Solver {
     }
 
     const path = [];
-    if(foundGoalCell){
+    if (foundGoalCell) {
       const constructPath = (cell) => {
         const { row, column } = cell;
         path.push({ row, column });
@@ -118,7 +118,7 @@ class Solver {
   }
 
   toString () {
-    if(this.path.length === 0){
+    if (this.path.length === 0) {
       return '';
     }
     const numberedPath = this.path.map((cell, index) => {

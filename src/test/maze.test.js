@@ -436,6 +436,6 @@ describe('Number of unvisited cells', () => {
   });
 
   describe('solver', () => {
-    it.todo('returns empty array if impassible returns path if path found');
+    it.todo('returns empty array if impassible returns path if no path found');
   });
 });
