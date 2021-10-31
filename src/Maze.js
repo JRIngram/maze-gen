@@ -1,6 +1,9 @@
 const Cell = require('./Cell');
 const Solver = require('./Solver');
 
+// TODO fix circular reference
+// solver is stored in maze, maze stores solver
+
 /**
  * A class to represent the generated maze. This is made of cells
  * @see Cell

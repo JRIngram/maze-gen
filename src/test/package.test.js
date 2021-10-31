@@ -260,3 +260,92 @@ describe('Error handling', () => {
     });
   });
 });
+
+describe('Can solve a maze and display the path', () => {
+  const testOptions = {
+    width: 10,
+    height: 10,
+    seed: 'testseed'
+  };
+
+  let testMaze;
+
+  describe('DEPTHFIRST', () => {
+    beforeEach(() => {
+      testMaze = mazegeneration({ ...testOptions, algorithm: 'DEPTHFIRST' });
+    });
+
+    // describe('can find path', () => {
+    //   let foundPath;
+    //   beforeEach(() => {
+    //     foundPath = testMaze.findPath({ row: 0, column: 0 }, { row: 9, column: 9 });
+    //   });
+
+    //   it('returns array of steps for solved maze', () => {
+    //     expect(foundPath.path)
+    //   });
+
+    //   it('toString returns string representation of maze with steps show for solved maze', () => {
+
+    //   });
+
+    //   it('toJson returns JSON representation of maze with steps show for solved maze', () => {
+
+    //   });
+    // });
+
+    describe('cannot find path', () => {
+      beforeEach(() => {
+        testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
+        testMaze.findPath({ row: 0, column: 0 }, { row: 9, column: 9 });
+      });
+
+      it('returns empty array if impassible returns path if no path found', () => {
+        expect(testMaze.path.path).toBeInstanceOf(Array);
+        expect(testMaze.path.path.length).toEqual(0);
+      });
+
+      it('shows an empty string if using toString on an empty path', () => {
+        const expectedString = '';
+        expect(testMaze.path.toString()).toEqual(expectedString);
+      });
+
+      it('shows an empty array if using toJSON on an empty path', () => {
+        const expectedJson = [];
+        expect(testMaze.path.toJSON()).toEqual(expectedJson);
+      });
+    });
+  });
+
+  describe('HUNTANDKILL', () => {
+    beforeEach(() => {
+      testMaze = mazegeneration({ ...testOptions, algorithm: 'HUNTANDKILL' });
+    });
+
+    describe('cannot find path', () => {
+      beforeEach(() => {
+        testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
+        testMaze.findPath({ row: 0, column: 0 }, { row: 9, column: 9 });
+      });
+
+      it('returns empty array if impassible returns path if no path found', () => {
+        expect(testMaze.path.path).toBeInstanceOf(Array);
+        expect(testMaze.path.path.length).toEqual(0);
+      });
+
+      it('shows an empty string if using toString on an empty path', () => {
+        const expectedString = '';
+        expect(testMaze.path.toString()).toEqual(expectedString);
+      });
+
+      it('shows an empty array if using toJSON on an empty path', () => {
+        const expectedJson = [];
+        expect(testMaze.path.toJSON()).toEqual(expectedJson);
+      });
+    });
+  });
+});
