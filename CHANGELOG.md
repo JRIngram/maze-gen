@@ -10,7 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Bump jest from `26.6.3` to `27.5.1`.
 * Bump semistandard from `16.0.0` to `16.0.1`.
 * Bump tmpl from `1.0.4` to `1.0.5`.
-* Bumps browserslist from `4.16.3` to `4.19.3`.
+* Bump browserslist from `4.16.3` to `4.19.3`.
+* Bump ws from `7.4.4` to `7.5.7`.
+* Bump hosted-git-info from `2.8.8` to `2.8.9`.
+* Bump path-parse from `1.0.6` to `1.0.7`.
 
 ## [3.0.0] - 2021-05-18
 ### Changes
