@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Changes
-* Update jest to 27.5.1
+* Bump jest from 26.6.3 to 27.5.1
 
 ## [3.0.0] - 2021-05-18
 ### Changes
