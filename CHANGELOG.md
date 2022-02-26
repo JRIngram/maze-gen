@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+* Donation Link
 ### Changes
 * Bump jest from `26.6.3` to `27.5.1`.
 * Bump semistandard from `16.0.0` to `16.0.1`.

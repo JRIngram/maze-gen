@@ -129,5 +129,7 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
 * More information can be found on [Jamis Buck's blog](https://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm).
 * This algorithm hunts for the "first unvisited cell with adjacent visited cells". First is found by searching each cell on the top row, before moving to the next row. 
 
+## Support
+* Donations to support this project - or even just to say thanks - are welcome here. Please donate via my [Kofi page](https://ko-fi.com/jringram).
 ## Acknowledgments
 * README format based off of [PurpleBooth's README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
