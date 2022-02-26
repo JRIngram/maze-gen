@@ -31,7 +31,8 @@
     "test": "jest",
     "test:cov": "jest --coverage",
     "linter": "semistandard",
-    "linter:fix": "semistandard --fix"
+    "linter:fix": "semistandard --fix",
+    "prepare": "husky install"
   },
   "author": {
     "name": "Jamie Ingram",
@@ -40,6 +41,7 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^27.5.1",
+    "husky": "^7.0.4",
     "semistandard": "^16.0.0"
   },
   "standard": {
