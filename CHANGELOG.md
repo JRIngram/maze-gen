@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changes
 * Bump jest from `26.6.3` to `27.5.1`
 * Bump semistandard from `16.0.0` to `16.0.1`
+* Bump tmpl from `1.0.4` to `1.0.5`
 
 ## [3.0.0] - 2021-05-18
 ### Changes
