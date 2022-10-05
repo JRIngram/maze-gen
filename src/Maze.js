@@ -227,9 +227,10 @@ class Maze {
    * @param {{row: number, column: number}} start the {row, column} coordinates of the starting cell
    * @param {{row: number, column: number}} goal the {row, column} coordinates of the goal cell
    */
-  findPath (start, goal) {
-    const solvedMaze = new Solver(this, start, goal);
-    this.path = solvedMaze;
+  generateSolution (start, goal) {
+    const solvedMaze = new Solver(this.cells, start, goal);
+    this.solution = solvedMaze;
+    return this.solution;
   }
 
   /**
