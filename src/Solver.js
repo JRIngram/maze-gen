@@ -1,8 +1,8 @@
 class Solver {
-  constructor (maze, start, goal) {
-    this.maze = maze;
-    const mazeHeight = this.maze.cells.length - 1;
-    const mazeWidth = this.maze.cells[0].length - 1;
+  constructor (cells, start, goal) {
+    this.cells = cells;
+    this.mazeHeight = this.cells.length - 1;
+    this.mazeWidth = this.cells[0].length - 1;
     if (start.column < 0 || start.row < 0) {
       throw Error('start column/row must be great than or equal to 0.');
     }
@@ -10,16 +10,16 @@ class Solver {
       throw Error('goal column/row must be great than or equal to 0.');
     }
     if (
-      mazeHeight < start.row ||
-      mazeHeight < goal.row
+      this.mazeHeight < start.row ||
+      this.mazeHeight < goal.row
     ) {
       throw Error(`start/goal rows must be less than maze height (${mazeHeight}).`);
     }
     if (
-      mazeWidth < start.column ||
-      mazeWidth < goal.column
+      this.mazeWidth < start.column ||
+      this.mazeWidth < goal.column
     ) {
-      throw Error(`start/goal columns must be less than maze width (${mazeWidth}).`);
+      throw Error(`start/goal columns must be less than maze width (${this.mazeWidth}).`);
     }
 
     const openSet = [{ ...start, cost: 0 }];
@@ -34,7 +34,7 @@ class Solver {
 
     const findAvailableCells = (currentCellInSet) => {
       const { row, column, cost } = currentCellInSet;
-      const { walls } = maze.cells[row][column];
+      const { walls } = cells[row][column];
       const includedInSet = (set, row, column) => {
         let cellInSet = false;
         set.forEach((cell) => {
@@ -118,6 +118,7 @@ class Solver {
   }
 
   toString () {
+    // @ TODO use arrows rather than numbers
     if (this.path.length === 0) {
       return '';
     }
@@ -126,49 +127,74 @@ class Solver {
     });
     let stringRepresentation = '';
 
+    const findNextStepInPath = (currentStep) => {
+      return numberedPath.find((cell) => cell.step === currentStep + 1);
+    }
+
     const cellInPath = (row, column) => {
       return numberedPath.find((pathCell) => {
         return row === pathCell.row && column === pathCell.column;
       });
     };
 
-    for (let topRow = 0; topRow < this.maze.cells[0].length; topRow++) {
+    for (let topRow = 0; topRow < this.cells[0].length; topRow++) {
       // Adds a top wall to the top cells
-      stringRepresentation += this.maze.cells[0][topRow].walls.up ? ' _' : '  ';
+      stringRepresentation += this.cells[0][topRow].walls.up ? ' _' : '  ';
     }
     stringRepresentation += '\n';
 
-    for (let row = 0; row < this.maze.cells.length; row++) {
+    for (let row = 0; row < this.cells.length; row++) {
       let rowString = '';
-      for (let column = 0; column < this.maze.cells[row].length; column++) {
+      for (let column = 0; column < this.cells[row].length; column++) {
         const pathCell = cellInPath(row, column);
-        if (column === 0 && this.maze.cells[row][column].walls.left) {
+        if (column === 0 && this.cells[row][column].walls.left) {
           // Adds a wall to the left most cell
           stringRepresentation += '|';
         }
         if (pathCell) {
-          const finalDigit = pathCell.step % 10;
-          rowString += finalDigit;
-          if (this.maze.cells[row][column].walls.right) {
+          const nextCellInPath = findNextStepInPath(pathCell.step);
+
+          if(nextCellInPath){
+            // calculate the direction of travel
+            const nextRowChange = nextCellInPath.row - pathCell.row;
+            const nextColumnChange = nextCellInPath.column - pathCell.column;
+
+            if(nextRowChange === 1){
+              rowString += '↓'
+            }
+            else if(nextRowChange === -1){
+              rowString += '↑'
+            }
+            else if(nextColumnChange === 1){
+              rowString += '→';
+            }
+            else if(nextColumnChange === -1){
+              rowString += '←'
+            }
+          }
+          else{
+            rowString += 'G';
+          }
+
+          if (this.cells[row][column].walls.right) {
             rowString += '|';
           } else {
             rowString += ' ';
           }
         } else {
-          rowString += this.maze.cells[row][column].toString();
+          rowString += this.cells[row][column].toString();
         }
       }
       // Add a new line if the last cell of the row
-      stringRepresentation += row + 1 < this.maze.cells.length ? rowString + '\n' : rowString;
+      stringRepresentation += row + 1 < this.cells.length ? rowString + '\n' : rowString;
     }
 
     stringRepresentation += '\n';
-    const mazeHeight = this.maze.cells.length - 1;
-    for (let bottomRow = 0; bottomRow < this.maze.cells[mazeHeight].length; bottomRow++) {
-      const cellIsInPath = cellInPath(mazeHeight, bottomRow);
+    for (let bottomRow = 0; bottomRow < this.cells[this.mazeHeight].length; bottomRow++) {
+      const cellIsInPath = cellInPath(this.mazeHeight, bottomRow);
       if (cellIsInPath) {
         // Adds a bottom wall to the bottom cells only if cell in path
-        if (this.maze.cells[mazeHeight][bottomRow].walls.down) {
+        if (this.cells[this.mazeHeight][bottomRow].walls.down) {
           stringRepresentation += ' ¯';
         }
       } else {
@@ -177,6 +203,7 @@ class Solver {
     }
     return stringRepresentation;
   }
+
 }
 
 module.exports = Solver;
