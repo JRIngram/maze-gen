@@ -4,10 +4,10 @@ class Solver {
     this.mazeHeight = this.cells.length - 1;
     this.mazeWidth = this.cells[0].length - 1;
     if (start.column < 0 || start.row < 0) {
-      throw Error('start column/row must be great than or equal to 0.');
+      throw Error('start column/row must be greater than or equal to 0.');
     }
     if (goal.column < 0 || goal.row < 0) {
-      throw Error('goal column/row must be great than or equal to 0.');
+      throw Error('goal column/row must be greater than or equal to 0.');
     }
     if (
       this.mazeHeight < start.row ||
@@ -127,6 +127,7 @@ class Solver {
     });
     let stringRepresentation = '';
 
+    // Returns the cell that is next in the path
     const findNextStepInPath = (currentStep) => {
       return numberedPath.find((cell) => cell.step === currentStep + 1);
     }
@@ -153,20 +154,51 @@ class Solver {
         }
         if (pathCell) {
           const nextCellInPath = findNextStepInPath(pathCell.step);
+          const previousCellInPath = findNextStepInPath(pathCell.step - 2);
 
           if(nextCellInPath){
             // calculate the direction of travel
             const nextRowChange = nextCellInPath.row - pathCell.row;
             const nextColumnChange = nextCellInPath.column - pathCell.column;
+            let previousRowChange, previousColumnChange;
+            if(previousCellInPath){
+              previousRowChange = previousCellInPath.row - pathCell.row;
+              previousColumnChange = previousCellInPath.column - pathCell.column
+            }
 
             if(nextRowChange === 1){
-              rowString += '↓'
+              if(previousColumnChange === 1){
+                rowString += '↶';
+              }
+              else if(previousColumnChange === -1){
+                rowString += '↴';
+              }
+              else{
+                rowString += '↓'
+              }
             }
             else if(nextRowChange === -1){
+              if(previousColumnChange === 1){
+                rowString += '⇖';
+              }
+              else if(previousColumnChange === -1){
+                rowString += '⇗';
+              }
+              else{
               rowString += '↑'
+              }
+
             }
             else if(nextColumnChange === 1){
-              rowString += '→';
+              if(previousRowChange === 1){
+                rowString += '↱';
+              }
+              else if(previousRowChange === -1){
+                rowString += '↳';
+              }
+              else {
+                rowString += '→';
+              }
             }
             else if(nextColumnChange === -1){
               rowString += '←'
