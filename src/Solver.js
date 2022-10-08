@@ -118,7 +118,6 @@ class Solver {
   }
 
   toString () {
-    // @ TODO use arrows rather than numbers
     if (this.path.length === 0) {
       return '';
     }
@@ -156,7 +155,10 @@ class Solver {
           const nextCellInPath = findNextStepInPath(pathCell.step);
           const previousCellInPath = findNextStepInPath(pathCell.step - 2);
 
-          if(nextCellInPath){
+          if(pathCell.step === 0){
+            rowString += 'S'
+          }
+          else if(nextCellInPath){
             // calculate the direction of travel
             const nextRowChange = nextCellInPath.row - pathCell.row;
             const nextColumnChange = nextCellInPath.column - pathCell.column;

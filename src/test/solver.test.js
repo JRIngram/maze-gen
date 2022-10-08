@@ -242,7 +242,6 @@ describe('Constructor', () => {
 });
 
 describe('toString', () => {
-  // TODO CHANGE FOR THIS TEST TO USE MORE ARROW TYPES
   it('correctly creates string representation of the path', () => {
     const testStart = {
       row: 0,
@@ -258,13 +257,37 @@ describe('toString', () => {
     const actual = testSolver.toString();
     const expected =
       ' _ _ _ _\n' +
-      '|↓ _  | |\n' +
+      '|S _  | |\n' +
       '|↓|_ _ _|\n' +
       '|↳ → → ↴|\n' +
       '|_|_ _ G|\n' +
       '       ¯';
     expect(actual).toEqual(expected);
   });
+
+  it('correctly creates string represenation if start and goal aren not in the corners', () => {
+    const testStart = {
+      row: 2,
+      column: 0
+    };
+    const testGoal = {
+      row: 1,
+      column: 2
+    };
+    const gen = new Generator(testOptions.width, testOptions.height);
+    const testMaze = gen.generateMaze(testOptions.algorithm, new Prando(testOptions.seed));
+    const testSolver = new Solver(testMaze.cells, testStart, testGoal);
+    const actual = testSolver.toString();
+    const expected =
+      ' _ _ _ _\n' +
+      '|↱ → ↴| |\n' +
+      '|↑|_ G _|\n' +
+      '|S _ _  |\n' +
+      '|_|_ _ _|\n' +
+      '        '
+
+    expect(actual).toEqual(expected);
+  })
 });
 
 describe('toJSON', () => {
