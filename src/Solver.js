@@ -113,10 +113,24 @@ class Solver {
     this.path = path;
   }
 
+  /**
+   * Returns an ordered array of cells, with each cell being a cell on the path through the maze.
+   */
   toJSON () {
     return this.path;
   }
 
+  /**
+   * Returns the string representation of the path through the maze
+   * e.g.
+   *  _ _ _ _ _
+   * |S|   |   |
+   * |↓ _| | |_|
+   * |↳ ↴|_ _| |
+   * | |↓|_ ↱ ↴|
+   * |_ ↳ → ⇗|G|
+   *    ¯ ¯ ¯ ¯
+   */
   toString () {
     if (this.path.length === 0) {
       return '';

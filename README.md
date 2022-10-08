@@ -27,7 +27,7 @@ Ensure `Node.js` is installed on your machine.
 Run `npm i maze-generation`
 
 ### Usage
-
+#### Generation
 Add an `options` object to your code, with the following to fields:
 * **REQUIRED** `width` and `height` should be replaced by ints corresponding to how wide and tall you want your maze.
 * **OPTIONAL** `seed` should be replaced by an int or string and will be used as the seed for the random number generator. Defaults to a random number.
@@ -40,7 +40,7 @@ const mazegeneration = require('maze-generation');
 
 const options = {
     width: 10,
-    height: 15,
+    height: 10,
     seed: 12345,
     algorithm: 'HUNTANDKILL'
 }
@@ -58,16 +58,16 @@ console.log(stringRepresenation);
 Example output:
 ```
  _ _ _ _ _ _ _ _ _ _
-|  _ _ _  |_ _ _    |
-| |_  |  _|  _ _ _| |
-|   |_ _  |_  | |  _|
-| |_  |_ _  | | | | |
-|  _|_  |  _| | |  _|
-|_|  _ _|_ _ _|  _| |
-|  _|   |_ _ _ _|  _|
-| |  _| |   |   |_  |
-|  _|  _| |_ _|_ _ _|
-|_ _|_ _ _ _ _ _ _ _|
+|   |  _   _ _   _  |
+| |_|_  |_ _  | |  _|
+|_ _ _ _|   | |_  | |
+|    _  | |_ _|  _ _|
+| | |_  |_  | |_ _  |
+|_|_  | |  _|_ _  | |
+|  _ _|_|_ _  | | | |
+|  _ _    | |_  |  _|
+| |_  | |_ _|  _| | |
+|_ _ _|_ _ _ _|_ _ _|
 
 ```
 
@@ -101,8 +101,8 @@ Where each object is a Cell object, which as the following JSON structure:
 
 The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that direction. The `visited` field corresponds to if the cell has been visited. This should be marked as `true` for all completed mazes.
 
-#### Algorithms
-##### Depth First
+##### Algorithms
+###### Depth First
 ```
    CURRENT_CELL = random cell
    Create an empty CELL_STACK
@@ -116,7 +116,7 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
 ```
 
 * More information can be found on the [Wikipedia page](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker).
-##### Hunt And Kill
+###### Hunt And Kill
 ```
   Choose a random starting cell and set that to CURRENT_CELL
   Perform a randomised walk from CURRENT_CELL
@@ -129,6 +129,66 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
 * More information can be found on [Jamis Buck's blog](https://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm).
 * This algorithm hunts for the "first unvisited cell with adjacent visited cells". First is found by searching each cell on the top row, before moving to the next row. 
 
+#### Solver
+The generated maze object contains a function called `generateSolution` which can be used to create a path through the maze. It takes two parameters, a `start` cell and a `goal` cell.
+
+Like the Maze object, the solution object has two methods which can be used for printing the output: `toString()` and `toJSON()`.
+
+`toJSON()` returns an array of cells, which represent the path taken from the start to the goal.
+
+```javascript
+// example usage
+
+const options = {
+    width: 5,
+    height: 5,
+    seed: 12345,
+    algorithm: 'HUNTANDKILL'
+}
+
+const generatedMaze = mazegeneration(options);
+console.log(generatedMaze.toString());
+//  _ _ _ _ _
+// | |   |   |
+// |  _| | |_|
+// |_  |_ _| |
+// | | |_    |
+// |_ _ _ _|_|
+
+const start = {
+    row: 0,
+    column: 0
+};
+const goal = {
+    row: 4,
+    column: 4
+};
+const solution = generatedMaze.generateSolution(start, goal);
+console.log(solution.toString());
+//  _ _ _ _ _
+// |S|   |   |
+// |↓ _| | |_|
+// |↳ ↴|_ _| |
+// | |↓|_ ↱ ↴|
+// |_ ↳ → ⇗|G|
+//    ¯ ¯ ¯ ¯
+
+console.log(solution.toJSON())
+// [
+//   { row: 0, column: 0 },
+//   { row: 1, column: 0 },
+//   { row: 2, column: 0 },
+//   { row: 2, column: 1 },
+//   { row: 3, column: 1 },
+//   { row: 4, column: 1 },
+//   { row: 4, column: 2 },
+//   { row: 4, column: 3 },
+//   { row: 3, column: 3 },
+//   { row: 3, column: 4 },
+//   { row: 4, column: 4 }
+// ]
+
+```
 ## Support
 * Donations to support this project - or even just to say thanks - are welcome here. Please donate via my [Kofi page](https://ko-fi.com/jringram).
 ## Acknowledgments

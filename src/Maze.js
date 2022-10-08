@@ -223,9 +223,9 @@ class Maze {
   }
 
   /**
-   *
-   * @param {{row: number, column: number}} start the {row, column} coordinates of the starting cell
-   * @param {{row: number, column: number}} goal the {row, column} coordinates of the goal cell
+   *  Generates a solution for the maze
+   *  @param {{row: number, column: number}} start the {row, column} coordinates of the starting cell
+   *  @param {{row: number, column: number}} goal the {row, column} coordinates of the goal cell
    */
   generateSolution (start, goal) {
     const solvedMaze = new Solver(this.cells, start, goal);
