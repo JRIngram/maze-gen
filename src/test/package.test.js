@@ -299,10 +299,10 @@ describe('Can solve a maze and display the path', () => {
         testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
-        testMaze.findPath({ row: 0, column: 0 }, { row: 9, column: 9 });
+        testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
       });
 
-      it('returns empty array if impassible returns path if no path found', () => {
+      it('returns empty array if no path found', () => {
         expect(testMaze.path.path).toBeInstanceOf(Array);
         expect(testMaze.path.path.length).toEqual(0);
       });
@@ -329,7 +329,7 @@ describe('Can solve a maze and display the path', () => {
         testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
-        testMaze.findPath({ row: 0, column: 0 }, { row: 9, column: 9 });
+        testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
       });
 
       it('returns empty array if impassible returns path if no path found', () => {

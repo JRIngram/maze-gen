@@ -13,7 +13,7 @@ class Solver {
       this.mazeHeight < start.row ||
       this.mazeHeight < goal.row
     ) {
-      throw Error(`start/goal rows must be less than maze height (${mazeHeight}).`);
+      throw Error(`start/goal rows must be less than maze height (${this.mazeHeight}).`);
     }
     if (
       this.mazeWidth < start.column ||
