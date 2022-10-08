@@ -27,7 +27,7 @@ describe('Constructor', () => {
       row: 3,
       column: 3
     };
-    const testSolver = new Solver(testMaze, testStart, testGoal);
+    const testSolver = new Solver(testMaze.cells, testStart, testGoal);
     const expected = [
       {
         column: 0,
@@ -73,7 +73,7 @@ describe('Constructor', () => {
         column: 3
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
       }).toThrowError('start/goal rows must be less than maze height (3).');
     });
@@ -88,7 +88,7 @@ describe('Constructor', () => {
         column: 4
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
       }).toThrowError('start/goal columns must be less than maze width (3).');
     });
@@ -103,9 +103,9 @@ describe('Constructor', () => {
         column: 3
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
-      }).toThrowError('goal column/row must be great than or equal to 0.');
+      }).toThrowError('goal column/row must be greater than or equal to 0.');
     });
 
     it('throws an error if the goal column is set to less than 0', () => {
@@ -118,9 +118,9 @@ describe('Constructor', () => {
         column: -1
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
-      }).toThrowError('goal column/row must be great than or equal to 0.');
+      }).toThrowError('goal column/row must be greater than or equal to 0.');
     });
   });
 
@@ -135,7 +135,7 @@ describe('Constructor', () => {
         column: 0
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
       }).toThrowError('start/goal rows must be less than maze height (3).');
     });
@@ -150,7 +150,7 @@ describe('Constructor', () => {
         column: 0
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
       }).toThrowError('start/goal columns must be less than maze width (3).');
     });
@@ -165,9 +165,9 @@ describe('Constructor', () => {
         column: 0
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
-      }).toThrowError('start column/row must be great than or equal to 0.');
+      }).toThrowError('start column/row must be greater than or equal to 0.');
     });
 
     it('throws an error if the start column is less than 0', () => {
@@ -180,9 +180,9 @@ describe('Constructor', () => {
         column: 0
       };
       expect(() => {
-        const testSolver = new Solver(testMaze, testStart, testGoal);
+        const testSolver = new Solver(testMaze.cells, testStart, testGoal);
         console.log(testSolver.path);
-      }).toThrowError('start column/row must be great than or equal to 0.');
+      }).toThrowError('start column/row must be greater than or equal to 0.');
     });
   });
 
@@ -203,7 +203,7 @@ describe('Constructor', () => {
         row: 3,
         column: 3
       };
-      const testSolver = new Solver(testMaze, testStart, testGoal);
+      const testSolver = new Solver(testMaze.cells, testStart, testGoal);
       const expected = [];
       const actual = testSolver.path;
       expect(actual).toEqual(expected);
@@ -218,7 +218,7 @@ describe('Constructor', () => {
         row: 3,
         column: 3
       };
-      const testSolver = new Solver(testMaze, testStart, testGoal);
+      const testSolver = new Solver(testMaze.cells, testStart, testGoal);
       const expected = '';
       const actual = testSolver.toString();
       expect(actual).toEqual(expected);
@@ -233,7 +233,7 @@ describe('Constructor', () => {
         row: 3,
         column: 3
       };
-      const testSolver = new Solver(testMaze, testStart, testGoal);
+      const testSolver = new Solver(testMaze.cells, testStart, testGoal);
       const expected = [];
       const actual = testSolver.toJSON();
       expect(actual).toEqual(expected);
@@ -242,6 +242,7 @@ describe('Constructor', () => {
 });
 
 describe('toString', () => {
+  // TODO CHANGE FOR THIS TEST TO USE MORE ARROW TYPES
   it('correctly creates string representation of the path', () => {
     const testStart = {
       row: 0,
@@ -253,14 +254,14 @@ describe('toString', () => {
     };
     const gen = new Generator(testOptions.width, testOptions.height);
     const testMaze = gen.generateMaze(testOptions.algorithm, new Prando(testOptions.seed));
-    const testSolver = new Solver(testMaze, testStart, testGoal);
+    const testSolver = new Solver(testMaze.cells, testStart, testGoal);
     const actual = testSolver.toString();
     const expected =
       ' _ _ _ _\n' +
-      '|0 _  | |\n' +
-      '|1|_ _ _|\n' +
-      '|2 3 4 5|\n' +
-      '|_|_ _ 6|\n' +
+      '|↓ _  | |\n' +
+      '|↓|_ _ _|\n' +
+      '|↳ → → ↴|\n' +
+      '|_|_ _ G|\n' +
       '       ¯';
     expect(actual).toEqual(expected);
   });
@@ -278,7 +279,7 @@ describe('toJSON', () => {
     };
     const gen = new Generator(testOptions.width, testOptions.height);
     const testMaze = gen.generateMaze(testOptions.algorithm, new Prando(testOptions.seed));
-    const testSolver = new Solver(testMaze, testStart, testGoal);
+    const testSolver = new Solver(testMaze.cells, testStart, testGoal);
     const actual = testSolver.toJSON();
     const expected =
       [{ column: 0, row: 0 }, { column: 0, row: 1 }, { column: 0, row: 2 }, { column: 1, row: 2 }, { column: 2, row: 2 }, { column: 3, row: 2 }, { column: 3, row: 3 }];
