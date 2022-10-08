@@ -129,7 +129,7 @@ class Solver {
     // Returns the cell that is next in the path
     const findNextStepInPath = (currentStep) => {
       return numberedPath.find((cell) => cell.step === currentStep + 1);
-    }
+    };
 
     const cellInPath = (row, column) => {
       return numberedPath.find((pathCell) => {
@@ -155,58 +155,46 @@ class Solver {
           const nextCellInPath = findNextStepInPath(pathCell.step);
           const previousCellInPath = findNextStepInPath(pathCell.step - 2);
 
-          if(pathCell.step === 0){
-            rowString += 'S'
-          }
-          else if(nextCellInPath){
+          if (pathCell.step === 0) {
+            rowString += 'S';
+          } else if (nextCellInPath) {
             // calculate the direction of travel
             const nextRowChange = nextCellInPath.row - pathCell.row;
             const nextColumnChange = nextCellInPath.column - pathCell.column;
             let previousRowChange, previousColumnChange;
-            if(previousCellInPath){
+            if (previousCellInPath) {
               previousRowChange = previousCellInPath.row - pathCell.row;
-              previousColumnChange = previousCellInPath.column - pathCell.column
+              previousColumnChange = previousCellInPath.column - pathCell.column;
             }
 
-            if(nextRowChange === 1){
-              if(previousColumnChange === 1){
+            if (nextRowChange === 1) {
+              if (previousColumnChange === 1) {
                 rowString += '↶';
-              }
-              else if(previousColumnChange === -1){
+              } else if (previousColumnChange === -1) {
                 rowString += '↴';
+              } else {
+                rowString += '↓';
               }
-              else{
-                rowString += '↓'
-              }
-            }
-            else if(nextRowChange === -1){
-              if(previousColumnChange === 1){
+            } else if (nextRowChange === -1) {
+              if (previousColumnChange === 1) {
                 rowString += '⇖';
-              }
-              else if(previousColumnChange === -1){
+              } else if (previousColumnChange === -1) {
                 rowString += '⇗';
+              } else {
+                rowString += '↑';
               }
-              else{
-              rowString += '↑'
-              }
-
-            }
-            else if(nextColumnChange === 1){
-              if(previousRowChange === 1){
+            } else if (nextColumnChange === 1) {
+              if (previousRowChange === 1) {
                 rowString += '↱';
-              }
-              else if(previousRowChange === -1){
+              } else if (previousRowChange === -1) {
                 rowString += '↳';
-              }
-              else {
+              } else {
                 rowString += '→';
               }
+            } else if (nextColumnChange === -1) {
+              rowString += '←';
             }
-            else if(nextColumnChange === -1){
-              rowString += '←'
-            }
-          }
-          else{
+          } else {
             rowString += 'G';
           }
 
@@ -237,7 +225,6 @@ class Solver {
     }
     return stringRepresentation;
   }
-
 }
 
 module.exports = Solver;

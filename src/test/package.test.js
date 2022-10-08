@@ -294,7 +294,7 @@ describe('Can solve a maze and display the path', () => {
       });
 
       it('shows an empty array if using toJSON on an empty path', () => {
-        const jsonPath = generatedSolution.toJSON()
+        const jsonPath = generatedSolution.toJSON();
         expect(jsonPath).toEqual([]);
       });
     });
@@ -302,7 +302,7 @@ describe('Can solve a maze and display the path', () => {
 
   describe.each([
     'DEPTHFIRST',
-    'HUNTANDKILL',
+    'HUNTANDKILL'
   ])('Path finding with algorithm: %s', (algorithm) => {
     beforeEach(() => {
       testMaze = mazegeneration({ ...testOptions, algorithm });

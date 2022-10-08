@@ -284,10 +284,10 @@ describe('toString', () => {
       '|↑|_ G _|\n' +
       '|S _ _  |\n' +
       '|_|_ _ _|\n' +
-      '        '
+      '        ';
 
     expect(actual).toEqual(expected);
-  })
+  });
 });
 
 describe('toJSON', () => {
