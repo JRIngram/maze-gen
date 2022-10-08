@@ -268,60 +268,44 @@ describe('Can solve a maze and display the path', () => {
     seed: 'testseed'
   };
 
-  let testMaze;
+  let testMaze, generatedSolution;
 
   describe('DEPTHFIRST', () => {
     beforeEach(() => {
       testMaze = mazegeneration({ ...testOptions, algorithm: 'DEPTHFIRST' });
     });
 
-    // describe('can find path', () => {
-    //   let foundPath;
-    //   beforeEach(() => {
-    //     foundPath = testMaze.findPath({ row: 0, column: 0 }, { row: 9, column: 9 });
-    //   });
-
-    //   it('returns array of steps for solved maze', () => {
-    //     expect(foundPath.path)
-    //   });
-
-    //   it('toString returns string representation of maze with steps show for solved maze', () => {
-
-    //   });
-
-    //   it('toJson returns JSON representation of maze with steps show for solved maze', () => {
-
-    //   });
-    // });
-
     describe('cannot find path', () => {
       beforeEach(() => {
         testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
-        testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
+        generatedSolution = testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
       });
 
-      it('returns empty array if no path found', () => {
-        expect(testMaze.path.path).toBeInstanceOf(Array);
-        expect(testMaze.path.path.length).toEqual(0);
+      it('returns path as a nempty array if no path found', () => {
+        expect(generatedSolution.path).toBeInstanceOf(Array);
+        expect(generatedSolution.path.length).toEqual(0);
       });
 
       it('shows an empty string if using toString on an empty path', () => {
         const expectedString = '';
-        expect(testMaze.path.toString()).toEqual(expectedString);
+        expect(generatedSolution.toString()).toEqual(expectedString);
       });
 
       it('shows an empty array if using toJSON on an empty path', () => {
-        const expectedJson = [];
-        expect(testMaze.path.toJSON()).toEqual(expectedJson);
+        const jsonPath = generatedSolution.toJSON()
+        expect(jsonPath).toEqual([]);
       });
     });
   });
 
-  describe('HUNTANDKILL', () => {
+  describe.each([
+    'DEPTHFIRST',
+    'HUNTANDKILL',
+  ])('Path finding with algorithm: %s', (algorithm) => {
     beforeEach(() => {
-      testMaze = mazegeneration({ ...testOptions, algorithm: 'HUNTANDKILL' });
+      testMaze = mazegeneration({ ...testOptions, algorithm });
     });
 
     describe('cannot find path', () => {
@@ -329,22 +313,22 @@ describe('Can solve a maze and display the path', () => {
         testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
         testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
-        testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
+        generatedSolution = testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
       });
 
       it('returns empty array if impassible returns path if no path found', () => {
-        expect(testMaze.path.path).toBeInstanceOf(Array);
-        expect(testMaze.path.path.length).toEqual(0);
+        expect(generatedSolution.path).toBeInstanceOf(Array);
+        expect(generatedSolution.path.length).toEqual(0);
       });
 
       it('shows an empty string if using toString on an empty path', () => {
         const expectedString = '';
-        expect(testMaze.path.toString()).toEqual(expectedString);
+        expect(generatedSolution.toString()).toEqual(expectedString);
       });
 
       it('shows an empty array if using toJSON on an empty path', () => {
         const expectedJson = [];
-        expect(testMaze.path.toJSON()).toEqual(expectedJson);
+        expect(generatedSolution.toJSON()).toEqual(expectedJson);
       });
     });
   });
