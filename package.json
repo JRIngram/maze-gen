@@ -1,6 +1,6 @@
 {
   "name": "maze-generation",
-  "version": "3.0.1",
+  "version": "3.1.1",
   "description": "A package to generate mazes using the depth first or hunt and kill algorithm. Mazes can be generated with seed values for reproducibility",
   "homepage": "https://github.com/JRIngram/maze-gen",
   "bugs": "https://github.com/JRIngram/maze-gen/issues",
