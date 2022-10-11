@@ -1,4 +1,8 @@
 const Cell = require('./Cell');
+const Solver = require('./Solver');
+
+// TODO fix circular reference
+// solver is stored in maze, maze stores solver
 
 /**
  * A class to represent the generated maze. This is made of cells
@@ -219,6 +223,17 @@ class Maze {
   }
 
   /**
+   *  Generates a solution for the maze
+   *  @param {{row: number, column: number}} start the {row, column} coordinates of the starting cell
+   *  @param {{row: number, column: number}} goal the {row, column} coordinates of the goal cell
+   */
+  generateSolution (start, goal) {
+    const solvedMaze = new Solver(this.cells, start, goal);
+    this.solution = solvedMaze;
+    return this.solution;
+  }
+
+  /**
      * @returns {string} The string represention of all cells within the maze.
      *  e.g.
      *  _ _ _
@@ -237,12 +252,12 @@ class Maze {
 
     for (let row = 0; row < this.cells.length; row++) {
       let rowString = '';
-      for (let cell = 0; cell < this.cells[row].length; cell++) {
-        // Adds a wall to the left most cell
-        if (cell === 0 && this.cells[row][cell].walls.left) {
+      for (let column = 0; column < this.cells[row].length; column++) {
+        if (column === 0 && this.cells[row][column].walls.left) {
+          // Adds a wall to the left most cell
           stringRepresentation += '|';
         }
-        rowString += this.cells[row][cell].toString();
+        rowString += this.cells[row][column].toString();
       }
       // Add a new line if the last cell of the row
       stringRepresentation += row + 1 < this.cells.length ? rowString + '\n' : rowString;

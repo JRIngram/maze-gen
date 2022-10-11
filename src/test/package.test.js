@@ -260,3 +260,76 @@ describe('Error handling', () => {
     });
   });
 });
+
+describe('Can solve a maze and display the path', () => {
+  const testOptions = {
+    width: 10,
+    height: 10,
+    seed: 'testseed'
+  };
+
+  let testMaze, generatedSolution;
+
+  describe('DEPTHFIRST', () => {
+    beforeEach(() => {
+      testMaze = mazegeneration({ ...testOptions, algorithm: 'DEPTHFIRST' });
+    });
+
+    describe('cannot find path', () => {
+      beforeEach(() => {
+        testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
+        generatedSolution = testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
+      });
+
+      it('returns path as a nempty array if no path found', () => {
+        expect(generatedSolution.path).toBeInstanceOf(Array);
+        expect(generatedSolution.path.length).toEqual(0);
+      });
+
+      it('shows an empty string if using toString on an empty path', () => {
+        const expectedString = '';
+        expect(generatedSolution.toString()).toEqual(expectedString);
+      });
+
+      it('shows an empty array if using toJSON on an empty path', () => {
+        const jsonPath = generatedSolution.toJSON();
+        expect(jsonPath).toEqual([]);
+      });
+    });
+  });
+
+  describe.each([
+    'DEPTHFIRST',
+    'HUNTANDKILL'
+  ])('Path finding with algorithm: %s', (algorithm) => {
+    beforeEach(() => {
+      testMaze = mazegeneration({ ...testOptions, algorithm });
+    });
+
+    describe('cannot find path', () => {
+      beforeEach(() => {
+        testMaze.cells[8][9].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][8].walls = { left: true, right: true, up: true, down: true };
+        testMaze.cells[9][9].walls = { left: true, right: true, up: true, down: true };
+        generatedSolution = testMaze.generateSolution({ row: 0, column: 0 }, { row: 9, column: 9 });
+      });
+
+      it('returns empty array if impassible returns path if no path found', () => {
+        expect(generatedSolution.path).toBeInstanceOf(Array);
+        expect(generatedSolution.path.length).toEqual(0);
+      });
+
+      it('shows an empty string if using toString on an empty path', () => {
+        const expectedString = '';
+        expect(generatedSolution.toString()).toEqual(expectedString);
+      });
+
+      it('shows an empty array if using toJSON on an empty path', () => {
+        const expectedJson = [];
+        expect(generatedSolution.toJSON()).toEqual(expectedJson);
+      });
+    });
+  });
+});
