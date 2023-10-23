@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Dependencies
 * Bump `jest` from `29.1.2` to `29.5.0`
+* Bump `husky` from `8.0.1` to `8.0.3`
 
 ## [3.1.2] - 2023-01-25
 ### Dependencies
