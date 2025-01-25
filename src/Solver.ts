@@ -1,5 +1,20 @@
-class Solver {
-  constructor (cells, start, goal) {
+import { type MazeCells } from "./Maze";
+import { type ColumnRowCoordinate } from "./types";
+
+type Cost =  number;
+
+interface ColumnRowCoordinateWithSolverAttributes extends ColumnRowCoordinate {
+  cost: Cost
+  previousCell?: ColumnRowCoordinateWithSolverAttributes;
+}
+
+export class Solver {
+  cells: MazeCells;
+  path: ColumnRowCoordinate[];
+  mazeHeight: number;
+  mazeWidth: number;
+
+  constructor(cells: MazeCells, start: ColumnRowCoordinate, goal: ColumnRowCoordinate) {
     this.cells = cells;
     this.mazeHeight = this.cells.length - 1;
     this.mazeWidth = this.cells[0].length - 1;
@@ -22,20 +37,20 @@ class Solver {
       throw Error(`start/goal columns must be less than maze width (${this.mazeWidth}).`);
     }
 
-    const openSet = [{ ...start, cost: 0 }];
-    const closedSet = [];
+    const openSet: ColumnRowCoordinateWithSolverAttributes[]  = [{ ...start, cost: 0 }];
+    const closedSet: ColumnRowCoordinateWithSolverAttributes[] = [];
 
-    const calculateDistanceFromGoal = (currentCell, goalCell) => {
+    const calculateDistanceFromGoal = (currentCell: ColumnRowCoordinate, goalCell: ColumnRowCoordinate) => {
       const { row, column } = currentCell;
       const distanceToGoalRow = Math.abs(row - goalCell.row);
       const distanceToGoalColumn = Math.abs(column - goalCell.column);
       return distanceToGoalRow + distanceToGoalColumn;
     };
 
-    const findAvailableCells = (currentCellInSet) => {
+    const findAvailableCells = (currentCellInSet: ColumnRowCoordinateWithSolverAttributes) => {
       const { row, column, cost } = currentCellInSet;
       const { walls } = cells[row][column];
-      const includedInSet = (set, row, column) => {
+      const includedInSet = (set: ColumnRowCoordinateWithSolverAttributes[], row: number, column: number) => {
         let cellInSet = false;
         set.forEach((cell) => {
           if (cell.row === row && cell.column === column) {
@@ -76,7 +91,7 @@ class Solver {
     };
 
     let finishedPathfinding = false;
-    let foundGoalCell = null;
+    let goalCellCordinates: ColumnRowCoordinateWithSolverAttributes | undefined = undefined;
     while (!finishedPathfinding) {
       if (openSet.length > 0) {
         findAvailableCells(openSet[0]);
@@ -85,22 +100,22 @@ class Solver {
         openSet.sort((cellOne, cellTwo) => {
           return cellOne.cost - cellTwo.cost;
         });
-        foundGoalCell = openSet.find((openSetCell) => {
+        goalCellCordinates = openSet.find((openSetCell) => {
           return openSetCell.column === goal.column && openSetCell.row === goal.row;
         });
-        if (foundGoalCell) {
+        if (goalCellCordinates) {
           finishedPathfinding = true;
         }
       } else {
         finishedPathfinding = true;
-        foundGoalCell = false;
+        goalCellCordinates = undefined;
         this.path = [];
       }
     }
 
-    const path = [];
-    if (foundGoalCell) {
-      const constructPath = (cell) => {
+    const path: ColumnRowCoordinate[] = [];
+    if (goalCellCordinates) {
+      const constructPath = (cell: ColumnRowCoordinateWithSolverAttributes) => {
         const { row, column } = cell;
         path.push({ row, column });
         if (cell.previousCell) {
@@ -108,7 +123,7 @@ class Solver {
         }
         path.reverse();
       };
-      constructPath(foundGoalCell);
+      constructPath(goalCellCordinates);
     }
     this.path = path;
   }
@@ -116,7 +131,7 @@ class Solver {
   /**
    * Returns an ordered array of cells, with each cell being a cell on the path through the maze.
    */
-  toJSON () {
+  toJSON(): ColumnRowCoordinate[] {
     return this.path;
   }
 
@@ -131,7 +146,7 @@ class Solver {
    * |_ ↳ → ⇗|G|
    *    ¯ ¯ ¯ ¯
    */
-  toString () {
+  toString(): string {
     if (this.path.length === 0) {
       return '';
     }
@@ -141,11 +156,11 @@ class Solver {
     let stringRepresentation = '';
 
     // Returns the cell that is next in the path
-    const findNextStepInPath = (currentStep) => {
+    const findNextStepInPath = (currentStep: number) => {
       return numberedPath.find((cell) => cell.step === currentStep + 1);
     };
 
-    const cellInPath = (row, column) => {
+    const cellInPath = (row: number, column: number) => {
       return numberedPath.find((pathCell) => {
         return row === pathCell.row && column === pathCell.column;
       });
@@ -240,5 +255,3 @@ class Solver {
     return stringRepresentation;
   }
 }
-
-module.exports = Solver;

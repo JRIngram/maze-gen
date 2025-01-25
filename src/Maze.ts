@@ -1,16 +1,18 @@
-import { Cell, Visited, type CellJSONRepresentation } from "./Cell";
+import { Cell, type Visited, type CellJSONRepresentation } from "./Cell";
 import type { ColumnRowCoordinate, Direction, Coordinate } from "./types";
-const Solver = require('./Solver');
+import { Solver } from "./Solver";
+
+export interface NeighbouringCoordinateWithDirection extends Coordinate {
+  direction: Direction
+}
+
+export type MazeCells = Array<Cell[]>
 
 type NeighbouringIndicies = {
   up?: Coordinate,
   down?: Coordinate,
   left?: Coordinate,
   right?: Coordinate,
-}
-
-interface NeighbouringCoordinateWithDirection extends Coordinate {
-  direction: Direction
 }
 
 type CellWithNeighbours = {
@@ -32,7 +34,7 @@ type MazeJSONRepresentation = {
  * @see Cell
  */
 export class Maze {
-  cells: Array<Cell[]>
+  cells: MazeCells
   solution: any
 
   /**

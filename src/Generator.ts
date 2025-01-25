@@ -1,8 +1,12 @@
-const Prando = require('prando');
-const Maze = require('./Maze');
+import Prando from "prando";
+import { Maze, NeighbouringCoordinateWithDirection } from "./Maze";
+import { Coordinate, Direction } from "./types";
 
-class Generator {
-  constructor (width, height) {
+export class Generator {
+  width: number
+  height: number
+
+  constructor (width: number, height: number) {
     this.width = width;
     this.height = height;
   }
@@ -27,10 +31,10 @@ class Generator {
    * Generates a maze using the Depth First algorithm
    * @param {*} prando A prando object constructed with the seed to generate the maze. Used as arandom number generator.
   */
-  depthFirst (prando) {
+  depthFirst (prando: Prando): Maze {
     const rng = prando;
     const generatedMaze = new Maze(this.width, this.height);
-    const cellStack = [];
+    const cellStack: Coordinate[] = [];
 
     // Set currentCell = random cell
     const randomCell = { randomHeight: rng.nextInt(0, this.height - 1), randomWidth: rng.nextInt(0, this.width - 1) };
@@ -45,7 +49,7 @@ class Generator {
       const unvisitedNeighbours = generatedMaze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x);
 
       // Find which of the unvisited neighbours can be visited
-      const validDirections = [];
+      const validDirections: Direction[] = [];
       for (let i = 0; i < unvisitedNeighbours.length; i++) {
         validDirections.push(unvisitedNeighbours[i].direction);
       }
@@ -65,7 +69,10 @@ class Generator {
           }
         }
       } else {
-        currentCell = cellStack.pop();
+        const nextCell = cellStack.pop();
+        if(nextCell){
+          currentCell = nextCell;
+        }
       }
     } while (cellStack.length > 0);
 
@@ -76,7 +83,7 @@ class Generator {
    * Generates a maze using the Hunt And Kill algorithm
    * @param {*} prando A prando object constructed with the seed to generate the maze. Used as arandom number generator.
    */
-  huntAndKill (prando) {
+  huntAndKill (prando: Prando): Maze {
     const rng = prando;
     let generatedMaze = new Maze(this.width, this.height);
 
@@ -89,6 +96,9 @@ class Generator {
 
     while (generatedMaze.getTotalUnvisitedCells() > 0) {
       const firstUnvisitedCellNeighbours = generatedMaze.getFirstUnvisitedCellWithVisitedNeighbour();
+      if(!firstUnvisitedCellNeighbours){
+        throw Error("No univisted cells fetched, whilst expecting getTotalUnvisitedCells() > 0")
+      }
       currentCell = firstUnvisitedCellNeighbours.firstCell;
       const neighbours = firstUnvisitedCellNeighbours.neighbours;
 
@@ -104,8 +114,8 @@ class Generator {
    * Get the unvisited neighbours of the current cell
    * @param {[]} unvisitedNeighbours Generated using maze.getUnvisitedNeigbourIndices
    */
-  getValidDirections (unvisitedNeighbours) {
-    const validDirections = [];
+  getValidDirections (unvisitedNeighbours: NeighbouringCoordinateWithDirection[]): Direction[] {
+    const validDirections: Direction[] = [];
     for (let i = 0; i < unvisitedNeighbours.length; i++) {
       validDirections.push(unvisitedNeighbours[i].direction);
     }
@@ -115,11 +125,11 @@ class Generator {
   /**
    * Performs a randomised walk from the specified current cell
    * @param {{x: int, y: int}} currentCell
-   * @param {*} rng Prando random number generator
+   * @param {*} prando Prando random number generator
    * @param {*} maze A Maze object
    * @returns A modified maze object
    */
-  randomisedWalk (currentCell, rng, maze) {
+  randomisedWalk (currentCell: Coordinate, prando: Prando, maze: Maze) {
     const modifiedMaze = maze;
     let unvisitedNeighbours = modifiedMaze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x);
     let validDirections = this.getValidDirections(unvisitedNeighbours);
@@ -127,7 +137,7 @@ class Generator {
     // If there's an unvisited neighbour
     while (validDirections.length > 0) {
       // Randomly select a valid direction and remove the wall
-      const nextDirection = validDirections[rng.nextInt(0, validDirections.length - 1)];
+      const nextDirection = validDirections[prando.nextInt(0, validDirections.length - 1)];
       modifiedMaze.removeWall(currentCell.y, currentCell.x, nextDirection);
 
       // Move to the cell in the direction of the removed wall
@@ -146,5 +156,3 @@ class Generator {
     return modifiedMaze;
   }
 }
-
-module.exports = Generator;
