@@ -37,15 +37,9 @@ export class Cell {
      * @param {string} direction left;right;up;down. The wall that should be removed.
      */
   removeWall(direction: Direction): void {
-    if (direction === 'left') {
-      this.walls.left = false;
-    } else if (direction === 'right') {
-      this.walls.right = false;
-    } else if (direction === 'up') {
-      this.walls.up = false;
-    } else if (direction === 'down') {
-      this.walls.down = false;
-    } else {
+    try {
+      this.walls[direction] = false
+    } catch(err) {
       throw new Error('Invalid direction');
     }
   }

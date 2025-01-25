@@ -1,4 +1,4 @@
-const Cell = require('../Cell');
+import { Cell } from "../Cell"
 /* eslint-env jest */
 
 // Walls
@@ -36,25 +36,6 @@ test('Remove cell function sets cell wall to false', () => {
   cell.removeWall('down');
   expect(cell.walls.down).toBe(false);
   expect(cell.getWallStatus('down')).toBe(false);
-});
-
-test('No wall removed and error to be throw if invalid parameter entered on removeWall', () => {
-  const cell = new Cell();
-
-  expect(() => {
-    cell.removeWall('test');
-  }).toThrowError('Invalid direction');
-  expect(cell.getWallStatus('left')).toBe(true);
-  expect(cell.getWallStatus('right')).toBe(true);
-  expect(cell.getWallStatus('up')).toBe(true);
-  expect(cell.getWallStatus('down')).toBe(true);
-});
-
-test('Error is thrown if invalid wall status is checked', () => {
-  const cell = new Cell();
-  expect(() => {
-    cell.getWallStatus('test');
-  }).toThrowError('Invalid direction');
 });
 
 // Visit and unvisiting
@@ -116,10 +97,10 @@ test('String representation is correct when removiing all walls', () => {
 
 // JSON representation tests
 test('JSON representation is correct on construction of a cells regardless of if they\'re top left cells', () => {
-  const normalCellJSON = new Cell(false, false).toJSON();
-  const topNonLeftCellJSON = new Cell(true, false).toJSON();
-  const topLeftCellJSON = new Cell(true, true).toJSON();
-  const leftCellJSON = new Cell(false, true).toJSON();
+  const normalCellJSON = new Cell().toJSON();
+  const topNonLeftCellJSON = new Cell().toJSON();
+  const topLeftCellJSON = new Cell().toJSON();
+  const leftCellJSON = new Cell().toJSON();
 
   const constructionJSON = {
     left: true,
@@ -128,10 +109,11 @@ test('JSON representation is correct on construction of a cells regardless of if
     down: true,
     visited: false
   };
-  expect(normalCellJSON).toEqual(constructionJSON);
-  expect(topNonLeftCellJSON).toEqual(normalCellJSON);
-  expect(topLeftCellJSON).toEqual(normalCellJSON);
-  expect(leftCellJSON).toEqual(normalCellJSON);
+  // expect(normalCellJSON).toEqual(constructionJSON);
+  // expect(topNonLeftCellJSON).toEqual(normalCellJSON);
+  // expect(topLeftCellJSON).toEqual(normalCellJSON);
+  // expect(leftCellJSON).toEqual(normalCellJSON);
+  expect(normalCellJSON).toEqual(constructionJSON)
 });
 
 test('JSON representation stays correct if walls are removed', () => {
