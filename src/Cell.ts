@@ -1,11 +1,27 @@
+import type { Direction } from "./types";
+
+type Walls = {
+  left: boolean;
+  right: boolean;
+  up: boolean;
+  down: boolean;
+}
+
+export type Visited = boolean;
+
+export type CellJSONRepresentation = Walls & { visited: Visited }
+
 /**
  * A class to represent an individual cell within the maze
  */
-class Cell {
+export class Cell {
+  walls: Walls;
+  visited: Visited;
+
   /**
      * Creates a cell with all 4 walls.
      */
-  constructor () {
+  constructor() {
     this.walls = {
       left: true,
       right: true,
@@ -20,7 +36,7 @@ class Cell {
      * Removes the wall in the specified direction.
      * @param {string} direction left;right;up;down. The wall that should be removed.
      */
-  removeWall (direction) {
+  removeWall(direction: Direction): void {
     if (direction === 'left') {
       this.walls.left = false;
     } else if (direction === 'right') {
@@ -39,7 +55,7 @@ class Cell {
      * @param {string} direction left;right;up;down. The wall that should be removed.
      * @returns {bool} true if the wall exists; false if the wall does not exist.
      */
-  getWallStatus (direction) {
+  getWallStatus(direction: Direction): boolean {
     if (direction === 'left') {
       return this.walls.left;
     } else if (direction === 'right') {
@@ -57,7 +73,7 @@ class Cell {
      * Marks if a cell has been visited or not
      * @param {bool} visited - The value to set cell.visited to.
      */
-  setCellVisited (visited) {
+  setCellVisited(visited: Visited): void {
     this.visited = visited;
   }
 
@@ -65,7 +81,7 @@ class Cell {
      * Returns if the cell has been visited or not
      * @returns {bool} Returns true if cell has been visited and false if not
      */
-  getCellVisited () {
+  getCellVisited(): Visited {
     return this.visited;
   }
 
@@ -78,7 +94,7 @@ class Cell {
      *  * _  would show if the right wall does not exist
      *  *  | would show if the down wall does not exist
      */
-  toString () {
+  toString(): string {
     let representation = '';
     representation += this.walls.down ? '_' : ' ';
     representation += this.walls.right ? '|' : ' ';
@@ -88,7 +104,7 @@ class Cell {
   /**
    * Returns the cell as a JSON object
    */
-  toJSON () {
+  toJSON(): CellJSONRepresentation {
     return {
       left: this.walls.left,
       right: this.walls.right,
@@ -98,5 +114,3 @@ class Cell {
     };
   }
 }
-
-module.exports = Cell;
