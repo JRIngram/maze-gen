@@ -6,7 +6,7 @@ export class Generator {
   width: number
   height: number
 
-  constructor (width: number, height: number) {
+  constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
   }
@@ -16,12 +16,14 @@ export class Generator {
    * @param {*} algorithm the algorithm to use to generate the maze
    * @param {*} prando A prando object constructed with the seed to generate the maze
    */
-  generateMaze (algorithm = 'DEPTHFIRST', prando = new Prando()) {
+  generateMaze(algorithm: string = 'DEPTHFIRST', prando: Prando = new Prando()) {
     const capitalisedAlgorithm = algorithm.toUpperCase();
     if (capitalisedAlgorithm === 'DEPTHFIRST') {
       return this.depthFirst(prando);
     } else if (capitalisedAlgorithm === 'HUNTANDKILL') {
       return this.huntAndKill(prando);
+    } if (capitalisedAlgorithm == "") {
+      return this.depthFirst(prando);
     } else {
       throw new Error(`${algorithm} is an Invalid Maze Generation Algorithm`);
     }
@@ -31,7 +33,7 @@ export class Generator {
    * Generates a maze using the Depth First algorithm
    * @param {*} prando A prando object constructed with the seed to generate the maze. Used as arandom number generator.
   */
-  depthFirst (prando: Prando): Maze {
+  depthFirst(prando: Prando): Maze {
     const rng = prando;
     const generatedMaze = new Maze(this.width, this.height);
     const cellStack: Coordinate[] = [];
@@ -70,7 +72,7 @@ export class Generator {
         }
       } else {
         const nextCell = cellStack.pop();
-        if(nextCell){
+        if (nextCell) {
           currentCell = nextCell;
         }
       }
@@ -83,7 +85,7 @@ export class Generator {
    * Generates a maze using the Hunt And Kill algorithm
    * @param {*} prando A prando object constructed with the seed to generate the maze. Used as arandom number generator.
    */
-  huntAndKill (prando: Prando): Maze {
+  huntAndKill(prando: Prando): Maze {
     const rng = prando;
     let generatedMaze = new Maze(this.width, this.height);
 
@@ -96,7 +98,7 @@ export class Generator {
 
     while (generatedMaze.getTotalUnvisitedCells() > 0) {
       const firstUnvisitedCellNeighbours = generatedMaze.getFirstUnvisitedCellWithVisitedNeighbour();
-      if(!firstUnvisitedCellNeighbours){
+      if (!firstUnvisitedCellNeighbours) {
         throw Error("No univisted cells fetched, whilst expecting getTotalUnvisitedCells() > 0")
       }
       currentCell = firstUnvisitedCellNeighbours.firstCell;
@@ -114,7 +116,7 @@ export class Generator {
    * Get the unvisited neighbours of the current cell
    * @param {[]} unvisitedNeighbours Generated using maze.getUnvisitedNeigbourIndices
    */
-  getValidDirections (unvisitedNeighbours: NeighbouringCoordinateWithDirection[]): Direction[] {
+  getValidDirections(unvisitedNeighbours: NeighbouringCoordinateWithDirection[]): Direction[] {
     const validDirections: Direction[] = [];
     for (let i = 0; i < unvisitedNeighbours.length; i++) {
       validDirections.push(unvisitedNeighbours[i].direction);
@@ -129,7 +131,7 @@ export class Generator {
    * @param {*} maze A Maze object
    * @returns A modified maze object
    */
-  randomisedWalk (currentCell: Coordinate, prando: Prando, maze: Maze) {
+  randomisedWalk(currentCell: Coordinate, prando: Prando, maze: Maze) {
     const modifiedMaze = maze;
     let unvisitedNeighbours = modifiedMaze.getUnvisitedNeigbourIndices(currentCell.y, currentCell.x);
     let validDirections = this.getValidDirections(unvisitedNeighbours);

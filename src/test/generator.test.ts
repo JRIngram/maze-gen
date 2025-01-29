@@ -4,7 +4,7 @@ const Prando = require('prando');
 
 /* eslint-env jest */
 describe('Calls the correct algorithms', () => {
-  let gen;
+  let gen: Generator;
 
   beforeAll(() => {
     gen = new Generator(10, 10);
@@ -29,11 +29,11 @@ describe('Calls the correct algorithms', () => {
     const gen = new Generator(10, 10);
     expect(() => {
       gen.generateMaze('InvalidAlgorithm');
-    }).toThrowError();
+    }).toThrowError()
   });
 
   it('Should call huntAndKill when HUNTANDKILL is is entered as generateMaze param', () => {
-    const gen = new Generator(10, 10, 'huntandkill');
+    const gen = new Generator(10, 10);
     const spy = jest.spyOn(gen, 'huntAndKill');
     gen.generateMaze('huntAndKill');
     expect(spy).toHaveBeenCalled();
@@ -42,32 +42,24 @@ describe('Calls the correct algorithms', () => {
 });
 
 describe('Returns mazes', () => {
-  it('Should return a maze when DEPTHFIRST is chosen', () => {
-    const gen = new Generator(10, 10, 'DepthFirst');
-    const maze = gen.generateMaze();
+  it.each([
+    ['DepthFirst'],
+    ['HuntAndKill']
+  ])('Should return a maze when %s is chosen', (algorithm: string) => {
+    const gen = new Generator(10, 10);
+    const maze = gen.generateMaze(algorithm);
     expect(maze.getTotalUnvisitedCells()).toEqual(0);
-  });
-
-  it('Should return a maze when HUNTANDKILL is chosen', () => {
-    const gen = new Generator(10, 10, 'HuntAndKill');
-    const maze = gen.generateMaze();
-    expect(maze.getTotalUnvisitedCells()).toEqual(0);
-  });
-
-  it('Should return a maze when an invalid algorithm is chosen', () => {
-    const gen = new Generator(10, 10, 'InvalidAlgorithm');
-    const maze = gen.generateMaze();
-    expect(maze.getTotalUnvisitedCells()).toEqual(0);
-  });
+  })
 });
 
 describe('Algorithm tests', () => {
-  let gen;
+  let gen: Generator;
 
   describe('Depth First Algorithm', () => {
     beforeEach(() => {
       gen = new Generator(3, 3);
     });
+
     it('Should return a maze when DEPTHFIRST is chosen', () => {
       const prando = new Prando();
       const maze = gen.depthFirst(prando);
@@ -120,7 +112,7 @@ describe('Algorithm tests', () => {
 describe('Randomised walk', () => {
   const width = 5;
   const height = 5;
-  let gen;
+  let gen: Generator;
 
   beforeAll(() => {
     gen = new Generator(width, height);
