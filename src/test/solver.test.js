@@ -1,5 +1,5 @@
-const Solver = require('../Solver');
-const Generator = require('../Generator');
+import { Solver } from '../Solver';
+import { Generator } from '../Generator';
 const Prando = require('prando');
 
 const testOptions = {

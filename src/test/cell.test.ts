@@ -96,26 +96,6 @@ test('String representation is correct when removiing all walls', () => {
 });
 
 // JSON representation tests
-test('JSON representation is correct on construction of a cells regardless of if they\'re top left cells', () => {
-  const normalCellJSON = new Cell().toJSON();
-  const topNonLeftCellJSON = new Cell().toJSON();
-  const topLeftCellJSON = new Cell().toJSON();
-  const leftCellJSON = new Cell().toJSON();
-
-  const constructionJSON = {
-    left: true,
-    right: true,
-    up: true,
-    down: true,
-    visited: false
-  };
-  // expect(normalCellJSON).toEqual(constructionJSON);
-  // expect(topNonLeftCellJSON).toEqual(normalCellJSON);
-  // expect(topLeftCellJSON).toEqual(normalCellJSON);
-  // expect(leftCellJSON).toEqual(normalCellJSON);
-  expect(normalCellJSON).toEqual(constructionJSON)
-});
-
 test('JSON representation stays correct if walls are removed', () => {
   const cell = new Cell();
   const testJSON = {

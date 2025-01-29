@@ -1,4 +1,4 @@
-const Maze = require('../Maze');
+import { Maze } from "../Maze";
 /* eslint-env jest */
 
 describe('Maze created with the correct dimension', () => {
@@ -22,7 +22,7 @@ describe('Maze created with the correct dimension', () => {
 });
 
 describe('Removing cell walls', () => {
-  let maze;
+  let maze: Maze;
 
   beforeEach(() => {
     maze = new Maze(3, 3);
@@ -88,7 +88,7 @@ describe('Visiting cells', () => {
 });
 
 describe('String representaion', () => {
-  let maze;
+  let maze: Maze;
 
   beforeEach(() => {
     maze = new Maze(3, 3);
@@ -118,7 +118,7 @@ describe('String representaion', () => {
 });
 
 describe('Cell neighbours', () => {
-  let maze;
+  let maze: Maze;
   beforeEach(() => {
     maze = new Maze(3, 3);
   });
@@ -126,6 +126,10 @@ describe('Cell neighbours', () => {
   describe('Get cell neighbour indicies', () => {
     it('Can get all neighbours indicies if in centre', () => {
       const actual = maze.getCellNeighbourIndices(1, 1);
+
+      if (!actual.up || !actual.down || !actual.left || !actual.right) {
+        throw Error("expected actual.right, actual.left, actual.up and actual.down to be defined")
+      }
 
       expect(actual.up.y).toBe(0);
       expect(actual.up.x).toBe(1);
@@ -143,6 +147,10 @@ describe('Cell neighbours', () => {
     it('Right cell is undefined if cell furthest right', () => {
       const actual = maze.getCellNeighbourIndices(1, 2);
 
+      if (!actual.left) {
+        throw Error("expected actual defined")
+      }
+
       expect(actual.right).toBeUndefined();
       expect(actual.left.y).toEqual(1);
       expect(actual.left.x).toEqual(1);
@@ -150,6 +158,10 @@ describe('Cell neighbours', () => {
 
     it('Left cell is undefined if cell furthest Left', () => {
       const actual = maze.getCellNeighbourIndices(1, 0);
+
+      if (!actual.right) {
+        throw Error("expected actual.right to be defined")
+      }
 
       expect(actual.left).toBeUndefined();
       expect(actual.right.y).toEqual(1);
@@ -159,6 +171,9 @@ describe('Cell neighbours', () => {
     it('Up cell is undefined if cell furthest up', () => {
       const actual = maze.getCellNeighbourIndices(0, 1);
 
+      if (!actual.down) {
+        throw Error("expected actual.down to be defined")
+      }
       expect(actual.up).toBeUndefined();
       expect(actual.down.y).toEqual(1);
       expect(actual.down.x).toEqual(1);
@@ -167,6 +182,9 @@ describe('Cell neighbours', () => {
     it('Down cell is undefined if cell furthest down', () => {
       const actual = maze.getCellNeighbourIndices(2, 1);
 
+      if (!actual.up) {
+        throw Error("expected actual.up to be defined")
+      }
       expect(actual.down).toBeUndefined();
       expect(actual.up.y).toEqual(1);
       expect(actual.up.x).toEqual(1);
@@ -175,7 +193,7 @@ describe('Cell neighbours', () => {
 });
 
 describe('Unvisited Neighbour Indicies', () => {
-  let maze;
+  let maze: Maze;
   beforeEach(() => {
     maze = new Maze(3, 3);
   });
@@ -199,18 +217,36 @@ describe('Unvisited Neighbour Indicies', () => {
     let unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1, 1);
     expect(unvisitedNeighboursIndicies.length).toBe(4);
     let nextCell = unvisitedNeighboursIndicies.pop();
+    if(!nextCell){
+      throw new Error("Expected nextCell to be defined");
+    }
     maze.visitCell(nextCell.y, nextCell.x);
     unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1, 1);
     expect(unvisitedNeighboursIndicies.length).toBe(3);
+
     nextCell = unvisitedNeighboursIndicies.pop();
+    if(!nextCell){
+      throw new Error("Expected nextCell to be defined");
+    }
     maze.visitCell(nextCell.y, nextCell.x);
+    if(!nextCell){
+      throw new Error("Expected nextCell to be defined");
+    }
     unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1, 1);
     expect(unvisitedNeighboursIndicies.length).toBe(2);
+
     nextCell = unvisitedNeighboursIndicies.pop();
+    if(!nextCell){
+      throw new Error("Expected nextCell to be defined");
+    }
     maze.visitCell(nextCell.y, nextCell.x);
     unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1, 1);
     expect(unvisitedNeighboursIndicies.length).toBe(1);
+
     nextCell = unvisitedNeighboursIndicies.pop();
+    if(!nextCell){
+      throw new Error("Expected nextCell to be defined");
+    }
     maze.visitCell(nextCell.y, nextCell.x);
     unvisitedNeighboursIndicies = maze.getUnvisitedNeigbourIndices(1, 1);
     expect(unvisitedNeighboursIndicies.length).toBe(0);
@@ -220,7 +256,7 @@ describe('Unvisited Neighbour Indicies', () => {
 });
 
 describe('Visited Neighbour Indicies', () => {
-  let maze;
+  let maze: Maze;
   beforeEach(() => {
     maze = new Maze(3, 3);
   });
@@ -261,7 +297,7 @@ describe('Visited Neighbour Indicies', () => {
 });
 
 describe('First cell with an unvisited neighbour', () => {
-  let maze;
+  let maze: Maze;
   const width = 3;
   const height = 3;
 
@@ -288,11 +324,16 @@ describe('First cell with an unvisited neighbour', () => {
 
   it('Should return the top left cell and cell (1,0) if cell (1,0) has been visited', () => {
     maze.visitCell(0, 1);
+    const firstUnivistedCellWithNeighbours = maze.getFirstUnvisitedCellWithVisitedNeighbour()
+    if(!firstUnivistedCellWithNeighbours){
+      throw new Error("Expected firstUnivistedCellWithNeighbours to not be false")
+    }
+
     const firstCellExpected = { x: 0, y: 0 };
-    const firstCellActual = maze.getFirstUnvisitedCellWithVisitedNeighbour().firstCell;
+    const firstCellActual = firstUnivistedCellWithNeighbours.firstCell;
     expect(firstCellActual).toEqual(firstCellExpected);
 
-    const neighbours = maze.getFirstUnvisitedCellWithVisitedNeighbour().neighbours;
+    const neighbours = firstUnivistedCellWithNeighbours.neighbours;
     const expectedNeighboursLength = 1;
     const actualNeighboursLength = neighbours.length;
     expect(actualNeighboursLength).toEqual(expectedNeighboursLength);
@@ -307,11 +348,16 @@ describe('First cell with an unvisited neighbour', () => {
     maze.visitCell(0, 1);
     maze.visitCell(0, 2);
     maze.visitCell(1, 0);
+    const firstUnivistedCellWithNeighbours = maze.getFirstUnvisitedCellWithVisitedNeighbour()
+    if(!firstUnivistedCellWithNeighbours){
+      throw new Error("Expected firstUnivistedCellWithNeighbours to not be false")
+    }
+    
     const firstCellExpected = { x: 1, y: 1 };
-    const firstCellActual = maze.getFirstUnvisitedCellWithVisitedNeighbour().firstCell;
+    const firstCellActual = firstUnivistedCellWithNeighbours.firstCell;
     expect(firstCellActual).toEqual(firstCellExpected);
 
-    const neighbours = maze.getFirstUnvisitedCellWithVisitedNeighbour().neighbours;
+    const neighbours = firstUnivistedCellWithNeighbours.neighbours;
     const expectedNeighboursLength = 2;
     const actualNeighboursLength = neighbours.length;
     expect(actualNeighboursLength).toEqual(expectedNeighboursLength);
@@ -409,7 +455,7 @@ describe(('JSON representation'), () => {
 });
 
 describe('Number of unvisited cells', () => {
-  let maze;
+  let maze: Maze;
   const width = 3;
   const height = 3;
 
