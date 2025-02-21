@@ -25,4 +25,4 @@ Once your contribution is ready to be added to the project, please do the follow
 
 ## Running the tests
 * `npm run test` to run [jest](https://jestjs.io/) tests.
-* `npm run linter` to run linter. This project uses [SemiStandard](https://github.com/standard/semistandard) styling.
+* `npm run linter` to run linter. This project uses [ESLint](https://eslint.org/).

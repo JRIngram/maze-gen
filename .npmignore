@@ -8,9 +8,7 @@ babel.config.js
 CHANGELOG.md
 CONTRIBUTING.md
 coverage/
-dist/src/test
 eslint.config.mjs
 node_modules/
 README.md
-src/
-tsconfig
+tsconfig.json

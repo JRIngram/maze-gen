@@ -28,6 +28,9 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rm -rf dist/ && tsc",
     "format": "npx prettier src/ -c",
@@ -35,6 +38,7 @@
     "linter:fix": "npx eslint --fix",
     "linter": "npx eslint",
     "prepare": "husky install",
+    "pre-publish": "rm -rf node_modules/ package-lock.json dist/ && npm i && npm run build && npm run format && npm run linter && npm run test:ci && rm -rf dist/src/test && npm pack",
     "test:cov": "jest --coverage",
     "test": "jest",
     "test:ci": "jest dist/"
