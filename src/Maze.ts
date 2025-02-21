@@ -35,7 +35,7 @@ type MazeJSONRepresentation = {
  */
 export class Maze {
   cells: MazeCells
-  solution: any
+  solution: Solver | undefined;
 
   /**
      * Constructs a 2D array of cells

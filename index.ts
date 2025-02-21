@@ -1,15 +1,11 @@
 import { Generator } from "./src/Generator";
 import Prando from "prando";
+import type { Config } from "./src/types";
 
-type Options = {
-  width: number;
-  height: number;
-  seed: number | string;
-  algorithm: string; 
-}
+export default (options: Config) => {
+  const { width, height } = options;
+  let { algorithm, seed } = options
 
-module.exports = (options: Options) => {
-  let { width, height, seed, algorithm } = options;
   if (typeof width === 'undefined' || typeof height === 'undefined') {
     throw new Error('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
   }
@@ -31,3 +27,4 @@ module.exports = (options: Options) => {
   const prando = new Prando(seed);
   return mazeGen.generateMaze(algorithm, prando);
 };
+

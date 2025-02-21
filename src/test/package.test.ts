@@ -2,7 +2,8 @@ import { Maze } from "../Maze";
 import { Solver } from "../Solver";
 import { ColumnRowCoordinate } from "../types";
 
-const mazegeneration = require('../../index');
+import mazegeneration from "../../index"
+import type { Config } from "../types";
 /* eslint-env jest */
 
 describe('Maze created with the correct dimensions', () => {
@@ -177,7 +178,7 @@ describe('Error handling', () => {
   describe('no required parameters', () => {
     it('throws an error if an empty object is passed as parameter', () => {
       expect(() => {
-        const options = {};
+        const options = {} as Config;
         mazegeneration(options);
       }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
     });
@@ -189,7 +190,7 @@ describe('Error handling', () => {
       ]
     )('throws an error if an object without the height parameter is passed', () => {
       expect(() => {
-        const options = { width: 3 };
+        const options = { width: 3 } as Config;
         mazegeneration(options);
       }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
     });
@@ -201,14 +202,14 @@ describe('Error handling', () => {
       ]
     )('throws an error if an object without the width parameter is passed', () => {
       expect(() => {
-        const options = { width: 3 };
+        const options = { width: 3 } as Config;
         mazegeneration(options);
       }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
     });
 
     it('throws an error if an object is passed without both dimension parameters', () => {
       expect(() => {
-        const options = { seed: 1234, algorithm: 'HUNTANDKILL' };
+        const options = { seed: 1234, algorithm: 'HUNTANDKILL' } as Config;
         mazegeneration(options);
       }).toThrowError('An object with the following parameters is required to generate a maze:\n{ height, width, seed (optional), algorithm (optional) }');
     });
@@ -228,7 +229,7 @@ describe('Error handling', () => {
         ['3', 3],
         [3, '3']
       ])('throws an error if width is %s and height is %s', (width, height) => {
-        const options = { width: width, height: height };
+        const options = { width: width, height: height } as Config;
         expect(() => {
           mazegeneration(options);
         }).toThrowError('Width and height must be numbers');
@@ -244,7 +245,7 @@ describe('Error handling', () => {
         [false, 3],
         [true, 3]
       ])('throws an error if width is %o and height is %o', (width, height) => {
-        const options = { width: width, height: height };
+        const options = { width: width, height: height } as Config;
         expect(() => {
           mazegeneration(options);
         }).toThrowError('Width and height must be numbers');
@@ -257,7 +258,7 @@ describe('Error handling', () => {
         [3, { height: 3 }],
         [{ width: 3 }, 3]
       ])(('throws an error if width is %o and height is %o'), (width, height) => {
-        const options = { width: width, height: height };
+        const options = { width: width, height: height } as Config;
         expect(() => {
           mazegeneration(options);
         }).toThrowError('Width and height must be numbers');

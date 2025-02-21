@@ -2,7 +2,7 @@ import { Solver } from '../Solver';
 import { Generator } from '../Generator';
 import { Maze } from '../Maze';
 import { ColumnRowCoordinate } from '../types';
-const Prando = require('prando');
+import Prando from 'prando';
 
 const testOptions = {
   width: 4,

@@ -1,6 +1,6 @@
 import { Generator } from "../Generator";
 import { Maze } from "../Maze";
-const Prando = require('prando');
+import Prando from "prando";
 
 /* eslint-env jest */
 describe('Calls the correct algorithms', () => {

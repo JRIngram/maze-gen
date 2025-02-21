@@ -39,7 +39,7 @@ export class Cell {
   removeWall(direction: Direction): void {
     try {
       this.walls[direction] = false
-    } catch(err) {
+    } catch {
       throw new Error('Invalid direction');
     }
   }
