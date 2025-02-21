@@ -8,13 +8,7 @@ jobs:
     steps:
       - checkout 
       - run: npm install
-  unit-test:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm test
+      - run: npm run build
   format-and-lint:
     executor:
       name: node/default
@@ -23,13 +17,21 @@ jobs:
       - run: npm install
       - run: npm run format
       - run: npm run linter
+  unit-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
+      - run: npm run test:ci
 workflows:
     build-and-test:
       jobs:
-        - build
-        - format-and-lint:
+        - format-and-lint
+        - build:
             requires:
-              - build
+              - format-and-lint
         - unit-test:
             requires:
               - build

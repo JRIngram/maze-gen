@@ -35,7 +35,8 @@
     "linter": "npx eslint",
     "prepare": "husky install",
     "test:cov": "jest --coverage",
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "jest dist/"
   },
   "author": {
     "name": "Jamie Ingram",
