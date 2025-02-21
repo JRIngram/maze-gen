@@ -7,7 +7,8 @@ jobs:
       name: node/default
     steps:
       - checkout 
-      - run: npm install
+      - restore_cache:
+          key: maze-gen-modules-{{ checksum "package-lock.json" }}
       - run: npm run build
   format-and-lint:
     executor:
@@ -15,6 +16,10 @@ jobs:
     steps:
       - checkout
       - run: npm install
+      - save_cache:
+          key: maze-gen-modules-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
       - run: npm run format
       - run: npm run linter
   unit-test:
@@ -22,8 +27,8 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - run: npm install
-      - run: npm run build
+      - restore_cache:
+          key: maze-gen-build-{{ checksum "package-lock.json" }}
       - run: npm run test:ci
 workflows:
     build-and-test:
