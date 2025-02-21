@@ -1,5 +1,7 @@
 import { Solver } from '../Solver';
 import { Generator } from '../Generator';
+import { Maze } from '../Maze';
+import { ColumnRowCoordinate } from '../types';
 const Prando = require('prando');
 
 const testOptions = {
@@ -11,7 +13,8 @@ const testOptions = {
 
 /* eslint-env jest */
 describe('Constructor', () => {
-  let gen, testMaze;
+  let gen: Generator;
+  let testMaze: Maze;
 
   beforeEach(() => {
     gen = new Generator(testOptions.width, testOptions.height);
@@ -27,6 +30,7 @@ describe('Constructor', () => {
       row: 3,
       column: 3
     };
+
     const testSolver = new Solver(testMaze.cells, testStart, testGoal);
     const expected = [
       {
@@ -204,7 +208,7 @@ describe('Constructor', () => {
         column: 3
       };
       const testSolver = new Solver(testMaze.cells, testStart, testGoal);
-      const expected = [];
+      const expected: ColumnRowCoordinate[] = [];
       const actual = testSolver.path;
       expect(actual).toEqual(expected);
     });
@@ -234,7 +238,7 @@ describe('Constructor', () => {
         column: 3
       };
       const testSolver = new Solver(testMaze.cells, testStart, testGoal);
-      const expected = [];
+      const expected: ColumnRowCoordinate[] = [];
       const actual = testSolver.toJSON();
       expect(actual).toEqual(expected);
     });

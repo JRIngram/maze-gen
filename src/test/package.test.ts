@@ -1,3 +1,7 @@
+import { Maze } from "../Maze";
+import { Solver } from "../Solver";
+import { ColumnRowCoordinate } from "../types";
+
 const mazegeneration = require('../../index');
 /* eslint-env jest */
 
@@ -21,7 +25,7 @@ describe('Maze created with the correct dimensions', () => {
 describe('Algorithms', () => {
   const testOptions = {
     width: 10,
-    height: 10
+    height: 10,
   };
 
   describe('Default (DEPTHFIRST)', () => {
@@ -54,7 +58,8 @@ describe('Algorithms', () => {
 describe('Seed generation', () => {
   let testOptions = {
     width: 10,
-    height: 10
+    height: 10,
+    algorithm: ""
   };
 
   describe('DEPTHFIRST', () => {
@@ -268,7 +273,8 @@ describe('Can solve a maze and display the path', () => {
     seed: 'testseed'
   };
 
-  let testMaze, generatedSolution;
+  let testMaze: Maze;
+  let generatedSolution: Solver;
 
   describe('DEPTHFIRST', () => {
     beforeEach(() => {
@@ -327,7 +333,7 @@ describe('Can solve a maze and display the path', () => {
       });
 
       it('shows an empty array if using toJSON on an empty path', () => {
-        const expectedJson = [];
+        const expectedJson: ColumnRowCoordinate[] = [];
         expect(generatedSolution.toJSON()).toEqual(expectedJson);
       });
     });
