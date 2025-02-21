@@ -1,10 +1,10 @@
 import { type MazeCells } from "./Maze";
 import { type ColumnRowCoordinate } from "./types";
 
-type Cost =  number;
+type Cost = number;
 
 interface ColumnRowCoordinateWithSolverAttributes extends ColumnRowCoordinate {
-  cost: Cost
+  cost: Cost;
   previousCell?: ColumnRowCoordinateWithSolverAttributes;
 }
 
@@ -14,43 +14,56 @@ export class Solver {
   mazeHeight: number;
   mazeWidth: number;
 
-  constructor(cells: MazeCells, start: ColumnRowCoordinate, goal: ColumnRowCoordinate) {
+  constructor(
+    cells: MazeCells,
+    start: ColumnRowCoordinate,
+    goal: ColumnRowCoordinate,
+  ) {
     this.cells = cells;
     this.mazeHeight = this.cells.length - 1;
     this.mazeWidth = this.cells[0].length - 1;
     if (start.column < 0 || start.row < 0) {
-      throw Error('start column/row must be greater than or equal to 0.');
+      throw Error("start column/row must be greater than or equal to 0.");
     }
     if (goal.column < 0 || goal.row < 0) {
-      throw Error('goal column/row must be greater than or equal to 0.');
+      throw Error("goal column/row must be greater than or equal to 0.");
     }
-    if (
-      this.mazeHeight < start.row ||
-      this.mazeHeight < goal.row
-    ) {
-      throw Error(`start/goal rows must be less than maze height (${this.mazeHeight}).`);
+    if (this.mazeHeight < start.row || this.mazeHeight < goal.row) {
+      throw Error(
+        `start/goal rows must be less than maze height (${this.mazeHeight}).`,
+      );
     }
-    if (
-      this.mazeWidth < start.column ||
-      this.mazeWidth < goal.column
-    ) {
-      throw Error(`start/goal columns must be less than maze width (${this.mazeWidth}).`);
+    if (this.mazeWidth < start.column || this.mazeWidth < goal.column) {
+      throw Error(
+        `start/goal columns must be less than maze width (${this.mazeWidth}).`,
+      );
     }
 
-    const openSet: ColumnRowCoordinateWithSolverAttributes[]  = [{ ...start, cost: 0 }];
+    const openSet: ColumnRowCoordinateWithSolverAttributes[] = [
+      { ...start, cost: 0 },
+    ];
     const closedSet: ColumnRowCoordinateWithSolverAttributes[] = [];
 
-    const calculateDistanceFromGoal = (currentCell: ColumnRowCoordinate, goalCell: ColumnRowCoordinate) => {
+    const calculateDistanceFromGoal = (
+      currentCell: ColumnRowCoordinate,
+      goalCell: ColumnRowCoordinate,
+    ) => {
       const { row, column } = currentCell;
       const distanceToGoalRow = Math.abs(row - goalCell.row);
       const distanceToGoalColumn = Math.abs(column - goalCell.column);
       return distanceToGoalRow + distanceToGoalColumn;
     };
 
-    const findAvailableCells = (currentCellInSet: ColumnRowCoordinateWithSolverAttributes) => {
+    const findAvailableCells = (
+      currentCellInSet: ColumnRowCoordinateWithSolverAttributes,
+    ) => {
       const { row, column, cost } = currentCellInSet;
       const { walls } = cells[row][column];
-      const includedInSet = (set: ColumnRowCoordinateWithSolverAttributes[], row: number, column: number) => {
+      const includedInSet = (
+        set: ColumnRowCoordinateWithSolverAttributes[],
+        row: number,
+        column: number,
+      ) => {
         let cellInSet = false;
         set.forEach((cell) => {
           if (cell.row === row && cell.column === column) {
@@ -62,36 +75,78 @@ export class Solver {
 
       if (!walls.left) {
         const calulcatedColumn = column - 1;
-        if (!includedInSet(closedSet, row, calulcatedColumn) && !includedInSet(openSet, row, calulcatedColumn)) {
-          const calculatedCost = cost + calculateDistanceFromGoal({ row, column: calulcatedColumn }, goal);
-          openSet.push({ row, column: calulcatedColumn, cost: calculatedCost, previousCell: currentCellInSet });
+        if (
+          !includedInSet(closedSet, row, calulcatedColumn) &&
+          !includedInSet(openSet, row, calulcatedColumn)
+        ) {
+          const calculatedCost =
+            cost +
+            calculateDistanceFromGoal({ row, column: calulcatedColumn }, goal);
+          openSet.push({
+            row,
+            column: calulcatedColumn,
+            cost: calculatedCost,
+            previousCell: currentCellInSet,
+          });
         }
       }
       if (!walls.right) {
         const calulcatedColumn = column + 1;
-        if (!includedInSet(closedSet, row, calulcatedColumn) && !includedInSet(openSet, row, calulcatedColumn)) {
-          const calculatedCost = cost + calculateDistanceFromGoal({ row, column: calulcatedColumn }, goal);
-          openSet.push({ row, column: calulcatedColumn, cost: calculatedCost, previousCell: currentCellInSet });
+        if (
+          !includedInSet(closedSet, row, calulcatedColumn) &&
+          !includedInSet(openSet, row, calulcatedColumn)
+        ) {
+          const calculatedCost =
+            cost +
+            calculateDistanceFromGoal({ row, column: calulcatedColumn }, goal);
+          openSet.push({
+            row,
+            column: calulcatedColumn,
+            cost: calculatedCost,
+            previousCell: currentCellInSet,
+          });
         }
       }
       if (!walls.up) {
         const calculatedRow = row - 1;
-        if (!includedInSet(closedSet, calculatedRow, column) && !includedInSet(openSet, calculatedRow, column)) {
-          const calculatedCost = cost + calculateDistanceFromGoal({ row: calculatedRow, column }, goal);
-          openSet.push({ row: calculatedRow, column: column, cost: calculatedCost, previousCell: currentCellInSet });
+        if (
+          !includedInSet(closedSet, calculatedRow, column) &&
+          !includedInSet(openSet, calculatedRow, column)
+        ) {
+          const calculatedCost =
+            cost +
+            calculateDistanceFromGoal({ row: calculatedRow, column }, goal);
+          openSet.push({
+            row: calculatedRow,
+            column: column,
+            cost: calculatedCost,
+            previousCell: currentCellInSet,
+          });
         }
       }
       if (!walls.down) {
         const calculatedRow = row + 1;
-        if (!includedInSet(closedSet, calculatedRow, column) && !includedInSet(openSet, calculatedRow, column)) {
-          const calculatedCost = cost + calculateDistanceFromGoal({ row: calculatedRow, column }, goal);
-          openSet.push({ row: calculatedRow, column: column, cost: calculatedCost, previousCell: currentCellInSet });
+        if (
+          !includedInSet(closedSet, calculatedRow, column) &&
+          !includedInSet(openSet, calculatedRow, column)
+        ) {
+          const calculatedCost =
+            cost +
+            calculateDistanceFromGoal({ row: calculatedRow, column }, goal);
+          openSet.push({
+            row: calculatedRow,
+            column: column,
+            cost: calculatedCost,
+            previousCell: currentCellInSet,
+          });
         }
       }
     };
 
     let finishedPathfinding = false;
-    let goalCellCordinates: ColumnRowCoordinateWithSolverAttributes | undefined = undefined;
+    let goalCellCordinates:
+      | ColumnRowCoordinateWithSolverAttributes
+      | undefined = undefined;
     while (!finishedPathfinding) {
       if (openSet.length > 0) {
         findAvailableCells(openSet[0]);
@@ -101,7 +156,9 @@ export class Solver {
           return cellOne.cost - cellTwo.cost;
         });
         goalCellCordinates = openSet.find((openSetCell) => {
-          return openSetCell.column === goal.column && openSetCell.row === goal.row;
+          return (
+            openSetCell.column === goal.column && openSetCell.row === goal.row
+          );
         });
         if (goalCellCordinates) {
           finishedPathfinding = true;
@@ -148,12 +205,12 @@ export class Solver {
    */
   toString(): string {
     if (this.path.length === 0) {
-      return '';
+      return "";
     }
     const numberedPath = this.path.map((cell, index) => {
       return { ...cell, step: index };
     });
-    let stringRepresentation = '';
+    let stringRepresentation = "";
 
     // Returns the cell that is next in the path
     const findNextStepInPath = (currentStep: number) => {
@@ -168,24 +225,24 @@ export class Solver {
 
     for (let topRow = 0; topRow < this.cells[0].length; topRow++) {
       // Adds a top wall to the top cells
-      stringRepresentation += this.cells[0][topRow].walls.up ? ' _' : '  ';
+      stringRepresentation += this.cells[0][topRow].walls.up ? " _" : "  ";
     }
-    stringRepresentation += '\n';
+    stringRepresentation += "\n";
 
     for (let row = 0; row < this.cells.length; row++) {
-      let rowString = '';
+      let rowString = "";
       for (let column = 0; column < this.cells[row].length; column++) {
         const pathCell = cellInPath(row, column);
         if (column === 0 && this.cells[row][column].walls.left) {
           // Adds a wall to the left most cell
-          stringRepresentation += '|';
+          stringRepresentation += "|";
         }
         if (pathCell) {
           const nextCellInPath = findNextStepInPath(pathCell.step);
           const previousCellInPath = findNextStepInPath(pathCell.step - 2);
 
           if (pathCell.step === 0) {
-            rowString += 'S';
+            rowString += "S";
           } else if (nextCellInPath) {
             // calculate the direction of travel
             const nextRowChange = nextCellInPath.row - pathCell.row;
@@ -193,63 +250,69 @@ export class Solver {
             let previousRowChange, previousColumnChange;
             if (previousCellInPath) {
               previousRowChange = previousCellInPath.row - pathCell.row;
-              previousColumnChange = previousCellInPath.column - pathCell.column;
+              previousColumnChange =
+                previousCellInPath.column - pathCell.column;
             }
 
             if (nextRowChange === 1) {
               if (previousColumnChange === 1) {
-                rowString += '↶';
+                rowString += "↶";
               } else if (previousColumnChange === -1) {
-                rowString += '↴';
+                rowString += "↴";
               } else {
-                rowString += '↓';
+                rowString += "↓";
               }
             } else if (nextRowChange === -1) {
               if (previousColumnChange === 1) {
-                rowString += '⇖';
+                rowString += "⇖";
               } else if (previousColumnChange === -1) {
-                rowString += '⇗';
+                rowString += "⇗";
               } else {
-                rowString += '↑';
+                rowString += "↑";
               }
             } else if (nextColumnChange === 1) {
               if (previousRowChange === 1) {
-                rowString += '↱';
+                rowString += "↱";
               } else if (previousRowChange === -1) {
-                rowString += '↳';
+                rowString += "↳";
               } else {
-                rowString += '→';
+                rowString += "→";
               }
             } else if (nextColumnChange === -1) {
-              rowString += '←';
+              rowString += "←";
             }
           } else {
-            rowString += 'G';
+            rowString += "G";
           }
 
           if (this.cells[row][column].walls.right) {
-            rowString += '|';
+            rowString += "|";
           } else {
-            rowString += ' ';
+            rowString += " ";
           }
         } else {
           rowString += this.cells[row][column].toString();
         }
       }
       // Add a new line if the last cell of the row
-      stringRepresentation += row + 1 < this.cells.length ? rowString + '\n' : rowString;
+      stringRepresentation +=
+        row + 1 < this.cells.length ? rowString + "\n" : rowString;
     }
 
-    stringRepresentation += '\n';
-    for (let bottomRow = 0; bottomRow < this.cells[this.mazeHeight].length; bottomRow++) {
+    stringRepresentation += "\n";
+    for (
+      let bottomRow = 0;
+      bottomRow < this.cells[this.mazeHeight].length;
+      bottomRow++
+    ) {
       const cellIsInPath = cellInPath(this.mazeHeight, bottomRow);
       if (cellIsInPath) {
         // Adds a bottom wall to the bottom cells only if cell in path
         if (this.cells[this.mazeHeight][bottomRow].walls.down) {
-          stringRepresentation += ' ¯';
+          stringRepresentation += " ¯";
         }
       } else {
-        stringRepresentation += '  ';
+        stringRepresentation += "  ";
       }
     }
     return stringRepresentation;

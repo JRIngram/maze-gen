@@ -29,7 +29,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
-    "format": "npx prettier src/ --write",
+    "format": "npx prettier src/ -c",
+    "format:fix": "npx prettier src/ --write",
     "linter:fix": "npx eslint --fix",
     "linter": "npx eslint",
     "prepare": "husky install",

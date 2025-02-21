@@ -3,28 +3,26 @@ import type { ColumnRowCoordinate, Direction, Coordinate } from "./types";
 import { Solver } from "./Solver";
 
 export interface NeighbouringCoordinateWithDirection extends Coordinate {
-  direction: Direction
+  direction: Direction;
 }
 
-export type MazeCells = Array<Cell[]>
+export type MazeCells = Array<Cell[]>;
 
 type NeighbouringIndicies = {
-  up?: Coordinate,
-  down?: Coordinate,
-  left?: Coordinate,
-  right?: Coordinate,
-}
+  up?: Coordinate;
+  down?: Coordinate;
+  left?: Coordinate;
+  right?: Coordinate;
+};
 
 type CellWithNeighbours = {
-  firstCell: Coordinate,
-  neighbours: NeighbouringCoordinateWithDirection[]
-
-}
+  firstCell: Coordinate;
+  neighbours: NeighbouringCoordinateWithDirection[];
+};
 
 type MazeJSONRepresentation = {
-  rows: Array<CellJSONRepresentation[]>
-}
-
+  rows: Array<CellJSONRepresentation[]>;
+};
 
 // TODO fix circular reference
 // solver is stored in maze, maze stores solver
@@ -34,14 +32,14 @@ type MazeJSONRepresentation = {
  * @see Cell
  */
 export class Maze {
-  cells: MazeCells
+  cells: MazeCells;
   solution: Solver | undefined;
 
   /**
-     * Constructs a 2D array of cells
-     * @param {*} width The width of the maze, i.e. how many cells each row contains
-     * @param {*} height The height of the maze, i.e. how many rows the maze contains
-     */
+   * Constructs a 2D array of cells
+   * @param {*} width The width of the maze, i.e. how many cells each row contains
+   * @param {*} height The height of the maze, i.e. how many rows the maze contains
+   */
   constructor(width: number, height: number) {
     this.cells = [];
     // Create an [i, j] 2D array of cells
@@ -55,20 +53,20 @@ export class Maze {
   }
 
   /**
-     * Returns if the cell has been visited or not
-     * @param {*} row The row index of the cell
-     * @param {*} column The column index ofsolution the cell
-     * @returns true if the cell has been visited; false if the cell hasn't been visited.
-     */
+   * Returns if the cell has been visited or not
+   * @param {*} row The row index of the cell
+   * @param {*} column The column index ofsolution the cell
+   * @returns true if the cell has been visited; false if the cell hasn't been visited.
+   */
   getCellVisited(row: number, column: number): boolean {
     return this.cells[row][column].getCellVisited();
   }
 
   /**
-     * Marks a cell as visited
-     * @param {*} row The row index of the cell
-     * @param {*} column The column index of the cell
-     */
+   * Marks a cell as visited
+   * @param {*} row The row index of the cell
+   * @param {*} column The column index of the cell
+   */
   visitCell(row: number, column: number): void {
     this.cells[row][column].setCellVisited(true);
   }
@@ -80,11 +78,14 @@ export class Maze {
   getFirstUnvisitedCellWithVisitedNeighbour(): false | CellWithNeighbours {
     const unvisitedCells = this.getUnvisitedCells();
     for (let i = 0; i < unvisitedCells.length; i++) {
-      const visitedNeighbours = this.getVisitedNeigbourIndices(unvisitedCells[i].y, unvisitedCells[i].x);
+      const visitedNeighbours = this.getVisitedNeigbourIndices(
+        unvisitedCells[i].y,
+        unvisitedCells[i].x,
+      );
       if (visitedNeighbours.length > 0) {
         return {
           firstCell: unvisitedCells[i],
-          neighbours: visitedNeighbours
+          neighbours: visitedNeighbours,
         };
       }
     }
@@ -108,98 +109,127 @@ export class Maze {
   }
 
   /**
-     * Removes the wall of the selected cell
-     * @param {*} row The row index of the cell
-     * @param {*} column The column index of the cell
-     * @param {string} direction left;right;up;down. The wall that should be removed.
-     */
+   * Removes the wall of the selected cell
+   * @param {*} row The row index of the cell
+   * @param {*} column The column index of the cell
+   * @param {string} direction left;right;up;down. The wall that should be removed.
+   */
   removeWall(row: number, column: number, direction: Direction): void {
     this.cells[row][column].removeWall(direction);
-    if (direction === 'right' && column + 1 < this.cells[row].length) {
-      this.cells[row][column + 1].removeWall('left');
-    } else if (direction === 'left' && column - 1 >= 0) {
-      this.cells[row][column - 1].removeWall('right');
-    } else if (direction === 'up' && (row - 1) >= 0) {
-      this.cells[row - 1][column].removeWall('down');
-    } else if (direction === 'down' && (row + 1) < this.cells.length) {
-      this.cells[row + 1][column].removeWall('up');
+    if (direction === "right" && column + 1 < this.cells[row].length) {
+      this.cells[row][column + 1].removeWall("left");
+    } else if (direction === "left" && column - 1 >= 0) {
+      this.cells[row][column - 1].removeWall("right");
+    } else if (direction === "up" && row - 1 >= 0) {
+      this.cells[row - 1][column].removeWall("down");
+    } else if (direction === "down" && row + 1 < this.cells.length) {
+      this.cells[row + 1][column].removeWall("up");
     }
   }
 
   /**
-     * Returns if a wall exists in the specified direction
-     * @param {*} row The row index of the cell
-     * @param {*} column The column index of the cell
-     * @param {string} direction left;right;up;down. The wall that should be removed.
-     * @returns {boolean} true if the wall exists; false if the wall does not exist.
-     */
+   * Returns if a wall exists in the specified direction
+   * @param {*} row The row index of the cell
+   * @param {*} column The column index of the cell
+   * @param {string} direction left;right;up;down. The wall that should be removed.
+   * @returns {boolean} true if the wall exists; false if the wall does not exist.
+   */
   getWallStatus(row: number, column: number, direction: Direction): Visited {
     return this.cells[row][column].getWallStatus(direction);
   }
 
   /**
-     * Gets the indicies of neighbouring cells
-     * @param {*} row The row index of the cell
-     * @param {*} column The column index of the cell
-     * @returns {{[]}} An object containing the indicies of neighbouring cells
-     */
+   * Gets the indicies of neighbouring cells
+   * @param {*} row The row index of the cell
+   * @param {*} column The column index of the cell
+   * @returns {{[]}} An object containing the indicies of neighbouring cells
+   */
   getCellNeighbourIndices(row: number, column: number): NeighbouringIndicies {
     const neighbourIndices: NeighbouringIndicies = {};
     const mazeHeight = this.cells.length;
     const mazeWidth = this.cells[0].length;
 
     // Get up neighbour
-    if (row > 0) { neighbourIndices.up = { y: (row - 1), x: column }; }
+    if (row > 0) {
+      neighbourIndices.up = { y: row - 1, x: column };
+    }
 
     // Get down neighbour
-    if (row < mazeHeight - 1) { neighbourIndices.down = { y: (row + 1), x: column }; }
+    if (row < mazeHeight - 1) {
+      neighbourIndices.down = { y: row + 1, x: column };
+    }
 
     // Get left neighbour
-    if (column > 0) { neighbourIndices.left = { y: row, x: (column - 1) }; }
+    if (column > 0) {
+      neighbourIndices.left = { y: row, x: column - 1 };
+    }
 
     // Get right neighbour
-    if (column < mazeWidth - 1) { neighbourIndices.right = { y: row, x: (column + 1) }; }
+    if (column < mazeWidth - 1) {
+      neighbourIndices.right = { y: row, x: column + 1 };
+    }
     return neighbourIndices;
   }
 
   /**
-    * Calls getCellNeighbourIndices, checks if each neighbour is unvisited and adds the unvisited cell's coordinates to an array
-    * @param {*} row The row index of the cell
-    * @param {*} column The column index of the cell
-    * @returns {[]} The indicies of unvisited neighours of the chosen cell
-    */
-  getUnvisitedNeigbourIndices(row: number, column: number): NeighbouringCoordinateWithDirection[] {
+   * Calls getCellNeighbourIndices, checks if each neighbour is unvisited and adds the unvisited cell's coordinates to an array
+   * @param {*} row The row index of the cell
+   * @param {*} column The column index of the cell
+   * @returns {[]} The indicies of unvisited neighours of the chosen cell
+   */
+  getUnvisitedNeigbourIndices(
+    row: number,
+    column: number,
+  ): NeighbouringCoordinateWithDirection[] {
     const neighbourIndices = this.getCellNeighbourIndices(row, column);
     const unvisitedNeighbours: NeighbouringCoordinateWithDirection[] = [];
-    if (typeof neighbourIndices.up !== 'undefined' && this.getCellVisited(neighbourIndices.up.y, neighbourIndices.up.x) === false) {
+    if (
+      typeof neighbourIndices.up !== "undefined" &&
+      this.getCellVisited(neighbourIndices.up.y, neighbourIndices.up.x) ===
+        false
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'up',
+        direction: "up",
         x: neighbourIndices.up.x,
-        y: neighbourIndices.up.y
+        y: neighbourIndices.up.y,
       };
       unvisitedNeighbours.push(cell);
     }
-    if (typeof neighbourIndices.down !== 'undefined' && this.getCellVisited(neighbourIndices.down.y, neighbourIndices.down.x) === false) {
+    if (
+      typeof neighbourIndices.down !== "undefined" &&
+      this.getCellVisited(neighbourIndices.down.y, neighbourIndices.down.x) ===
+        false
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'down',
+        direction: "down",
         x: neighbourIndices.down.x,
-        y: neighbourIndices.down.y
+        y: neighbourIndices.down.y,
       };
       unvisitedNeighbours.push(cell);
     }
-    if (typeof neighbourIndices.left !== 'undefined' && this.getCellVisited(neighbourIndices.left.y, neighbourIndices.left.x) === false) {
+    if (
+      typeof neighbourIndices.left !== "undefined" &&
+      this.getCellVisited(neighbourIndices.left.y, neighbourIndices.left.x) ===
+        false
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'left',
+        direction: "left",
         x: neighbourIndices.left.x,
-        y: neighbourIndices.left.y
+        y: neighbourIndices.left.y,
       };
       unvisitedNeighbours.push(cell);
     }
-    if (typeof neighbourIndices.right !== 'undefined' && this.getCellVisited(neighbourIndices.right.y, neighbourIndices.right.x) === false) {
+    if (
+      typeof neighbourIndices.right !== "undefined" &&
+      this.getCellVisited(
+        neighbourIndices.right.y,
+        neighbourIndices.right.x,
+      ) === false
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'right',
+        direction: "right",
         x: neighbourIndices.right.x,
-        y: neighbourIndices.right.y
+        y: neighbourIndices.right.y,
       };
       unvisitedNeighbours.push(cell);
     }
@@ -207,43 +237,63 @@ export class Maze {
   }
 
   /**
-    * Calls getCellNeighbourIndices, checks if each neighbour is visited and adds the visited cell's coordinates to an array
-    * @param {*} row The row index of the cell
-    * @param {*} column The column index of the cell
-    * @returns {[]} The indicies of visited neighours of the chosen cell
-  */
-  getVisitedNeigbourIndices(row: number, column: number): NeighbouringCoordinateWithDirection[] {
+   * Calls getCellNeighbourIndices, checks if each neighbour is visited and adds the visited cell's coordinates to an array
+   * @param {*} row The row index of the cell
+   * @param {*} column The column index of the cell
+   * @returns {[]} The indicies of visited neighours of the chosen cell
+   */
+  getVisitedNeigbourIndices(
+    row: number,
+    column: number,
+  ): NeighbouringCoordinateWithDirection[] {
     const neighbourIndices = this.getCellNeighbourIndices(row, column);
     const unvisitedNeighbours: NeighbouringCoordinateWithDirection[] = [];
-    if (typeof neighbourIndices.up !== 'undefined' && this.getCellVisited(neighbourIndices.up.y, neighbourIndices.up.x) === true) {
+    if (
+      typeof neighbourIndices.up !== "undefined" &&
+      this.getCellVisited(neighbourIndices.up.y, neighbourIndices.up.x) === true
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'up',
+        direction: "up",
         x: neighbourIndices.up.x,
-        y: neighbourIndices.up.y
+        y: neighbourIndices.up.y,
       };
       unvisitedNeighbours.push(cell);
     }
-    if (typeof neighbourIndices.down !== 'undefined' && this.getCellVisited(neighbourIndices.down.y, neighbourIndices.down.x) === true) {
+    if (
+      typeof neighbourIndices.down !== "undefined" &&
+      this.getCellVisited(neighbourIndices.down.y, neighbourIndices.down.x) ===
+        true
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'down',
+        direction: "down",
         x: neighbourIndices.down.x,
-        y: neighbourIndices.down.y
+        y: neighbourIndices.down.y,
       };
       unvisitedNeighbours.push(cell);
     }
-    if (typeof neighbourIndices.left !== 'undefined' && this.getCellVisited(neighbourIndices.left.y, neighbourIndices.left.x) === true) {
+    if (
+      typeof neighbourIndices.left !== "undefined" &&
+      this.getCellVisited(neighbourIndices.left.y, neighbourIndices.left.x) ===
+        true
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'left',
+        direction: "left",
         x: neighbourIndices.left.x,
-        y: neighbourIndices.left.y
+        y: neighbourIndices.left.y,
       };
       unvisitedNeighbours.push(cell);
     }
-    if (typeof neighbourIndices.right !== 'undefined' && this.getCellVisited(neighbourIndices.right.y, neighbourIndices.right.x) === true) {
+    if (
+      typeof neighbourIndices.right !== "undefined" &&
+      this.getCellVisited(
+        neighbourIndices.right.y,
+        neighbourIndices.right.x,
+      ) === true
+    ) {
       const cell: NeighbouringCoordinateWithDirection = {
-        direction: 'right',
+        direction: "right",
         x: neighbourIndices.right.x,
-        y: neighbourIndices.right.y
+        y: neighbourIndices.right.y,
       };
       unvisitedNeighbours.push(cell);
     }
@@ -262,33 +312,34 @@ export class Maze {
   }
 
   /**
-     * @returns {string} The string represention of all cells within the maze.
-     *  e.g.
-     *  _ _ _
-     * |    _|
-     * |_| | |
-     * | | | |
-     * |_ _ _|
-     **/
+   * @returns {string} The string represention of all cells within the maze.
+   *  e.g.
+   *  _ _ _
+   * |    _|
+   * |_| | |
+   * | | | |
+   * |_ _ _|
+   **/
   toString(): string {
-    let stringRepresentation = '';
+    let stringRepresentation = "";
     for (let topRow = 0; topRow < this.cells[0].length; topRow++) {
       // Adds a top wall to the top cells
-      stringRepresentation += this.cells[0][topRow].walls.up ? ' _' : '  ';
+      stringRepresentation += this.cells[0][topRow].walls.up ? " _" : "  ";
     }
-    stringRepresentation += '\n';
+    stringRepresentation += "\n";
 
     for (let row = 0; row < this.cells.length; row++) {
-      let rowString = '';
+      let rowString = "";
       for (let column = 0; column < this.cells[row].length; column++) {
         if (column === 0 && this.cells[row][column].walls.left) {
           // Adds a wall to the left most cell
-          stringRepresentation += '|';
+          stringRepresentation += "|";
         }
         rowString += this.cells[row][column].toString();
       }
       // Add a new line if the last cell of the row
-      stringRepresentation += row + 1 < this.cells.length ? rowString + '\n' : rowString;
+      stringRepresentation +=
+        row + 1 < this.cells.length ? rowString + "\n" : rowString;
     }
     return stringRepresentation;
   }
@@ -300,7 +351,7 @@ export class Maze {
    */
   toJSON(): MazeJSONRepresentation {
     const JSONRepresentation: MazeJSONRepresentation = {
-      rows: []
+      rows: [],
     };
     for (let row = 0; row < this.cells.length; row++) {
       const rowArray: CellJSONRepresentation[] = [];
