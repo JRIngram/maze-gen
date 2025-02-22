@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2025-02-22
+### Added
+* TypeScript support
+* Replace semistandard with eslint and prettier
+* Change to using ESM over CommonJs for modules.
+
+### Dependencies
+* Bump `@babel/traverse` from `7.21.2` to `7.23.2`.
+* Bump `husky` from `8.0.1` to `9.1.7`
+* Bump `jest` from `29.1.2` to `29.7.0`.
+
 ## [3.1.2] - 2023-01-25
 ### Dependencies
 * Bump json5 from `2.2.1` to `2.2.3`.
@@ -98,3 +109,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [3.0.1]: https://github.com/jringram/maze-gen/releases/tag/v3.0.1
 [3.1.1]: https://github.com/jringram/maze-gen/releases/tag/v3.1.1
 [3.1.2]: https://github.com/jringram/maze-gen/releases/tag/v3.1.2
+[4.0.0]: https://github.com/jringram/maze-gen/releases/tag/v4.0.0

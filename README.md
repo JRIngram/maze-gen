@@ -73,12 +73,12 @@ Example output:
 
 To get the JSON representation of the generated maze write:
 
-```javascript
+```typescript
 let JSONRepresentation = generatedMaze.toJSON();
 ```
 
 The outputed JSON object has the following structure (example is a 3 by 3 cell):
-```javascript
+```typescript
     {
         rows: [
             [[Object],[Object],[Object]],
@@ -89,7 +89,7 @@ The outputed JSON object has the following structure (example is a 3 by 3 cell):
 ```
 
 Where each object is a Cell object, which as the following JSON structure:
-```javascript
+```typescript
     {  
         left: bool,
         right: bool, 
@@ -116,6 +116,7 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
 ```
 
 * More information can be found on the [Wikipedia page](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker).
+
 ###### Hunt And Kill
 ```
   Choose a random starting cell and set that to CURRENT_CELL
@@ -136,7 +137,7 @@ Like the Maze object, the solution object has two methods which can be used for 
 
 `toJSON()` returns an array of cells, which represent the path taken from the start to the goal.
 
-```javascript
+```typescript
 // example usage
 
 const options = {
