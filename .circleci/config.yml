@@ -29,6 +29,7 @@ jobs:
       - checkout
       - restore_cache:
           key: maze-gen-modules-{{ checksum "package-lock.json" }}
+      - run: npm run build
       - run: npm run test:ci
 workflows:
     build-and-test:
