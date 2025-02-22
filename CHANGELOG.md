@@ -5,12 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [4.0.0] - Unreleased
+### Added
+* TypeScript support
+* Replace semistandard with eslint and prettier
+* Change to using ESM over CommonJs for modules.
+
 ### Dependencies
 * Bump `@babel/traverse` from `7.21.2` to `7.23.2`.
 * Bump `husky` from `8.0.1` to `8.0.3`.
 * Bump `jest` from `29.1.2` to `29.7.0`.
-* Bump `semistandard` from `16.0.1` to `17.0.0`.
 
 ## [3.1.2] - 2023-01-25
 ### Dependencies

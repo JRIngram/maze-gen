@@ -116,6 +116,7 @@ The `left`,`right`,`up`,`down` fields correspond to if the wall exists in that d
 ```
 
 * More information can be found on the [Wikipedia page](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker).
+
 ###### Hunt And Kill
 ```
   Choose a random starting cell and set that to CURRENT_CELL

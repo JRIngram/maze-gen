@@ -1,7 +1,14 @@
 .circleci/
 .github/
-coverage/
-node_modules/
 .gitignore
-src/test/
+.husky
+.prettierignore
+.prettierrc
+babel.config.js
+CHANGELOG.md
 CONTRIBUTING.md
+coverage/
+eslint.config.mjs
+node_modules/
+README.md
+tsconfig.json
