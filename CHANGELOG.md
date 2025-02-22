@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Dependencies
 * Bump `@babel/traverse` from `7.21.2` to `7.23.2`.
-* Bump husky from `8.0.1` to `9.1.7`
+* Bump `husky` from `8.0.1` to `9.1.7`
 * Bump `jest` from `29.1.2` to `29.7.0`.
 
 ## [3.1.2] - 2023-01-25
