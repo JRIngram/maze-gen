@@ -28,7 +28,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: maze-gen-build-{{ checksum "package-lock.json" }}
+          key: maze-gen-modules-{{ checksum "package-lock.json" }}
       - run: npm run test:ci
 workflows:
     build-and-test:
