@@ -1,6 +1,6 @@
-import { Generator } from "./src/Generator";
 import Prando from "prando";
-import type { Config } from "./src/types";
+import { Generator } from "./src/Generator.js";
+import type { Config } from "./src/types.js";
 
 export default (options: Config) => {
   const { width, height } = options;
@@ -27,4 +27,3 @@ export default (options: Config) => {
   const prando = new Prando(seed);
   return mazeGen.generateMaze(algorithm, prando);
 };
-

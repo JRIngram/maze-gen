@@ -1,5 +1,5 @@
 import Prando from "prando";
-import { Maze, NeighbouringCoordinateWithDirection } from "./Maze";
+import { Maze, NeighbouringCoordinateWithDirection } from "./Maze.js";
 import { Coordinate, Direction } from "./types";
 
 export class Generator {

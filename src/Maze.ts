@@ -1,6 +1,6 @@
-import { Cell, type Visited, type CellJSONRepresentation } from "./Cell";
+import { Cell, type Visited, type CellJSONRepresentation } from "./Cell.js";
+import { Solver } from "./Solver.js";
 import type { ColumnRowCoordinate, Direction, Coordinate } from "./types";
-import { Solver } from "./Solver";
 
 export interface NeighbouringCoordinateWithDirection extends Coordinate {
   direction: Direction;

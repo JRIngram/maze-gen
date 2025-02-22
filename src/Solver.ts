@@ -1,4 +1,4 @@
-import { type MazeCells } from "./Maze";
+import { type MazeCells } from "./Maze.js";
 import { type ColumnRowCoordinate } from "./types";
 
 type Cost = number;

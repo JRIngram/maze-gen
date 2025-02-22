@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/JRIngram/maze-gen.git"
   },
+  "type": "module",
   "keywords": [
     "maze",
     "generator",
