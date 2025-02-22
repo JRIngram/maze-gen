@@ -1,4 +1,4 @@
-import { Cell } from "../Cell.js";
+import { Cell } from "../Cell";
 /* eslint-env jest */
 
 // Walls

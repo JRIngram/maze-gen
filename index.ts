@@ -1,6 +1,6 @@
 import Prando from "prando";
 import { Generator } from "./src/Generator.js";
-import type { Config } from "./src/types.js";
+import type { Config } from "./src/types";
 
 export default (options: Config) => {
   const { width, height } = options;
